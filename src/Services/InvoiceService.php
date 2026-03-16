@@ -239,6 +239,55 @@ class InvoiceService extends BaseService
     // ─── E-Arşiv ──────────────────────────────────────────────────────
 
     /**
+     * E-Arşiv faturaları listele (sayfalı, filtreli)
+     *
+     * Gerçek endpoint:
+     *   GET /cp/{accountId}/EArchive/GetEArchiveList
+     *
+     * @param array $filters Filtre parametreleri:
+     *   - firstDate, lastDate: Tarih aralığı (ISO 8601)
+     *   - filterDateType: DocumentDate
+     *   - eArchiveState: Hepsi
+     *   - invoiceTypeCodesFilter: TUMU, SATIS, IADE
+     *   - cancelledStatus: All
+     *   - FlagStatus: All
+     *   - status: All
+     *   - readingState: All
+     *   - invoiceCurrency: All, TRY, USD, EUR
+     *   - taxNumber, gibNumber, minAmount, maxAmount
+     *   - page, recordPerPage, sortColumn, sortOrder
+     */
+    public function listArchive(array $filters = []): array
+    {
+        $defaults = [
+            'FlagStatus' => 'All',
+            'cancelledStatus' => 'All',
+            'eArchiveState' => 'Hepsi',
+            'filterDateType' => 'DocumentDate',
+            'firstDate' => date('Y-m-d\TH:i:s.v\Z', strtotime('-30 days')),
+            'lastDate' => date('Y-m-d\TH:i:s.v\Z'),
+            'folder' => '',
+            'gibNumber' => '',
+            'invoiceCurrency' => 'All',
+            'invoiceTypeCodesFilter' => 'TUMU',
+            'maxAmount' => '',
+            'minAmount' => '',
+            'page' => 1,
+            'readingState' => 'All',
+            'recordPerPage' => 20,
+            'sortColumn' => '',
+            'sortOrder' => '',
+            'status' => 'All',
+            'taxNumber' => '',
+        ];
+
+        return $this->http->get(
+            $this->cp('EArchive/GetEArchiveList'),
+            array_merge($defaults, $filters)
+        );
+    }
+
+    /**
      * E-Arşiv taslak faturaları listele
      * Aynı GetDraftList endpoint'i, invoiceType=EArchive filtresi ile
      */
