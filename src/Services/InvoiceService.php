@@ -199,9 +199,12 @@ class InvoiceService extends BaseService
     // ─── Gelen Fatura Listeleme ──────────────────────────────────────
 
     /**
-     * Gelen e-faturaları listele
-     * TODO: Gelen fatura listesi sayfasının endpoint'i Network tab'dan eklenecek
-     * Muhtemelen: GET /cp/{accountId}/inbox/GetReceivedInvoiceList
+     * Gelen e-faturaları listele (sayfalı, filtreli)
+     *
+     * Gerçek endpoint:
+     *   GET /cp/{accountId}/inbox/GetIncomingInvoiceList
+     *
+     * @param array $filters Aynı filtre parametreleri (giden ile aynı yapı)
      */
     public function listIncoming(array $filters = []): array
     {
@@ -211,18 +214,24 @@ class InvoiceService extends BaseService
             'filterDateType' => 'DocumentDate',
             'firstDate' => date('Y-m-d\TH:i:s.v\Z', strtotime('-30 days')),
             'lastDate' => date('Y-m-d\TH:i:s.v\Z'),
+            'folder' => '',
+            'gibNumber' => '',
             'invoiceCurrency' => 'All',
             'invoiceProfilesFilter' => 'TUMU',
             'invoiceTypeCodesFilter' => 'TUMU',
+            'maxAmount' => '',
+            'minAmount' => '',
             'page' => 1,
             'readingState' => 'All',
             'recordPerPage' => 20,
+            'sortColumn' => '',
+            'sortOrder' => '',
             'state' => 'Hepsi',
             'taxNumber' => '',
         ];
 
         return $this->http->get(
-            $this->cp('inbox/GetReceivedInvoiceList'),
+            $this->cp('inbox/GetIncomingInvoiceList'),
             array_merge($defaults, $filters)
         );
     }
