@@ -236,15 +236,42 @@ class InvoiceService extends BaseService
         );
     }
 
-    // ─── E-Arşiv Listeleme ───────────────────────────────────────────
+    // ─── E-Arşiv ──────────────────────────────────────────────────────
 
     /**
-     * E-Arşiv faturaları listele
-     * TODO: E-Arşiv listesi sayfasının endpoint'i Network tab'dan eklenecek
+     * E-Arşiv taslak faturaları listele
+     * Aynı GetDraftList endpoint'i, invoiceType=EArchive filtresi ile
      */
-    public function listArchive(array $filters = []): array
+    public function listArchiveDrafts(array $filters = []): array
     {
-        return $this->http->get($this->cp('earchive/GetArchiveInvoices'), $filters);
+        return $this->listDrafts(array_merge(['invoiceType' => 'EArchive'], $filters));
+    }
+
+    /**
+     * Yeni E-Arşiv fatura şablonu al
+     * Aynı newInvoice/get endpoint'i, invoiceType=EArchive ile
+     * Prefix: EARB
+     */
+    public function getNewArchiveInvoice(): array
+    {
+        return $this->getNewInvoice('EArchive');
+    }
+
+    /**
+     * E-Arşiv fatura şablonunu Invoice modeli olarak al
+     */
+    public function newArchiveDraft(): \ZirveDonusum\Models\Invoice
+    {
+        $response = $this->getNewArchiveInvoice();
+        return \ZirveDonusum\Models\Invoice::fromResponse($response);
+    }
+
+    /**
+     * E-Arşiv belge numarası üret (EARB prefix)
+     */
+    public function generateArchiveDocumentNo(string $uuid): array
+    {
+        return $this->generateDocumentNo($uuid, 'EARB');
     }
 
     // ─── Fatura Detay ────────────────────────────────────────────────
