@@ -10,6 +10,7 @@ namespace ZirveDonusum\Services;
  *   GET /cp/{accountId}/dashboard/GetDocumentDraftCount?date=...
  *   GET /cp/{accountId}/dashboard/GetUserPacketCountInfo?date=...
  *   GET /cp/{accountId}/dashboard/ShouldShowLeadInformationCard
+ *   GET /cp/{accountId}/dashboard/CloseLeadInformationCard
  */
 class DashboardService extends BaseService
 {
@@ -50,5 +51,13 @@ class DashboardService extends BaseService
     public function shouldShowLeadInformationCard(): array
     {
         return $this->http->get($this->cp('dashboard/ShouldShowLeadInformationCard'));
+    }
+
+    /**
+     * Lead bilgi kartını kapat
+     */
+    public function closeLeadInformationCard(): array
+    {
+        return $this->http->get($this->cp('dashboard/CloseLeadInformationCard'));
     }
 }
