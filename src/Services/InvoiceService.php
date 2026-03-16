@@ -361,19 +361,75 @@ class InvoiceService extends BaseService
     }
 
     /**
-     * Fatura XML'i indir
+     * Fatura XML (UBL) indir
+     * Gerçek endpoint: /cp/{accountId}/inbox/downloadUBL?enveloped=false&id=...
+     *
+     * @param string $invoiceId Fatura UUID
+     * @param string $direction incoming veya outgoing
+     * @param bool $enveloped Zarf XML mi (true = zarflı, false = sadece fatura)
      */
-    public function downloadXml(string $invoiceId): string
+    public function downloadXml(string $invoiceId, string $direction = 'incoming', bool $enveloped = false): string
     {
-        return $this->http->download($this->cp('einvoice/DownloadXml'), ['id' => $invoiceId]);
+        $prefix = $direction === 'outgoing' ? 'outbox' : 'inbox';
+        return $this->http->download($this->cp("{$prefix}/downloadUBL"), [
+            'id' => $invoiceId,
+            'enveloped' => $enveloped ? 'true' : 'false',
+        ]);
     }
 
     /**
-     * Fatura PDF'i indir
+     * Zarf XML indir (enveloped=true)
      */
-    public function downloadPdf(string $invoiceId): string
+    public function downloadEnvelopeXml(string $invoiceId, string $direction = 'incoming'): string
     {
-        return $this->http->download($this->cp('einvoice/DownloadPdf'), ['id' => $invoiceId]);
+        return $this->downloadXml($invoiceId, $direction, true);
+    }
+
+    /**
+     * Fatura PDF indir (ZIP olarak döner)
+     * Gerçek endpoint: POST /cp/{accountId}/inbox/DownloadPdfFilesZip
+     *
+     * @param string $invoiceId Fatura UUID
+     * @param string $direction incoming veya outgoing
+     * @return string ZIP dosya içeriği
+     */
+    public function downloadPdf(string $invoiceId, string $direction = 'incoming'): string
+    {
+        $prefix = $direction === 'outgoing' ? 'outbox' : 'inbox';
+        $positionType = $direction === 'outgoing' ? 'Outgoing' : 'Incoming';
+
+        $response = $this->http->raw('POST', $this->cp("{$prefix}/DownloadPdfFilesZip"), [
+            'json' => [
+                'IdList' => [$invoiceId],
+                'IsSinglePdf' => true,
+                'DocumentType' => 'DCEInvoice',
+                'IsZipped' => false,
+                'ItemPositionType' => $positionType,
+            ],
+        ]);
+
+        return $response->getBody()->getContents();
+    }
+
+    /**
+     * Fatura PDF indir (ZIP olarak, birden fazla fatura)
+     */
+    public function downloadPdfZip(array $invoiceIds, string $direction = 'incoming'): string
+    {
+        $prefix = $direction === 'outgoing' ? 'outbox' : 'inbox';
+        $positionType = $direction === 'outgoing' ? 'Outgoing' : 'Incoming';
+
+        $response = $this->http->raw('POST', $this->cp("{$prefix}/DownloadPdfFilesZip"), [
+            'json' => [
+                'IdList' => $invoiceIds,
+                'IsSinglePdf' => false,
+                'DocumentType' => 'DCEInvoice',
+                'IsZipped' => true,
+                'ItemPositionType' => $positionType,
+            ],
+        ]);
+
+        return $response->getBody()->getContents();
     }
 
     // ─── Fatura Gönderme ─────────────────────────────────────────────
