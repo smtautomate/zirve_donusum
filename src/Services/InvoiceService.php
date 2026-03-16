@@ -136,25 +136,98 @@ class InvoiceService extends BaseService
         );
     }
 
-    // ─── Gelen / Giden Fatura Listeleme ──────────────────────────────
+    // ─── Giden Fatura Listeleme ─────────────────────────────────────
+
+    /**
+     * Giden e-faturaları listele (sayfalı, filtreli)
+     *
+     * Gerçek endpoint:
+     *   GET /cp/{accountId}/outbox/GetSubmittedInvoiceList
+     *
+     * @param array $filters Filtre parametreleri:
+     *   - firstDate: Başlangıç tarihi (ISO 8601)
+     *   - lastDate: Bitiş tarihi (ISO 8601)
+     *   - filterDateType: DocumentDate (varsayılan)
+     *   - invoiceProfilesFilter: TUMU, TEMELFATURA, TICARIFATURA
+     *   - invoiceTypeCodesFilter: TUMU, SATIS, IADE
+     *   - state: Hepsi, Onaylandi, Reddedildi
+     *   - outingInvoiceState: Hepsi
+     *   - cancelledStatus: All
+     *   - FlagStatus: All
+     *   - readingState: All
+     *   - invoiceCurrency: All, TRY, USD, EUR
+     *   - taxNumber: VKN/TCKN ile filtrele
+     *   - gibNumber: GİB numarası ile filtrele
+     *   - minAmount: Minimum tutar
+     *   - maxAmount: Maksimum tutar
+     *   - page: Sayfa numarası (varsayılan: 1)
+     *   - recordPerPage: Sayfa başına kayıt (varsayılan: 20)
+     *   - sortColumn: Sıralama kolonu
+     *   - sortOrder: Sıralama yönü
+     */
+    public function listOutgoing(array $filters = []): array
+    {
+        $defaults = [
+            'FlagStatus' => 'All',
+            'cancelledStatus' => 'All',
+            'filterDateType' => 'DocumentDate',
+            'firstDate' => date('Y-m-d\TH:i:s.v\Z', strtotime('-30 days')),
+            'lastDate' => date('Y-m-d\TH:i:s.v\Z'),
+            'folder' => '',
+            'gibNumber' => '',
+            'invoiceCurrency' => 'All',
+            'invoiceProfilesFilter' => 'TUMU',
+            'invoiceTypeCodesFilter' => 'TUMU',
+            'maxAmount' => '',
+            'minAmount' => '',
+            'outingInvoiceState' => 'Hepsi',
+            'page' => 1,
+            'readingState' => 'All',
+            'recordPerPage' => 20,
+            'sortColumn' => '',
+            'sortOrder' => '',
+            'state' => 'Hepsi',
+            'taxNumber' => '',
+        ];
+
+        return $this->http->get(
+            $this->cp('outbox/GetSubmittedInvoiceList'),
+            array_merge($defaults, $filters)
+        );
+    }
+
+    // ─── Gelen Fatura Listeleme ──────────────────────────────────────
 
     /**
      * Gelen e-faturaları listele
      * TODO: Gelen fatura listesi sayfasının endpoint'i Network tab'dan eklenecek
+     * Muhtemelen: GET /cp/{accountId}/inbox/GetReceivedInvoiceList
      */
     public function listIncoming(array $filters = []): array
     {
-        return $this->http->get($this->cp('einvoice/GetIncomingInvoices'), $filters);
+        $defaults = [
+            'FlagStatus' => 'All',
+            'cancelledStatus' => 'All',
+            'filterDateType' => 'DocumentDate',
+            'firstDate' => date('Y-m-d\TH:i:s.v\Z', strtotime('-30 days')),
+            'lastDate' => date('Y-m-d\TH:i:s.v\Z'),
+            'invoiceCurrency' => 'All',
+            'invoiceProfilesFilter' => 'TUMU',
+            'invoiceTypeCodesFilter' => 'TUMU',
+            'page' => 1,
+            'readingState' => 'All',
+            'recordPerPage' => 20,
+            'state' => 'Hepsi',
+            'taxNumber' => '',
+        ];
+
+        return $this->http->get(
+            $this->cp('inbox/GetReceivedInvoiceList'),
+            array_merge($defaults, $filters)
+        );
     }
 
-    /**
-     * Giden e-faturaları listele
-     * TODO: Giden fatura listesi sayfasının endpoint'i Network tab'dan eklenecek
-     */
-    public function listOutgoing(array $filters = []): array
-    {
-        return $this->http->get($this->cp('einvoice/GetOutgoingInvoices'), $filters);
-    }
+    // ─── E-Arşiv Listeleme ───────────────────────────────────────────
 
     /**
      * E-Arşiv faturaları listele
