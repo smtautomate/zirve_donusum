@@ -12,7 +12,7 @@ class ReportService extends BaseService
      */
     public function invoiceSummary(array $filters = []): array
     {
-        return $this->http->get('/report/getInvoiceSummary', $filters);
+        return $this->http->get($this->cp('report/GetInvoiceSummary'), $filters);
     }
 
     /**
@@ -20,7 +20,7 @@ class ReportService extends BaseService
      */
     public function monthly(string $year, string $month): array
     {
-        return $this->http->get('/report/getMonthlyReport', [
+        return $this->http->get($this->cp('report/GetMonthlyReport'), [
             'year' => $year,
             'month' => $month,
         ]);

@@ -5,20 +5,21 @@ namespace ZirveDonusum\Services;
 /**
  * E-Fatura / E-Arşiv Fatura İşlemleri
  *
- * Endpoint'ler sen Network tab'dan paylaştıkça güncellenecek.
- * Şu anki path'ler eMikro'nun tipik yapısına göre tahmin edildi.
+ * Endpoint'ler /cp/{accountId}/einvoice/... ve /cp/{accountId}/earchive/... altında.
+ * Sen portaldeki fatura sayfalarının Network tab'ını paylaştıkça
+ * doğru endpoint'ler buraya eklenecek.
  */
 class InvoiceService extends BaseService
 {
-    // ─── Fatura Listeleme ────────────────────────────────────────────
+    // ─── E-Fatura Listeleme ──────────────────────────────────────────
 
     /**
      * Gelen e-faturaları listele
      */
     public function listIncoming(array $filters = []): array
     {
-        // TODO: Doğru endpoint Network tab'dan gelecek
-        return $this->http->get('/einvoice/getIncomingInvoices', $filters);
+        // TODO: Network tab'dan doğru endpoint gelecek
+        return $this->http->get($this->cp('einvoice/GetIncomingInvoices'), $filters);
     }
 
     /**
@@ -26,15 +27,17 @@ class InvoiceService extends BaseService
      */
     public function listOutgoing(array $filters = []): array
     {
-        return $this->http->get('/einvoice/getOutgoingInvoices', $filters);
+        return $this->http->get($this->cp('einvoice/GetOutgoingInvoices'), $filters);
     }
+
+    // ─── E-Arşiv ─────────────────────────────────────────────────────
 
     /**
      * E-Arşiv faturaları listele
      */
     public function listArchive(array $filters = []): array
     {
-        return $this->http->get('/earchive/getArchiveInvoices', $filters);
+        return $this->http->get($this->cp('earchive/GetArchiveInvoices'), $filters);
     }
 
     // ─── Fatura Detay ────────────────────────────────────────────────
@@ -44,7 +47,7 @@ class InvoiceService extends BaseService
      */
     public function get(string $invoiceId): array
     {
-        return $this->http->get('/einvoice/getInvoiceDetail', ['id' => $invoiceId]);
+        return $this->http->get($this->cp('einvoice/GetInvoiceDetail'), ['id' => $invoiceId]);
     }
 
     /**
@@ -52,7 +55,7 @@ class InvoiceService extends BaseService
      */
     public function getHtml(string $invoiceId): string
     {
-        return $this->http->download('/einvoice/getInvoiceHtml', ['id' => $invoiceId]);
+        return $this->http->download($this->cp('einvoice/GetInvoiceHtml'), ['id' => $invoiceId]);
     }
 
     /**
@@ -60,7 +63,7 @@ class InvoiceService extends BaseService
      */
     public function downloadXml(string $invoiceId): string
     {
-        return $this->http->download('/einvoice/downloadXml', ['id' => $invoiceId]);
+        return $this->http->download($this->cp('einvoice/DownloadXml'), ['id' => $invoiceId]);
     }
 
     /**
@@ -68,7 +71,7 @@ class InvoiceService extends BaseService
      */
     public function downloadPdf(string $invoiceId): string
     {
-        return $this->http->download('/einvoice/downloadPdf', ['id' => $invoiceId]);
+        return $this->http->download($this->cp('einvoice/DownloadPdf'), ['id' => $invoiceId]);
     }
 
     // ─── Fatura Gönderme ─────────────────────────────────────────────
@@ -78,7 +81,7 @@ class InvoiceService extends BaseService
      */
     public function send(array $invoiceData): array
     {
-        return $this->http->post('/einvoice/sendInvoice', $invoiceData);
+        return $this->http->post($this->cp('einvoice/SendInvoice'), $invoiceData);
     }
 
     /**
@@ -86,7 +89,7 @@ class InvoiceService extends BaseService
      */
     public function createArchive(array $invoiceData): array
     {
-        return $this->http->post('/earchive/createInvoice', $invoiceData);
+        return $this->http->post($this->cp('earchive/CreateInvoice'), $invoiceData);
     }
 
     // ─── Fatura İşlemleri ────────────────────────────────────────────
@@ -96,7 +99,7 @@ class InvoiceService extends BaseService
      */
     public function accept(string $invoiceId): array
     {
-        return $this->http->postForm('/einvoice/acceptInvoice', ['id' => $invoiceId]);
+        return $this->http->postForm($this->cp('einvoice/AcceptInvoice'), ['id' => $invoiceId]);
     }
 
     /**
@@ -104,7 +107,7 @@ class InvoiceService extends BaseService
      */
     public function reject(string $invoiceId, string $reason = ''): array
     {
-        return $this->http->postForm('/einvoice/rejectInvoice', [
+        return $this->http->postForm($this->cp('einvoice/RejectInvoice'), [
             'id' => $invoiceId,
             'reason' => $reason,
         ]);
@@ -115,6 +118,6 @@ class InvoiceService extends BaseService
      */
     public function status(string $invoiceId): array
     {
-        return $this->http->get('/einvoice/getInvoiceStatus', ['id' => $invoiceId]);
+        return $this->http->get($this->cp('einvoice/GetInvoiceStatus'), ['id' => $invoiceId]);
     }
 }

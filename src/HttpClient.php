@@ -20,6 +20,12 @@ class HttpClient
     private int $timeout;
     private bool $authenticated = false;
 
+    /**
+     * eMikro'nun tüm API çağrıları /cp/{accountId}/... altında.
+     * Login sonrası status endpoint'inden veya redirect'ten alınır.
+     */
+    private ?string $accountId = null;
+
     public function __construct(array $config)
     {
         $this->baseUrl = rtrim($config['base_url'] ?? 'https://eportal.mikrogrup.com', '/');
@@ -34,10 +40,11 @@ class HttpClient
 
         $this->cookieJar = new CookieJar();
 
-        // Eğer cache'de geçerli bir session varsa, cookie jar'a ekle
-        $cachedSession = $this->sessionManager->getSessionId();
-        if ($cachedSession) {
-            $this->setCookieFromSession($cachedSession);
+        // Cache'den session ve accountId yükle
+        $cached = $this->sessionManager->load();
+        if ($cached) {
+            $this->setCookieFromSession($cached['session_id']);
+            $this->accountId = $cached['account_id'] ?? null;
             $this->authenticated = true;
         }
 
@@ -47,6 +54,7 @@ class HttpClient
             'verify' => $config['verify_ssl'] ?? true,
             'http_errors' => false,
             'cookies' => $this->cookieJar,
+            'allow_redirects' => false, // Redirect'leri manuel yakala (accountId için)
             'headers' => [
                 'Accept' => 'application/json, text/plain, */*',
                 'User-Agent' => 'ZirveDonusum-PHP-Client/1.0',
@@ -61,22 +69,18 @@ class HttpClient
     /**
      * eMikro Portal'a login olur.
      * POST /home/loginEmikro — multipart/form-data
-     * Response: JSON (16 byte, muhtemelen {"success":true} benzeri)
      * Auth: PHPSESSID cookie ile session bazlı
+     *
+     * Login sonrası /status veya redirect'ten accountId alınır.
+     * Tüm API çağrıları /cp/{accountId}/... altında yapılır.
      */
     public function login(): bool
     {
         try {
             $response = $this->http->post('/home/loginEmikro', [
                 'multipart' => [
-                    [
-                        'name' => 'email',
-                        'contents' => $this->email,
-                    ],
-                    [
-                        'name' => 'password',
-                        'contents' => $this->password,
-                    ],
+                    ['name' => 'email', 'contents' => $this->email],
+                    ['name' => 'password', 'contents' => $this->password],
                 ],
             ]);
 
@@ -92,23 +96,25 @@ class HttpClient
                 );
             }
 
-            // PHPSESSID cookie'yi yakala
-            $sessionId = $this->extractSessionCookie();
-
-            if ($sessionId) {
-                $this->sessionManager->setSession($sessionId);
-            }
-
-            $this->authenticated = true;
-
-            // Response'da hata mesajı varsa kontrol et
+            // Response'da hata kontrolü
             if (is_array($body) && isset($body['error']) && $body['error']) {
-                $this->authenticated = false;
                 throw new AuthenticationException(
                     $body['message'] ?? $body['error'] ?? 'Login failed',
                     $statusCode,
                     $body
                 );
+            }
+
+            // PHPSESSID cookie'yi yakala
+            $sessionId = $this->extractSessionCookie();
+            $this->authenticated = true;
+
+            // accountId'yi al: login response'dan veya status endpoint'inden
+            $this->resolveAccountId($body);
+
+            // Session'ı cache'le
+            if ($sessionId) {
+                $this->sessionManager->save($sessionId, $this->accountId);
             }
 
             return true;
@@ -119,6 +125,79 @@ class HttpClient
                 [],
                 $e
             );
+        }
+    }
+
+    /**
+     * Login sonrası accountId'yi çöz.
+     * 1. Login response'da varsa oradan al
+     * 2. Yoksa /status endpoint'ine git
+     * 3. Hâlâ yoksa dashboard redirect'inden yakala
+     */
+    private function resolveAccountId(?array $loginResponse): void
+    {
+        // 1. Login response'dan
+        if ($loginResponse) {
+            $this->accountId = $loginResponse['accountId']
+                ?? $loginResponse['account_id']
+                ?? $loginResponse['AccountId']
+                ?? $loginResponse['id']
+                ?? null;
+
+            if ($this->accountId) {
+                return;
+            }
+        }
+
+        // 2. /status endpoint'inden
+        try {
+            $statusResponse = $this->http->get('/status');
+            $statusBody = json_decode($statusResponse->getBody()->getContents(), true);
+
+            if ($statusBody) {
+                $this->accountId = $statusBody['accountId']
+                    ?? $statusBody['account_id']
+                    ?? $statusBody['AccountId']
+                    ?? null;
+
+                if ($this->accountId) {
+                    return;
+                }
+            }
+        } catch (\Throwable) {
+            // Status endpoint yoksa devam et
+        }
+
+        // 3. Dashboard redirect'inden: /cp/{accountId}/dashboard/index
+        try {
+            $dashResponse = $this->http->get('/', [
+                'allow_redirects' => ['track_redirects' => true, 'max' => 5],
+            ]);
+
+            // Redirect history'den accountId'yi yakala
+            $redirectHistory = $dashResponse->getHeader('X-Guzzle-Redirect-History');
+            foreach ($redirectHistory as $url) {
+                if (preg_match('#/cp/([a-f0-9\-]{36})/#i', $url, $matches)) {
+                    $this->accountId = $matches[1];
+                    return;
+                }
+            }
+
+            // Response URL'den yakala
+            $finalUrl = $dashResponse->getHeaderLine('Location');
+            if (preg_match('#/cp/([a-f0-9\-]{36})/#i', $finalUrl, $matches)) {
+                $this->accountId = $matches[1];
+                return;
+            }
+
+            // Body'den yakala (HTML içinde accountId olabilir)
+            $html = $dashResponse->getBody()->getContents();
+            if (preg_match('#/cp/([a-f0-9\-]{36})/#i', $html, $matches)) {
+                $this->accountId = $matches[1];
+                return;
+            }
+        } catch (\Throwable) {
+            // Son çare başarısız
         }
     }
 
@@ -134,11 +213,45 @@ class HttpClient
         return $this->authenticated;
     }
 
+    public function getAccountId(): ?string
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * accountId'yi manuel set et (biliyorsan direkt verebilirsin)
+     */
+    public function setAccountId(string $accountId): self
+    {
+        $this->accountId = $accountId;
+        return $this;
+    }
+
     public function logout(): void
     {
         $this->authenticated = false;
+        $this->accountId = null;
         $this->sessionManager->clear();
         $this->cookieJar = new CookieJar();
+    }
+
+    // ─── URL Builder ─────────────────────────────────────────────────
+
+    /**
+     * /cp/{accountId}/... path'ini oluşturur.
+     * eMikro'nun tüm authenticated endpoint'leri bu pattern'i kullanır.
+     */
+    public function cpPath(string $path): string
+    {
+        if (!$this->accountId) {
+            throw new AuthenticationException(
+                'accountId not available. Login first or set it manually.',
+                0,
+                []
+            );
+        }
+
+        return '/cp/' . $this->accountId . '/' . ltrim($path, '/');
     }
 
     // ─── HTTP Methods ────────────────────────────────────────────────
@@ -209,18 +322,12 @@ class HttpClient
         $this->ensureAuthenticated();
 
         try {
-            $response = $this->http->get($endpoint, [
-                'query' => $query,
-            ]);
+            $response = $this->http->get($endpoint, ['query' => $query]);
 
-            if ($response->getStatusCode() === 401 || $response->getStatusCode() === 302) {
-                // Session expired, yeniden login
+            if (in_array($response->getStatusCode(), [401, 302])) {
                 $this->authenticated = false;
                 $this->login();
-
-                $response = $this->http->get($endpoint, [
-                    'query' => $query,
-                ]);
+                $response = $this->http->get($endpoint, ['query' => $query]);
             }
 
             if ($response->getStatusCode() !== 200) {
@@ -244,12 +351,11 @@ class HttpClient
     }
 
     /**
-     * Ham response objesi döndürür (headers, status code vb. lazım olduğunda)
+     * Ham response objesi döndürür
      */
     public function raw(string $method, string $endpoint, array $options = []): \Psr\Http\Message\ResponseInterface
     {
         $this->ensureAuthenticated();
-
         return $this->http->request($method, $endpoint, $options);
     }
 
@@ -264,7 +370,7 @@ class HttpClient
             $statusCode = $response->getStatusCode();
             $rawBody = $response->getBody()->getContents();
 
-            // 401 veya login sayfasına redirect → session expired
+            // 401 veya login redirect → session expired
             if ($statusCode === 401 || ($statusCode === 302 && str_contains($response->getHeaderLine('Location'), 'login'))) {
                 $this->authenticated = false;
                 $this->login();
@@ -274,7 +380,7 @@ class HttpClient
                 $rawBody = $response->getBody()->getContents();
             }
 
-            // HTML response gelirse muhtemelen login sayfasına düşmüş
+            // HTML response = muhtemelen login sayfasına düşmüş
             $contentType = $response->getHeaderLine('Content-Type');
             if (str_contains($contentType, 'text/html') && str_contains($rawBody, 'loginEmikro')) {
                 $this->authenticated = false;
@@ -322,11 +428,7 @@ class HttpClient
     private function setCookieFromSession(string $sessionId): void
     {
         $domain = parse_url($this->baseUrl, PHP_URL_HOST);
-
-        $this->cookieJar = CookieJar::fromArray(
-            ['PHPSESSID' => $sessionId],
-            $domain
-        );
+        $this->cookieJar = CookieJar::fromArray(['PHPSESSID' => $sessionId], $domain);
     }
 
     // ─── Getters ─────────────────────────────────────────────────────

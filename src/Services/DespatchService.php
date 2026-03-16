@@ -12,7 +12,7 @@ class DespatchService extends BaseService
      */
     public function listIncoming(array $filters = []): array
     {
-        return $this->http->get('/edespatch/getIncomingDespatches', $filters);
+        return $this->http->get($this->cp('edespatch/GetIncomingDespatches'), $filters);
     }
 
     /**
@@ -20,7 +20,7 @@ class DespatchService extends BaseService
      */
     public function listOutgoing(array $filters = []): array
     {
-        return $this->http->get('/edespatch/getOutgoingDespatches', $filters);
+        return $this->http->get($this->cp('edespatch/GetOutgoingDespatches'), $filters);
     }
 
     /**
@@ -28,7 +28,7 @@ class DespatchService extends BaseService
      */
     public function get(string $despatchId): array
     {
-        return $this->http->get('/edespatch/getDespatchDetail', ['id' => $despatchId]);
+        return $this->http->get($this->cp('edespatch/GetDespatchDetail'), ['id' => $despatchId]);
     }
 
     /**
@@ -36,7 +36,7 @@ class DespatchService extends BaseService
      */
     public function send(array $despatchData): array
     {
-        return $this->http->post('/edespatch/sendDespatch', $despatchData);
+        return $this->http->post($this->cp('edespatch/SendDespatch'), $despatchData);
     }
 
     /**
@@ -44,7 +44,7 @@ class DespatchService extends BaseService
      */
     public function respond(string $despatchId, string $action, string $reason = ''): array
     {
-        return $this->http->postForm('/edespatch/respondDespatch', [
+        return $this->http->postForm($this->cp('edespatch/RespondDespatch'), [
             'id' => $despatchId,
             'action' => $action,
             'reason' => $reason,
@@ -56,6 +56,6 @@ class DespatchService extends BaseService
      */
     public function downloadPdf(string $despatchId): string
     {
-        return $this->http->download('/edespatch/downloadPdf', ['id' => $despatchId]);
+        return $this->http->download($this->cp('edespatch/DownloadPdf'), ['id' => $despatchId]);
     }
 }

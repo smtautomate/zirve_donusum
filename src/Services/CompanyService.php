@@ -12,7 +12,7 @@ class CompanyService extends BaseService
      */
     public function info(): array
     {
-        return $this->http->get('/home/getCompanyInfo');
+        return $this->http->get($this->cp('company/GetCompanyInfo'));
     }
 
     /**
@@ -20,7 +20,7 @@ class CompanyService extends BaseService
      */
     public function lookupTaxpayer(string $taxNumber): array
     {
-        return $this->http->postForm('/home/checkTaxpayer', [
+        return $this->http->get($this->cp('company/CheckTaxpayer'), [
             'taxNumber' => $taxNumber,
         ]);
     }
@@ -30,24 +30,8 @@ class CompanyService extends BaseService
      */
     public function checkEInvoiceRegistered(string $taxNumber): array
     {
-        return $this->http->postForm('/home/checkEInvoiceUser', [
+        return $this->http->get($this->cp('company/CheckEInvoiceUser'), [
             'taxNumber' => $taxNumber,
         ]);
-    }
-
-    /**
-     * Kullanıcı profil bilgisi
-     */
-    public function profile(): array
-    {
-        return $this->http->get('/home/getUserProfile');
-    }
-
-    /**
-     * Dashboard / Ana sayfa verileri
-     */
-    public function dashboard(): array
-    {
-        return $this->http->get('/home/getDashboard');
     }
 }
