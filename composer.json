@@ -35,7 +35,8 @@
             "aliases": {
                 "ZirveDonusum": "ZirveDonusum\\Facades\\ZirveDonusum",
                 "MikroPortal": "ZirveDonusum\\Facades\\MikroPortal",
-                "ZirvePortal": "ZirveDonusum\\Facades\\ZirvePortal"
+                "ZirvePortal": "ZirveDonusum\\Facades\\ZirvePortal",
+                "GibPortal": "ZirveDonusum\\Facades\\GibPortal"
             }
         }
     },

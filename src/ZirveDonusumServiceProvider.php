@@ -5,6 +5,7 @@ namespace ZirveDonusum;
 use Illuminate\Support\ServiceProvider;
 use ZirveDonusum\Mikro\MikroClient;
 use ZirveDonusum\Zirve\ZirvePortalClient;
+use ZirveDonusum\Gib\GibClient;
 
 class ZirveDonusumServiceProvider extends ServiceProvider
 {
@@ -42,9 +43,26 @@ class ZirveDonusumServiceProvider extends ServiceProvider
             ]);
         });
 
+        // GİB e-Arşiv Portal client
+        $this->app->singleton(GibClient::class, function ($app) {
+            $config = $app['config']['zirve_donusum.gib'];
+
+            return new GibClient([
+                'base_url' => $config['base_url'],
+                'username' => $config['username'],
+                'password' => $config['password'],
+                'test_mode' => $config['test_mode'],
+                'timeout' => $config['timeout'],
+                'verify_ssl' => $config['verify_ssl'],
+                'cache_token' => $config['cache_token'],
+                'cache_dir' => storage_path('app/gib-portal'),
+            ]);
+        });
+
         // Alias'lar
         $this->app->alias(MikroClient::class, 'mikro-portal');
         $this->app->alias(ZirvePortalClient::class, 'zirve-portal');
+        $this->app->alias(GibClient::class, 'gib-portal');
 
         // Geriye uyumluluk: eski 'zirve-donusum' alias'ı default client'a yönlendir
         $this->app->singleton('zirve-donusum', function ($app) {

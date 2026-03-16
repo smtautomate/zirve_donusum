@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------
     | 'mikro' veya 'zirve' — Facade ve singleton hangi client'ı kullanacak
     */
-    'default' => env('EDONUSUM_DEFAULT', 'zirve'),
+    'default' => env('EDONUSUM_DEFAULT', 'zirve'), // mikro, zirve, gib
 
     /*
     |--------------------------------------------------------------------------
@@ -40,6 +40,25 @@ return [
         'verify_ssl' => env('ZIRVE_VERIFY_SSL', true),
         'cache_token' => env('ZIRVE_CACHE_TOKEN', true),
         'token_ttl' => env('ZIRVE_TOKEN_TTL', 82800),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | GİB e-Arşiv Portal (earsivportal.efatura.gov.tr)
+    |--------------------------------------------------------------------------
+    | Session token auth, form-encoded dispatch pattern
+    | Test: earsivportaltest.efatura.gov.tr
+    | Prod: earsivportal.efatura.gov.tr
+    */
+    'gib' => [
+        'base_url' => env('GIB_BASE_URL', 'https://earsivportal.efatura.gov.tr'),
+        'username' => env('GIB_USERNAME', ''),
+        'password' => env('GIB_PASSWORD', ''),
+        'test_mode' => env('GIB_TEST_MODE', false),
+        'timeout' => env('GIB_TIMEOUT', 30),
+        'verify_ssl' => env('GIB_VERIFY_SSL', false),
+        'cache_token' => env('GIB_CACHE_TOKEN', true),
+        'token_ttl' => env('GIB_TOKEN_TTL', 3600),
     ],
 
 ];
