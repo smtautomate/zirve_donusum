@@ -334,11 +334,30 @@ class InvoiceService extends BaseService
     }
 
     /**
-     * Fatura HTML görüntüsü
+     * Gelen fatura HTML görüntüsü
+     * Gerçek endpoint: /cp/{accountId}/inbox/GetDocumentAsHtml?id=...
      */
-    public function getHtml(string $invoiceId): string
+    public function getIncomingHtml(string $invoiceId): string
     {
-        return $this->http->download($this->cp('einvoice/GetInvoiceHtml'), ['id' => $invoiceId]);
+        return $this->http->download($this->cp('inbox/GetDocumentAsHtml'), ['id' => $invoiceId]);
+    }
+
+    /**
+     * Giden fatura HTML görüntüsü
+     * Gerçek endpoint: /cp/{accountId}/outbox/GetDocumentAsHtml?id=...
+     */
+    public function getOutgoingHtml(string $invoiceId): string
+    {
+        return $this->http->download($this->cp('outbox/GetDocumentAsHtml'), ['id' => $invoiceId]);
+    }
+
+    /**
+     * Fatura HTML görüntüsü (geriye uyumluluk — gelen fatura varsayılan)
+     */
+    public function getHtml(string $invoiceId, string $direction = 'incoming'): string
+    {
+        $prefix = $direction === 'outgoing' ? 'outbox' : 'inbox';
+        return $this->http->download($this->cp("{$prefix}/GetDocumentAsHtml"), ['id' => $invoiceId]);
     }
 
     /**
