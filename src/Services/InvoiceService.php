@@ -160,20 +160,53 @@ class InvoiceService extends BaseService
 
     /**
      * Yeni e-fatura gönder / kaydet
+     *
+     * @param array|\ZirveDonusum\Models\Invoice $invoiceData Fatura verisi
+     *
+     * Kullanım:
+     *   // Array ile
+     *   $service->send(['InvoiceType' => 'EInvoice', ...]);
+     *
+     *   // Invoice model ile
+     *   $fatura = Invoice::create()
+     *       ->customer('1234567890', 'Firma Adı', 'Vergi Dairesi')
+     *       ->addLine('Ürün', 1, 100.00, 20);
+     *   $service->send($fatura);
      */
-    public function send(array $invoiceData): array
+    public function send(array|\ZirveDonusum\Models\Invoice $invoiceData): array
     {
-        return $this->http->post($this->cp('newInvoice/save'), $invoiceData);
+        $data = $invoiceData instanceof \ZirveDonusum\Models\Invoice
+            ? $invoiceData->toArray()
+            : $invoiceData;
+
+        return $this->http->post($this->cp('newInvoice/save'), $data);
     }
 
     /**
      * E-Arşiv fatura oluştur
      */
-    public function createArchive(array $invoiceData): array
+    public function createArchive(array|\ZirveDonusum\Models\Invoice $invoiceData): array
     {
-        return $this->http->post($this->cp('newInvoice/save'), array_merge($invoiceData, [
-            'invoiceType' => 'EArchive',
-        ]));
+        if ($invoiceData instanceof \ZirveDonusum\Models\Invoice) {
+            $invoiceData->type('EArchive');
+            $data = $invoiceData->toArray();
+        } else {
+            $data = array_merge($invoiceData, ['InvoiceType' => 'EArchive']);
+        }
+
+        return $this->http->post($this->cp('newInvoice/save'), $data);
+    }
+
+    /**
+     * Sunucudan boş fatura şablonu al, Invoice modeli olarak döndür
+     *
+     * @param string $invoiceType EInvoice, EArchive
+     * @return \ZirveDonusum\Models\Invoice
+     */
+    public function newDraft(string $invoiceType = 'EInvoice'): \ZirveDonusum\Models\Invoice
+    {
+        $response = $this->getNewInvoice($invoiceType);
+        return \ZirveDonusum\Models\Invoice::fromResponse($response);
     }
 
     // ─── Fatura İşlemleri ────────────────────────────────────────────
