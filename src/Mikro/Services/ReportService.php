@@ -1,6 +1,6 @@
 <?php
 
-namespace ZirveDonusum\Services;
+namespace ZirveDonusum\Mikro\Services;
 
 /**
  * Raporlama / GİB Rapor Gönderme

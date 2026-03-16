@@ -1,6 +1,6 @@
 <?php
 
-namespace ZirveDonusum\Models;
+namespace ZirveDonusum\Mikro\Models;
 
 /**
  * E-Fatura / E-Arşiv Fatura Modeli

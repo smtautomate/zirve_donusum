@@ -1,17 +1,17 @@
 <?php
 
-namespace ZirveDonusum;
+namespace ZirveDonusum\Mikro;
 
-use ZirveDonusum\Services\InvoiceService;
-use ZirveDonusum\Services\CompanyService;
-use ZirveDonusum\Services\DespatchService;
-use ZirveDonusum\Services\ReportService;
-use ZirveDonusum\Services\DashboardService;
-use ZirveDonusum\Services\UserService;
-use ZirveDonusum\Services\ContractService;
-use ZirveDonusum\Services\LookupService;
-use ZirveDonusum\Services\CustomerService;
-use ZirveDonusum\Services\ProductService;
+use ZirveDonusum\Mikro\Services\InvoiceService;
+use ZirveDonusum\Mikro\Services\CompanyService;
+use ZirveDonusum\Mikro\Services\DespatchService;
+use ZirveDonusum\Mikro\Services\ReportService;
+use ZirveDonusum\Mikro\Services\DashboardService;
+use ZirveDonusum\Mikro\Services\UserService;
+use ZirveDonusum\Mikro\Services\ContractService;
+use ZirveDonusum\Mikro\Services\LookupService;
+use ZirveDonusum\Mikro\Services\CustomerService;
+use ZirveDonusum\Mikro\Services\ProductService;
 
 /**
  * eMikro (Zirve Dönüşüm) API Client
@@ -27,7 +27,7 @@ use ZirveDonusum\Services\ProductService;
  *   $services = $client->dashboard()->getUserServices();
  *   $faturalar = $client->invoices()->listIncoming();
  */
-class ZirveDonusumClient
+class MikroClient
 {
     private HttpClient $http;
 

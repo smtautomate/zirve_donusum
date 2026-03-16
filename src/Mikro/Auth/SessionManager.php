@@ -1,6 +1,6 @@
 <?php
 
-namespace ZirveDonusum\Auth;
+namespace ZirveDonusum\Mikro\Auth;
 
 /**
  * PHPSESSID cookie + accountId yönetimi.

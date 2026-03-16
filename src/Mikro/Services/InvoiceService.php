@@ -1,6 +1,6 @@
 <?php
 
-namespace ZirveDonusum\Services;
+namespace ZirveDonusum\Mikro\Services;
 
 /**
  * E-Fatura / E-Arşiv Fatura İşlemleri
@@ -309,10 +309,10 @@ class InvoiceService extends BaseService
     /**
      * E-Arşiv fatura şablonunu Invoice modeli olarak al
      */
-    public function newArchiveDraft(): \ZirveDonusum\Models\Invoice
+    public function newArchiveDraft(): \ZirveDonusum\Mikro\Models\Invoice
     {
         $response = $this->getNewArchiveInvoice();
-        return \ZirveDonusum\Models\Invoice::fromResponse($response);
+        return \ZirveDonusum\Mikro\Models\Invoice::fromResponse($response);
     }
 
     /**
@@ -437,7 +437,7 @@ class InvoiceService extends BaseService
     /**
      * Yeni e-fatura gönder / kaydet
      *
-     * @param array|\ZirveDonusum\Models\Invoice $invoiceData Fatura verisi
+     * @param array|\ZirveDonusum\Mikro\Models\Invoice $invoiceData Fatura verisi
      *
      * Kullanım:
      *   // Array ile
@@ -449,9 +449,9 @@ class InvoiceService extends BaseService
      *       ->addLine('Ürün', 1, 100.00, 20);
      *   $service->send($fatura);
      */
-    public function send(array|\ZirveDonusum\Models\Invoice $invoiceData): array
+    public function send(array|\ZirveDonusum\Mikro\Models\Invoice $invoiceData): array
     {
-        $data = $invoiceData instanceof \ZirveDonusum\Models\Invoice
+        $data = $invoiceData instanceof \ZirveDonusum\Mikro\Models\Invoice
             ? $invoiceData->toArray()
             : $invoiceData;
 
@@ -461,9 +461,9 @@ class InvoiceService extends BaseService
     /**
      * E-Arşiv fatura oluştur
      */
-    public function createArchive(array|\ZirveDonusum\Models\Invoice $invoiceData): array
+    public function createArchive(array|\ZirveDonusum\Mikro\Models\Invoice $invoiceData): array
     {
-        if ($invoiceData instanceof \ZirveDonusum\Models\Invoice) {
+        if ($invoiceData instanceof \ZirveDonusum\Mikro\Models\Invoice) {
             $invoiceData->type('EArchive');
             $data = $invoiceData->toArray();
         } else {
@@ -477,12 +477,12 @@ class InvoiceService extends BaseService
      * Sunucudan boş fatura şablonu al, Invoice modeli olarak döndür
      *
      * @param string $invoiceType EInvoice, EArchive
-     * @return \ZirveDonusum\Models\Invoice
+     * @return \ZirveDonusum\Mikro\Models\Invoice
      */
-    public function newDraft(string $invoiceType = 'EInvoice'): \ZirveDonusum\Models\Invoice
+    public function newDraft(string $invoiceType = 'EInvoice'): \ZirveDonusum\Mikro\Models\Invoice
     {
         $response = $this->getNewInvoice($invoiceType);
-        return \ZirveDonusum\Models\Invoice::fromResponse($response);
+        return \ZirveDonusum\Mikro\Models\Invoice::fromResponse($response);
     }
 
     // ─── Fatura İşlemleri ────────────────────────────────────────────

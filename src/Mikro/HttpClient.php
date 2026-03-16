@@ -1,11 +1,11 @@
 <?php
 
-namespace ZirveDonusum;
+namespace ZirveDonusum\Mikro;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\GuzzleException;
-use ZirveDonusum\Auth\SessionManager;
+use ZirveDonusum\Mikro\Auth\SessionManager;
 use ZirveDonusum\Exceptions\ApiException;
 use ZirveDonusum\Exceptions\AuthenticationException;
 

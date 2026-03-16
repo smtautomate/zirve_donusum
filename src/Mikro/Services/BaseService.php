@@ -1,8 +1,8 @@
 <?php
 
-namespace ZirveDonusum\Services;
+namespace ZirveDonusum\Mikro\Services;
 
-use ZirveDonusum\HttpClient;
+use ZirveDonusum\Mikro\HttpClient;
 
 abstract class BaseService
 {

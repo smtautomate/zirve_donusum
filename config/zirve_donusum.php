@@ -4,34 +4,42 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | eMikro Portal Base URL
+    | Varsayılan Client
     |--------------------------------------------------------------------------
+    | 'mikro' veya 'zirve' — Facade ve singleton hangi client'ı kullanacak
     */
-    'base_url' => env('EMIKRO_BASE_URL', 'https://eportal.mikrogrup.com'),
+    'default' => env('EDONUSUM_DEFAULT', 'zirve'),
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Credentials
+    | Mikro Portal (eportal.mikrogrup.com)
     |--------------------------------------------------------------------------
+    | Session-based (PHPSESSID cookie) auth, /cp/{accountId}/... endpoint yapısı
     */
-    'email' => env('EMIKRO_EMAIL', ''),
-    'password' => env('EMIKRO_PASSWORD', ''),
+    'mikro' => [
+        'base_url' => env('EMIKRO_BASE_URL', 'https://eportal.mikrogrup.com'),
+        'email' => env('EMIKRO_EMAIL', ''),
+        'password' => env('EMIKRO_PASSWORD', ''),
+        'timeout' => env('EMIKRO_TIMEOUT', 30),
+        'verify_ssl' => env('EMIKRO_VERIFY_SSL', true),
+        'cache_session' => env('EMIKRO_CACHE_SESSION', true),
+        'session_ttl' => env('EMIKRO_SESSION_TTL', 82800),
+    ],
 
     /*
     |--------------------------------------------------------------------------
-    | HTTP Client Settings
+    | Zirve Portal (yeniportal.zirvedonusum.com)
     |--------------------------------------------------------------------------
+    | JWT Bearer token auth, /accounting/api/... endpoint yapısı
     */
-    'timeout' => env('EMIKRO_TIMEOUT', 30),
-    'verify_ssl' => env('EMIKRO_VERIFY_SSL', true),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Session Cache
-    |--------------------------------------------------------------------------
-    | Session cookie'yi dosyada saklar, her istekte yeniden login olmamak için.
-    */
-    'cache_session' => env('EMIKRO_CACHE_SESSION', true),
-    'session_ttl' => env('EMIKRO_SESSION_TTL', 82800), // 23 saat (cookie 24 saat geçerli)
+    'zirve' => [
+        'base_url' => env('ZIRVE_BASE_URL', 'https://yeniportal.zirvedonusum.com/accounting/api'),
+        'username' => env('ZIRVE_USERNAME', ''),
+        'password' => env('ZIRVE_PASSWORD', ''),
+        'timeout' => env('ZIRVE_TIMEOUT', 30),
+        'verify_ssl' => env('ZIRVE_VERIFY_SSL', true),
+        'cache_token' => env('ZIRVE_CACHE_TOKEN', true),
+        'token_ttl' => env('ZIRVE_TOKEN_TTL', 82800),
+    ],
 
 ];
