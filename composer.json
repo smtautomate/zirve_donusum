@@ -1,0 +1,42 @@
+{
+    "name": "zirvedonusum/api-client",
+    "description": "Zirve Dönüşüm E-Dönüşüm Portal API Client for PHP/Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sercan Ozbilek"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ZirveDonusum\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZirveDonusum\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ZirveDonusum\\ZirveDonusumServiceProvider"
+            ],
+            "aliases": {
+                "ZirveDonusum": "ZirveDonusum\\Facades\\ZirveDonusum"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
