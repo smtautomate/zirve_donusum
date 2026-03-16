@@ -17,7 +17,7 @@ class ConnectorService extends BaseService
      */
     public function getConnectionInfo(): array
     {
-        return $this->http->get('/connector/getConnectionInfo');
+        return $this->http->post('/connector/getConnectionInfo');
     }
 
     /**

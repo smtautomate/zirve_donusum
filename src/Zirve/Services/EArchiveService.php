@@ -26,6 +26,6 @@ class EArchiveService extends BaseService
      */
     public function getCodes(): array
     {
-        return $this->http->get('/eArchive/getCodes');
+        return $this->http->post('/eArchive/getCodes');
     }
 }

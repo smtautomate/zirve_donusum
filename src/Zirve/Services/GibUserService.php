@@ -26,7 +26,7 @@ class GibUserService extends BaseService
      */
     public function getCustomerAliasList(): array
     {
-        return $this->http->get('/gibuser/getCustomerAliasList');
+        return $this->http->post('/gibuser/getCustomerAliasList');
     }
 
     /**

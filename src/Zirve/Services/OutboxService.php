@@ -15,7 +15,7 @@ class OutboxService extends BaseService
      */
     public function getCodes(): array
     {
-        return $this->http->get('/outbox/getCodes');
+        return $this->http->post('/outbox/getCodes');
     }
 
     /**

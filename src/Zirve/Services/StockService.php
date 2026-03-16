@@ -19,7 +19,7 @@ class StockService extends BaseService
      */
     public function list(int $page = 0, int $size = 10): array
     {
-        return $this->http->get('/stock/getStocks', [
+        return $this->http->post('/stock/getStocks', [
             'page' => $page,
             'size' => $size,
         ]);
@@ -55,7 +55,7 @@ class StockService extends BaseService
      */
     public function getCodes(): array
     {
-        return $this->http->get('/stock/getCodes');
+        return $this->http->post('/stock/getCodes');
     }
 
     /**

@@ -19,7 +19,7 @@ class ExternalCustomerService extends BaseService
      */
     public function list(int $page = 0, int $size = 10): array
     {
-        return $this->http->get('/externalCustomer/fetch', [
+        return $this->http->post('/externalCustomer/fetch', [
             'page' => $page,
             'size' => $size,
         ]);
@@ -85,7 +85,7 @@ class ExternalCustomerService extends BaseService
      */
     public function getCodes(): array
     {
-        return $this->http->get('/externalCustomer/getCodes');
+        return $this->http->post('/externalCustomer/getCodes');
     }
 
     /**
