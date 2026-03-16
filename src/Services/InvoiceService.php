@@ -93,7 +93,50 @@ class InvoiceService extends BaseService
         return $this->http->get($this->cp('Nace/GetAccountVatRates'));
     }
 
-    // ─── Fatura Listeleme ────────────────────────────────────────────
+    // ─── Taslak Fatura Listeleme ────────────────────────────────────
+
+    /**
+     * Taslak e-faturaları listele (sayfalı, filtreli)
+     *
+     * Gerçek endpoint:
+     *   GET /cp/{accountId}/NewInvoice/GetDraftList?firstDate=...&lastDate=...&invoiceType=EInvoice&page=1&recordPerPage=20
+     *
+     * @param array $filters Filtre parametreleri:
+     *   - firstDate: Başlangıç tarihi (ISO 8601, örn: 2026-02-15T21:00:00.000Z)
+     *   - lastDate: Bitiş tarihi (ISO 8601, örn: 2026-03-16T20:59:59.999Z)
+     *   - invoiceType: EInvoice, EArchive
+     *   - invoiceTypeCode: TUMU, SATIS, IADE vb.
+     *   - profile: TUMU, TEMELFATURA, TICARIFATURA
+     *   - taxNumber: VKN/TCKN ile filtrele
+     *   - title: Firma adı ile filtrele
+     *   - name: Ad ile filtrele
+     *   - surname: Soyad ile filtrele
+     *   - page: Sayfa numarası (varsayılan: 1)
+     *   - recordPerPage: Sayfa başına kayıt (varsayılan: 20)
+     */
+    public function listDrafts(array $filters = []): array
+    {
+        $defaults = [
+            'firstDate' => date('Y-m-d\T00:00:00.000\Z', strtotime('-30 days')),
+            'lastDate' => date('Y-m-d\T23:59:59.999\Z'),
+            'invoiceType' => 'EInvoice',
+            'invoiceTypeCode' => 'TUMU',
+            'profile' => 'TUMU',
+            'taxNumber' => '',
+            'title' => '',
+            'name' => '',
+            'surname' => '',
+            'page' => 1,
+            'recordPerPage' => 20,
+        ];
+
+        return $this->http->get(
+            $this->cp('NewInvoice/GetDraftList'),
+            array_merge($defaults, $filters)
+        );
+    }
+
+    // ─── Gelen / Giden Fatura Listeleme ──────────────────────────────
 
     /**
      * Gelen e-faturaları listele
