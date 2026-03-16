@@ -54,10 +54,9 @@ class HttpClient
             'verify' => $config['verify_ssl'] ?? true,
             'http_errors' => false,
             'cookies' => $this->cookieJar,
-            'allow_redirects' => false, // Redirect'leri manuel yakala (accountId için)
             'headers' => [
                 'Accept' => 'application/json, text/plain, */*',
-                'User-Agent' => 'ZirveDonusum-PHP-Client/1.0',
+                'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
                 'Origin' => $this->baseUrl,
                 'Referer' => $this->baseUrl . '/',
             ],
@@ -78,9 +77,9 @@ class HttpClient
     {
         try {
             $response = $this->http->post('/home/loginEmikro', [
-                'multipart' => [
-                    ['name' => 'email', 'contents' => $this->email],
-                    ['name' => 'password', 'contents' => $this->password],
+                'json' => [
+                    'email' => $this->email,
+                    'password' => $this->password,
                 ],
             ]);
 
@@ -131,8 +130,8 @@ class HttpClient
     /**
      * Login sonrası accountId'yi çöz.
      * 1. Login response'da varsa oradan al
-     * 2. Yoksa /status endpoint'ine git
-     * 3. Hâlâ yoksa dashboard redirect'inden yakala
+     * 2. /home/GetAccounts endpoint'inden al (gerçek endpoint)
+     * 3. Son çare: /accounts HTML'den parse et
      */
     private function resolveAccountId(?array $loginResponse): void
     {
@@ -149,49 +148,24 @@ class HttpClient
             }
         }
 
-        // 2. /status endpoint'inden
+        // 2. /home/GetAccounts endpoint'inden (gerçek çalışan endpoint)
         try {
-            $statusResponse = $this->http->get('/status');
-            $statusBody = json_decode($statusResponse->getBody()->getContents(), true);
+            $accountsResponse = $this->http->get('/home/GetAccounts');
+            if ($accountsResponse->getStatusCode() === 200) {
+                $accountsBody = json_decode($accountsResponse->getBody()->getContents(), true);
 
-            if ($statusBody) {
-                $this->accountId = $statusBody['accountId']
-                    ?? $statusBody['account_id']
-                    ?? $statusBody['AccountId']
-                    ?? null;
-
-                if ($this->accountId) {
+                if (isset($accountsBody['accounts'][0]['id'])) {
+                    $this->accountId = $accountsBody['accounts'][0]['id'];
                     return;
                 }
             }
         } catch (\Throwable) {
-            // Status endpoint yoksa devam et
+            // GetAccounts başarısız, devam et
         }
 
-        // 3. Dashboard redirect'inden: /cp/{accountId}/dashboard/index
+        // 3. Son çare: /accounts HTML'den parse et
         try {
-            $dashResponse = $this->http->get('/', [
-                'allow_redirects' => ['track_redirects' => true, 'max' => 5],
-            ]);
-
-            // Redirect history'den accountId'yi yakala
-            $redirectHistory = $dashResponse->getHeader('X-Guzzle-Redirect-History');
-            foreach ($redirectHistory as $url) {
-                if (preg_match('#/cp/([a-f0-9\-]{36})/#i', $url, $matches)) {
-                    $this->accountId = $matches[1];
-                    return;
-                }
-            }
-
-            // Response URL'den yakala
-            $finalUrl = $dashResponse->getHeaderLine('Location');
-            if (preg_match('#/cp/([a-f0-9\-]{36})/#i', $finalUrl, $matches)) {
-                $this->accountId = $matches[1];
-                return;
-            }
-
-            // Body'den yakala (HTML içinde accountId olabilir)
-            $html = $dashResponse->getBody()->getContents();
+            $html = $this->http->get('/accounts')->getBody()->getContents();
             if (preg_match('#/cp/([a-f0-9\-]{36})/#i', $html, $matches)) {
                 $this->accountId = $matches[1];
                 return;
