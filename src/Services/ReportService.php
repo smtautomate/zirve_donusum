@@ -23,6 +23,17 @@ class ReportService extends BaseService
     }
 
     /**
+     * Yükleme / Transfer belgeleri listesi
+     *
+     * Gerçek endpoint:
+     *   GET /cp/{accountId}/TransferDocuments/GetTransferDocumentList
+     */
+    public function getTransferDocumentList(): array
+    {
+        return $this->http->get($this->cp('TransferDocuments/GetTransferDocumentList'));
+    }
+
+    /**
      * Fatura özet raporu
      */
     public function invoiceSummary(array $filters = []): array

@@ -10,6 +10,8 @@ use ZirveDonusum\Services\DashboardService;
 use ZirveDonusum\Services\UserService;
 use ZirveDonusum\Services\ContractService;
 use ZirveDonusum\Services\LookupService;
+use ZirveDonusum\Services\CustomerService;
+use ZirveDonusum\Services\ProductService;
 
 /**
  * eMikro (Zirve Dönüşüm) API Client
@@ -37,6 +39,8 @@ class ZirveDonusumClient
     private ?DespatchService $despatchService = null;
     private ?ReportService $reportService = null;
     private ?LookupService $lookupService = null;
+    private ?CustomerService $customerService = null;
+    private ?ProductService $productService = null;
 
     public function __construct(array $config)
     {
@@ -85,6 +89,18 @@ class ZirveDonusumClient
     public function reports(): ReportService
     {
         return $this->reportService ??= new ReportService($this->http);
+    }
+
+    /** Müşteri işlemleri */
+    public function customers(): CustomerService
+    {
+        return $this->customerService ??= new CustomerService($this->http);
+    }
+
+    /** Ürün / Hizmet işlemleri */
+    public function products(): ProductService
+    {
+        return $this->productService ??= new ProductService($this->http);
     }
 
     /** Referans verileri (il, vergi dairesi vb.) */
