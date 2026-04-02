@@ -79,6 +79,14 @@
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-fetch"],
       "description": "HTTP fetch — web sayfaları ve API'ler için doğrudan HTTP erişimi"
+    },
+    "google-ai": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/claude-code-google-ai-mcp"],
+      "env": {
+        "GOOGLE_AI_KEY": "${GOOGLE_AI_KEY}"
+      },
+      "description": "Google AI — Nano Banana Pro 2 görsel üretim, Gemini multimodal (CRE-02, CRE-06)"
     }
   },
   "_comment": {
@@ -86,6 +94,6 @@
     "env_vars": "Tüm ${VAR} değerleri shell environment'tan okunur — .env dosyası veya sistem değişkeni olarak set edin",
     "dokumantasyon": "Detaylı kurulum: setup/cloudflare-mcp-setup.md ve setup/github-mcp-setup.md",
     "oncelik": "filesystem + github + brave-search + sequential-thinking = minimum kurulum",
-    "tam_kurulum": "Tüm 12 server = tam AI-TEAM OS deneyimi"
+    "tam_kurulum": "Tüm 13 server = tam AI-TEAM OS deneyimi"
   }
 }
