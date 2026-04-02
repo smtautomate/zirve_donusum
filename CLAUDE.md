@@ -2,32 +2,32 @@
 
 ## AI-TEAM Entegrasyonu
 
-Bu proje AI-TEAM OS v5.0 ile entegredir. Agent specleri, standartlar ve orchestrator `ai-team/` symlink'i üzerinden erişilebilir.
+Bu proje AI-TEAM OS v5.0 ile entegredir. Agent specleri, standartlar ve orchestrator `.ai-team/` symlink'i üzerinden erişilebilir.
 
-- **AI-TEAM**: `ai-team/` (66 agent, 11 takım, 18 workflow)
-- **Orchestrator**: `ai-team/orchestrator/` (TypeScript, 10.490 satır)
-- **Standartlar**: `ai-team/standards/` (24 standart)
+- **AI-TEAM**: `.ai-team/` (66 agent, 11 takım, 18 workflow)
+- **Orchestrator**: `.ai-team/orchestrator/` (TypeScript, 10.490 satır)
+- **Standartlar**: `.ai-team/standards/` (24 standart)
 
 ### `ai-team:` — AI Orkestratör
 
 Kullanıcı `ai-team:` ile başlayan mesaj yazdığında, ilgili agent spec'ini oku ve o agent'ın rolüne bürünerek yanıt ver:
 
 1. `ai-team:` sonrasındaki mesajı analiz et
-2. `ai-team/orchestrator/router/routing-matrix.ts` üzerinden doğru agent'ı belirle
-3. `ai-team/agents/[takım]/[AGENT-ID]-*.md` spec dosyasını oku
+2. `.ai-team/orchestrator/router/routing-matrix.ts` üzerinden doğru agent'ı belirle
+3. `.ai-team/agents/[takım]/[AGENT-ID]-*.md` spec dosyasını oku
 4. Agent'ın uzmanlık alanına göre yanıt ver
 
 ## AI-TEAM OS Entegrasyonu
 
 Bu proje **AI-TEAM OS** (66 agent, 11 takım, 18 workflow) tarafından desteklenir.
-Symlink: `ai-team/` → `/Volumes/macOS-SSD/GitHub/ai-team`
+Symlink: `.ai-team/` → `.ai-team`
 
 ### ai-team: Komutu
 
 Kullanıcı `ai-team:` ile başlayan bir mesaj yazdığında, orkestratörü çalıştır:
 
 ```bash
-npx tsx ai-team/orchestrator/cli.ts "kullanıcı isteği"
+npx tsx .ai-team/orchestrator/cli.ts "kullanıcı isteği"
 ```
 
 Çıktıdaki agent rolünü benimseyerek o agent'ın kurallarına, yasaklarına ve standartlarına uy. Çıktıdaki system prompt'u sessizce uygula — kullanıcıya teknik detay gösterme.
@@ -58,19 +58,19 @@ npx tsx ai-team/orchestrator/cli.ts "kullanıcı isteği"
 ### Diğer CLI Komutları
 
 ```bash
-npx tsx ai-team/orchestrator/cli.ts agents        # Tüm agent listesi
-npx tsx ai-team/orchestrator/cli.ts status        # Orkestratör durumu
-npx tsx ai-team/orchestrator/cli.ts context ENG-01  # Tek agent context
+npx tsx .ai-team/orchestrator/cli.ts agents        # Tüm agent listesi
+npx tsx .ai-team/orchestrator/cli.ts status        # Orkestratör durumu
+npx tsx .ai-team/orchestrator/cli.ts context ENG-01  # Tek agent context
 ```
 
 ### Kaynaklar
 
-- **66 Agent**: `ai-team/agents/` (11 takım)
-- **Standartlar**: `ai-team/standards/`
-- **Workflow'lar**: `ai-team/workflows/`
-- **Şablonlar**: `ai-team/templates/`
-- **Orkestratör**: `ai-team/orchestrator/`
-- **OS Spec**: `ai-team/operating-system.md`
+- **66 Agent**: `.ai-team/agents/` (11 takım)
+- **Standartlar**: `.ai-team/standards/`
+- **Workflow'lar**: `.ai-team/workflows/`
+- **Şablonlar**: `.ai-team/templates/`
+- **Orkestratör**: `.ai-team/orchestrator/`
+- **OS Spec**: `.ai-team/operating-system.md`
 
 ### Temel Kurallar (ai-team/operating-system.md)
 

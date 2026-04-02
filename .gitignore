@@ -6,3 +6,4 @@
 composer.lock
 *.cache
 test_connection.php
+.ai-team
