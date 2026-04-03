@@ -2,7 +2,7 @@
   "mcpServers": {
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Volumes/macOS-SSD/GitHub"],
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/sercanozbilek/Documents/GitHub"],
       "description": "Dosya sistemi erişimi — proje dizinleri için güvenli R/W"
     },
     "github": {
