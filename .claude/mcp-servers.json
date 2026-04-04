@@ -82,11 +82,11 @@
     },
     "google-ai": {
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/claude-code-google-ai-mcp"],
+      "args": ["-y", "@anthropic-ai/google-ai-mcp"],
       "env": {
-        "GOOGLE_AI_KEY": "${GOOGLE_AI_KEY}"
+        "GOOGLE_AI_API_KEY": "${GOOGLE_AI_KEY}"
       },
-      "description": "Google AI — Nano Banana Pro 2 görsel üretim, Gemini multimodal (CRE-02, CRE-06)"
+      "description": "Google AI — Gemini multimodal, görsel üretim (CRE-02, CRE-06). Not: Paket yoksa fetch MCP veya curl ile API çağrısı yap."
     }
   },
   "_comment": {

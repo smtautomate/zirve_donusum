@@ -1,146 +1,55 @@
 ---
 name: image-gen
-description: AI görsel üretim koordinatörü. Görsel oluşturma, resim üretme veya image generation talebi olduğunda otomatik aktive olur. CRE-02 agent ile koordineli çalışır.
+description: AI görsel üretim. Görsel oluşturma, resim üretme, fotoğraf, banner, logo, ürün görseli, sosyal medya görseli talep edildiğinde aktive olur.
 ---
 
-# Image Generation Skill
+# Görsel Üretim Skill
 
-Aktive olma koşulları:
-- "görsel üret", "resim oluştur", "fotoğraf üret" talepleri
-- "ürün görseli", "banner", "sosyal medya görseli" istekleri
-- Logo, illüstrasyon veya tasarım talepleri
+Bu skill aktive olduğunda aşağıdaki adımları uygula.
 
-## Platform Seçim Matrisi
+## Platform Seçimi
 
-| Platform | En İyi Kullanım | Maliyet |
-|----------|-----------------|---------|
-| **Nano Banana Pro 2** (Google) | En iyi genel görsel üretim, fotorealistik | Google AI Studio (ücretsiz tier var) |
-| **Flux Pro 1.1** (fal.ai) | Fotorealistik ürün, portre | ~$0.05/görsel |
-| **Flux Dev** (fal.ai) | Hızlı iterasyon, prototip | ~$0.025/görsel |
-| **Midjourney v6.1** | Yaratıcı, sanatsal | $10-60/ay |
-| **DALL-E 3** (OpenAI) | Metin içeren görseller | $0.04-0.08/görsel |
-| **Ideogram 2.0** | Logo, metin-görsel entegrasyonu | ~$0.05/görsel |
-| **Leonardo AI** | Oyun asset, concept art | Kredi bazlı |
-| **Adobe Firefly** | Ticari güvenli, marka uyumlu | CC aboneliği |
-| **SDXL** (Replicate) | Fine-tune, ControlNet | ~$0.002/görsel |
+| Durum | Platform | Nasıl |
+|-------|----------|-------|
+| **Profesyonel tasarım** (poster, sosyal medya, logo, sunum) | **Canva** | `mcp__claude_ai_Canva__generate-design` aracını kullan |
+| **Fotorealistik görsel** (ürün fotoğrafı, sahne) | **Gemini** | Bash ile `curl` komutu çalıştır (aşağıya bak) |
+| **Hızlı basit görsel** | **Canva** | `mcp__claude_ai_Canva__generate-design` |
 
-## Platform Seçim Rehberi
+## Canva ile Tasarım (ÖNCELİKLİ — DOĞRUDAN BAĞLI)
 
-```
-Varsayılan (en iyi kalite) → Nano Banana Pro 2 (Google Gemini)
-Ticari ürün fotoğrafı      → Nano Banana Pro 2 veya Flux Pro 1.1
-Yaratıcı/sanatsal          → Midjourney v6.1
-Metin içeren görsel         → Ideogram 2.0 veya DALL-E 3
-Hızlı prototip              → Flux Dev veya DALL-E 3
-Oyun/karakter asset         → Leonardo AI
-Fine-tune gerekli           → SDXL on Replicate
-Ticari güvenli              → Adobe Firefly
-```
+Canva MCP doğrudan bağlı. Kullanılabilir tasarım tipleri:
+- `instagram_post`, `facebook_post`, `twitter_post`, `your_story`
+- `poster`, `flyer`, `infographic`, `logo`
+- `presentation`, `proposal`, `report`, `doc`
+- `youtube_thumbnail`, `youtube_banner`
+- `business_card`, `resume`, `invitation`
 
-## Prompt Şablonları
+Kullanım:
+1. `mcp__claude_ai_Canva__generate-design` ile tasarım üret
+2. Kullanıcıya adayları göster
+3. `mcp__claude_ai_Canva__create-design-from-candidate` ile seçileni kaydet
 
-### Flux Pro — Ürün Fotoğrafı
-```
-[Ürün adı ve özellikleri], white seamless background, studio lighting,
-45-degree angle, product photography, sharp focus, 8K resolution,
-commercial quality, no shadows, no reflections
-```
+## Gemini ile Fotorealistik Görsel
 
-### Midjourney — Yaratıcı
-```
-/imagine [konu], [stil referansı], [atmosfer] --ar 1:1 --style raw --v 6.1
-```
+GOOGLE_AI_KEY ortam değişkeni gerekli. Bash ile çalıştır:
 
-### DALL-E 3 — Metin İçeren
-```
-Türkçe metin içeren görseller için İngilizce prompt + metin belirt:
-"A banner with the text 'BÜYÜK İNDİRİM' in bold red letters..."
-```
-
-### Negatif Promptlar (SDXL/Flux)
-```
-Genel:   blurry, low quality, distorted, watermark, ugly
-Ürün:    background clutter, harsh shadows, people
-Portre:  extra fingers, bad anatomy, deformed hands
-```
-
-## Kalite Standartları
-
-- **E-ticaret**: min 1024x1024px, beyaz/transparan arka plan, WebP formatı
-- **Sosyal medya**: Instagram 1:1 (1080x1080), Stories 9:16 (1080x1920)
-- **Print**: min 2048px en kısa kenar, PNG veya TIFF
-- **Web banner**: 1200x628 (OG image), 728x90 (leaderboard)
-
-## Nano Banana Pro 2 API (Google Gemini — ÖNCELİKLİ)
-
-```typescript
-// Google AI Studio API ile görsel üretim
-const response = await fetch(
-  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${process.env.GOOGLE_AI_KEY}`,
-  {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{
-        parts: [{ text: "Generate an image: professional product photo of..." }]
-      }],
-      generationConfig: {
-        responseModalities: ["TEXT", "IMAGE"]
-      }
-    })
-  }
-);
-const result = await response.json();
-// result.candidates[0].content.parts → text + inline image data (base64)
-```
-
-**CLI ile kullanım (Claude Code içinden):**
 ```bash
-# Google AI Studio'dan API key al: https://aistudio.google.com/apikey
-# Env'e ekle:
-export GOOGLE_AI_KEY="your-key-here"
+curl -s "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=$GOOGLE_AI_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "contents": [{"parts": [{"text": "Generate a photorealistic image: [PROMPT]"}]}],
+    "generationConfig": {"responseModalities": ["IMAGE", "TEXT"]}
+  }'
 ```
 
-**Avantajları:**
-- Ücretsiz tier mevcut (günlük limit var)
-- Fotorealistik kalite
-- Metin anlama ve yerleştirme çok iyi
-- Türkçe prompt destekli
-- Claude Code skill olarak entegre
-
-## fal.ai API (Flux)
-
-```typescript
-const response = await fetch('https://fal.run/fal-ai/flux-pro', {
-  method: 'POST',
-  headers: {
-    'Authorization': `Key ${process.env.FAL_KEY}`,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    prompt: "product photo of...",
-    image_size: "square_hd",
-    num_images: 1,
-    enable_safety_checker: true
-  })
-})
-const result = await response.json()
-// result.images[0].url → üretilen görsel URL
+Yanıttaki base64 görsel verisini dosyaya kaydet:
+```bash
+echo "<base64_data>" | base64 -d > output.png
 ```
 
-## Batch Üretim
+## Prompt Yazım Kuralları
 
-10+ görsel için:
-1. 3-5 test görseli üret, en iyiyi seç
-2. `seed` numarasını sabitle (tutarlılık)
-3. Aynı seed ile varyasyonlar üret
-4. Sonuçları `public/generated/[proje]/` altına kaydet
-
-## Marka Tutarlılığı
-
-```
-Renk paleti:   Prompt'ta hex kod belirt: "#2563EB blue accent"
-Font tarzı:    "minimalist sans-serif typography"
-Logo alanı:    "leave empty space in bottom-right corner for logo overlay"
-Genel ton:     "professional and clean" / "warm and friendly" / "bold and energetic"
-```
+1. İngilizce yaz (AI modelleri İngilizce prompt'ta daha iyi sonuç verir)
+2. Detaylı ol: renk, ışık, açı, stil, ortam belirt
+3. Negatif prompt ekle: "no text, no watermark, no distortion"
+4. Marka tutarlılığı: Her seferinde aynı stil referansı ver
