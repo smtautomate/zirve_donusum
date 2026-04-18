@@ -1,5 +1,11 @@
 # Proje Talimatları
 
+## Model Kullanim Kurali (ZORUNLU)
+- **Planlama / Mimari / Analiz / Spec / Orkestrasyon**: `claude-opus-4-7` (Opus 4.7)
+- **Uygulama / Kod / Refactor / Test / Deploy**: `claude-sonnet-4-6` (Sonnet 4.6)
+- Plan Mode'da `/model opus`, `ExitPlanMode` sonrasi `/model sonnet`.
+- `.ai-team/` symlink araciliyla AI-TEAM OS v5.0 kurallari uygulanir.
+
 ## AI-TEAM Entegrasyonu
 
 Bu proje AI-TEAM OS v5.0 ile entegredir. Agent specleri, standartlar ve orchestrator `.ai-team/` symlink'i üzerinden erişilebilir.
