@@ -1,6 +1,6 @@
 {
     "name": "zirvedonusum/api-client",
-    "description": "Zirve Dönüşüm E-Dönüşüm Multi-Portal API Client (Mikro + Zirve Portal + GIB) for PHP/Laravel",
+    "description": "Zirve Dönüşüm Multi-Portal E-Dönüşüm API Client (Mikro + Zirve Portal + GIB + Paraşüt + Logo Tiger + Uyumsoft) for PHP/Laravel",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -36,7 +36,10 @@
                 "ZirveDonusum": "ZirveDonusum\\Facades\\ZirveDonusum",
                 "MikroPortal": "ZirveDonusum\\Facades\\MikroPortal",
                 "ZirvePortal": "ZirveDonusum\\Facades\\ZirvePortal",
-                "GibPortal": "ZirveDonusum\\Facades\\GibPortal"
+                "GibPortal": "ZirveDonusum\\Facades\\GibPortal",
+                "Parasut": "ZirveDonusum\\Facades\\Parasut",
+                "LogoTiger": "ZirveDonusum\\Facades\\LogoTiger",
+                "Uyumsoft": "ZirveDonusum\\Facades\\Uyumsoft"
             }
         }
     },
