@@ -28,13 +28,14 @@ class InvoiceService extends BaseService
     }
 
     /**
-     * Yeni fatura formu / taslak getir
+     * Yeni fatura formu / taslak getir (sunucu UUID + serial dahil döner)
      *
+     * Mikro API: POST /cp/{accountId}/newInvoice/get
      * @param string $invoiceType EInvoice, EArchive, vb.
      */
     public function getNewInvoice(string $invoiceType = 'EInvoice'): array
     {
-        return $this->http->get($this->cp('newInvoice/get/'), ['invoiceType' => $invoiceType]);
+        return $this->http->post($this->cp('newInvoice/get'), ['invoiceType' => $invoiceType]);
     }
 
     /**
@@ -335,20 +336,22 @@ class InvoiceService extends BaseService
 
     /**
      * Gelen fatura HTML görüntüsü
-     * Gerçek endpoint: /cp/{accountId}/inbox/GetDocumentAsHtml?id=...
+     * API: GET /cp/{accountId}/inbox/GetDocumentAsHtml → {"success":true,"html":"<html>..."}
      */
     public function getIncomingHtml(string $invoiceId): string
     {
-        return $this->http->download($this->cp('inbox/GetDocumentAsHtml'), ['id' => $invoiceId]);
+        $response = $this->http->get($this->cp('inbox/GetDocumentAsHtml'), ['id' => $invoiceId]);
+        return $response['html'] ?? '';
     }
 
     /**
      * Giden fatura HTML görüntüsü
-     * Gerçek endpoint: /cp/{accountId}/outbox/GetDocumentAsHtml?id=...
+     * API: GET /cp/{accountId}/outbox/GetDocumentAsHtml → {"success":true,"html":"<html>..."}
      */
     public function getOutgoingHtml(string $invoiceId): string
     {
-        return $this->http->download($this->cp('outbox/GetDocumentAsHtml'), ['id' => $invoiceId]);
+        $response = $this->http->get($this->cp('outbox/GetDocumentAsHtml'), ['id' => $invoiceId]);
+        return $response['html'] ?? '';
     }
 
     /**
@@ -357,16 +360,18 @@ class InvoiceService extends BaseService
     public function getHtml(string $invoiceId, string $direction = 'incoming'): string
     {
         $prefix = $direction === 'outgoing' ? 'outbox' : 'inbox';
-        return $this->http->download($this->cp("{$prefix}/GetDocumentAsHtml"), ['id' => $invoiceId]);
+        $response = $this->http->get($this->cp("{$prefix}/GetDocumentAsHtml"), ['id' => $invoiceId]);
+        return $response['html'] ?? '';
     }
 
     /**
-     * Fatura XML (UBL) indir
-     * Gerçek endpoint: /cp/{accountId}/inbox/downloadUBL?enveloped=false&id=...
+     * Fatura XML (UBL) indir — ZIP formatında döner (içinde XML vardır)
+     * API: GET /cp/{accountId}/inbox/downloadUBL?enveloped=false&id=...
      *
      * @param string $invoiceId Fatura UUID
      * @param string $direction incoming veya outgoing
      * @param bool $enveloped Zarf XML mi (true = zarflı, false = sadece fatura)
+     * @return string ZIP binary içeriği (içinde XML vardır)
      */
     public function downloadXml(string $invoiceId, string $direction = 'incoming', bool $enveloped = false): string
     {
@@ -455,7 +460,7 @@ class InvoiceService extends BaseService
             ? $invoiceData->toArray()
             : $invoiceData;
 
-        return $this->http->post($this->cp('newInvoice/save'), $data);
+        return $this->http->post($this->cp('newInvoice/send'), $data);
     }
 
     /**
@@ -470,7 +475,7 @@ class InvoiceService extends BaseService
             $data = array_merge($invoiceData, ['InvoiceType' => 'EArchive']);
         }
 
-        return $this->http->post($this->cp('newInvoice/save'), $data);
+        return $this->http->post($this->cp('newInvoice/send'), $data);
     }
 
     /**
@@ -485,32 +490,328 @@ class InvoiceService extends BaseService
         return \ZirveDonusum\Mikro\Models\Invoice::fromResponse($response);
     }
 
-    // ─── Fatura İşlemleri ────────────────────────────────────────────
+    // ─── Tam Fatura Oluşturma İş Akışı ──────────────────────────────
 
     /**
-     * Gelen faturayı kabul et
+     * Sunucudan sıradaki fatura numarasını üret
+     *
+     * Akış: getNewInvoice() → UUID + serial al → generateDocumentNo() → numara döndür
+     *
+     * @param string|null $prefix Seri prefix. null ise sunucudan (getNewInvoice) otomatik alınır.
+     * @param string $invoiceType EInvoice veya EArchive
      */
-    public function accept(string $invoiceId): array
+    public function nextDocumentNo(?string $prefix = null, string $invoiceType = 'EInvoice'): array
     {
-        return $this->http->postForm($this->cp('einvoice/AcceptInvoice'), ['id' => $invoiceId]);
+        $template = $this->getNewInvoice($invoiceType);
+        $uuid = $this->extractUuid($template);
+
+        if (!$uuid) {
+            throw new \RuntimeException(
+                'Sunucudan UUID alınamadı. getNewInvoice() response: ' . json_encode($template)
+            );
+        }
+
+        // Prefix'i template'den al (her firma/yıl farklı seri kullanabilir)
+        if (!$prefix) {
+            $invoice = $template['invoice'] ?? $template['Invoice'] ?? $template;
+            $prefix = $invoice['Number']['Serial'] ?? ($invoiceType === 'EArchive' ? 'EARB' : 'EFAB');
+        }
+
+        return $this->generateDocumentNo($uuid, $prefix);
     }
 
     /**
-     * Gelen faturayı reddet
+     * Tam fatura oluşturma iş akışı (Chrome DevTools ile doğrulandı)
+     *
+     * Sıra: getNewInvoice() → UUID → generateDocumentNo() → aliasLookup() → send()
+     *
+     * @param string $taxNumber Müşteri VKN/TCKN
+     * @param string $title     Müşteri ünvanı
+     * @param array  $lines     Fatura kalemleri:
+     *   [['name', 'quantity', 'unitPrice', 'vatRate'?=20, 'unit'?='C62',
+     *     'discount'?=0, 'stockCode'?=null, 'withholding'?=[]], ...]
+     * @param array  $options   Ek seçenekler:
+     *   - invoiceType:  EInvoice (varsayılan) | EArchive
+     *   - profile:      TEMELFATURA (varsayılan) | TICARIFATURA | IHRACAT | KAMU
+     *   - typeCode:     SATIS (varsayılan) | IADE | TEVKIFAT | SGK
+     *   - prefix:       Seri prefix (boş = template'den otomatik)
+     *   - date:         Y-m-d formatında tarih (boş = bugün)
+     *   - taxOffice:    Vergi dairesi
+     *   - aliasObj:     checkEInvoiceRegistered() users[0] tam nesnesi (otomatik sorgulanır)
+     *   - description:  Fatura notu
+     *   - currency:     TRY (varsayılan) | USD | EUR
+     *   - paymentType:  KREDIKARTI_BANKAKARTI (varsayılan) | EFT_HAVALE | NAKIT
+     *   - iban:         IBAN numarası
      */
-    public function reject(string $invoiceId, string $reason = ''): array
+    public function create(
+        string $taxNumber,
+        string $title,
+        array $lines,
+        array $options = []
+    ): array {
+        $invoiceType = $options['invoiceType'] ?? 'EInvoice';
+
+        // 1. Boş şablon + UUID + SubAccountId al
+        $template    = $this->getNewInvoice($invoiceType);
+        $invoiceNode = $template['invoice'] ?? $template;
+        $uuid        = $invoiceNode['UUID'] ?? null;
+
+        if (!$uuid) {
+            throw new \RuntimeException('UUID alınamadı: ' . json_encode(array_keys($invoiceNode)));
+        }
+
+        // 2. Seri prefix ve sıradaki numara (her firma/yıl farklı seri kullanabilir)
+        $prefix        = $options['prefix'] ?? ($invoiceNode['Number']['Serial'] ?? 'EFAB');
+        $docNoResponse = $this->generateDocumentNo($uuid, $prefix);
+        $serial        = $docNoResponse['Data']['Prefix'] ?? $prefix;
+        $docNumber     = $docNoResponse['Data']['Serial'] ?? 0;
+
+        // 3. e-Fatura alias'ı otomatik sorgula (EInvoice için zorunlu)
+        $aliasObj = $options['aliasObj'] ?? null;
+        if ($aliasObj === null && $invoiceType === 'EInvoice') {
+            $aliasResp = $this->http->post(
+                $this->cp("newInvoice/getCustomerEInvoiceUsers/{$taxNumber}"),
+                []
+            );
+            $aliasObj = $aliasResp['Data']['users'][0] ?? null;
+        }
+
+        $now = date('Y-m-d\TH:i:s.000\Z');
+
+        // 4. Payload (Chrome DevTools'tan doğrulandı)
+        $payload = array_merge($invoiceNode, [
+            'Id'          => '',
+            'InvoiceType' => $invoiceType,
+            'Profile'     => $options['profile'] ?? 'TEMELFATURA',
+            'TypeCode'    => $options['typeCode'] ?? 'SATIS',
+            'UUID'        => $uuid,
+            'Number'      => ['Serial' => $serial, 'Number' => $docNumber],
+            'Date'        => isset($options['date']) ? $options['date'] . 'T00:00:00.000Z' : $now,
+            'Time'        => date('H:i'),
+            'ExchangeRate'=> 1,
+            'ExchangeType'=> 'Buying',
+            'PayableAmountForManuelSet' => 0,
+            'IsSpecialBudgetPublicInstitution' => false,
+            'PublicPayingCustomerCountry' => ['Code' => 'TR', 'Name' => 'TÜRKİYE'],
+            'BuyerCustomerNo' => '',
+            'FromDespatch'    => false,
+            'FromDespatchDate'=> $now,
+            'IsDespatch'      => false,
+            'Passenger'       => (object) [],
+            'TaxRepresentative' => (object) [],
+            'SelectedTechnologies' => ['IMEInumbers' => [''], 'MACnumbers' => ['']],
+            'AdditionalFields'    => [],
+            'AselsanAdditionalFields' => [],
+            'AdditionalDocuments' => [],
+            'CancelInfo'      => [],
+            'Dispatchs'       => [(object) []],
+            'InvestmentIncentiveDocumentDate' => $now,
+            'IBANNo'     => $options['iban'] ?? null,
+            'Description'=> $options['description'] ?? null,
+            'Customer'   => [
+                'TaxNumber'  => $taxNumber,
+                'Title'      => $title,
+                'Name'       => '',
+                'Surname'    => '',
+                'TaxOffice'  => $options['taxOffice'] ?? '',
+                'DealerNo'   => '',
+                'VehicleNumberPlate'          => '',
+                'VehicleIdentificationNumber' => '',
+                'Alias'         => $aliasObj,
+                'EInvoiceUsers' => $aliasObj ? [$aliasObj] : [],
+                'IsEmailSend'   => false,
+                'Address' => [
+                    'Country'             => ['Code' => 'TR', 'Name' => 'TÜRKİYE'],
+                    'City'                => $options['city'] ?? null,
+                    'CitySubdivisionName' => $options['district'] ?? null,
+                ],
+            ],
+            'Payment' => [
+                'Type'        => $options['paymentType'] ?? 'KREDIKARTI_BANKAKARTI',
+                'IsOnlineSale'=> false,
+            ],
+            'Details' => [],
+        ]);
+
+        if (isset($options['currency'])) {
+            $payload['Currency'] = ['Code' => $options['currency'], 'Name' => $options['currency']];
+        }
+
+        // 5. Kalemler
+        $rowNum = 1;
+        foreach ($lines as $line) {
+            $amount     = round((float)$line['quantity'] * (float)$line['unitPrice'], 2);
+            $vatRate    = (int)($line['vatRate'] ?? 20);
+            $kdvAmount  = round($amount * $vatRate / 100, 2);
+            $discount   = (float)($line['discount'] ?? 0.0);
+
+            $payload['Details'][] = [
+                'RowNumber'      => $rowNum++,
+                'StockName'      => $line['name'],
+                'StockCode'      => $line['stockCode'] ?? null,
+                'Unit'           => $line['unit'] ?? 'C62',
+                'Quantity'       => (float)$line['quantity'],
+                'UnitPrice'      => (float)$line['unitPrice'],
+                'Amount'         => $amount,
+                'UnFixedAmount'  => $amount,
+                'KdvAmount'      => $kdvAmount,
+                'TotalAmount'    => round($amount + $kdvAmount, 2),
+                'VATRate'        => $vatRate,
+                'Currency'       => $payload['Currency']['Code'] ?? 'TRY',
+                'Taxes'          => [],
+                'Discounts'      => [['Amount' => $amount, 'DiscountRate' => 0, 'DiscountAmount' => $discount, 'Description' => null]],
+                'IdisTagNumbers' => [],
+                'IsProductSelected'      => isset($line['stockCode']),
+                'isProductExist'         => isset($line['stockCode']),
+                'ExemptionReason'        => null,
+                'TaxAmountForTaxAssesment'=> null,
+                'FreightCharge'  => 0,
+                'InnsuranceCharge'=> 0,
+                'ContainerQuantity'=> 0,
+                'ContainerNumber' => null,
+                'PackagingTypeCode'=> null,
+                'DeliveryTerm'   => 'Belirtilmedi',
+                'TransportMode'  => 'Belirtilmedi',
+                'GTIP'           => null,
+            ];
+        }
+
+        // 6. Gönder
+        return $this->send($payload);
+    }
+
+    /**
+     * UUID'yi response'dan çıkar (birden fazla key olasılığını dener)
+     */
+    private function extractUuid(array $response): ?string
     {
-        return $this->http->postForm($this->cp('einvoice/RejectInvoice'), [
-            'id' => $invoiceId,
-            'reason' => $reason,
+        $invoice = $response['invoice'] ?? $response['Invoice'] ?? $response;
+
+        return $invoice['UUID']
+            ?? $invoice['Uuid']
+            ?? $invoice['uuid']
+            ?? $invoice['Id']
+            ?? $invoice['id']
+            ?? $response['UUID']
+            ?? $response['uuid']
+            ?? null;
+    }
+
+    // ─── Fatura Kabul / Red (TICARIFATURA) ──────────────────────────
+
+    /**
+     * Gelen TİCARİ FATURA'yı kabul et
+     *
+     * Endpoint: POST /cp/{accountId}/inbox/AcceptReject
+     * Payload:  {"id":"...","operation":"accept","description":""}
+     *
+     * NOT: Sadece TICARIFATURA profilinde uygulanır.
+     *      TEMELFATURA otomatik işlenir, kabul/red gerekmez.
+     *      Bir faturaya yalnızca bir kez yanıt verilebilir.
+     */
+    public function accept(string $invoiceId): array
+    {
+        return $this->http->post($this->cp('inbox/AcceptReject'), [
+            'id'          => $invoiceId,
+            'operation'   => 'accept',
+            'description' => '',
         ]);
     }
 
     /**
-     * Fatura durumunu sorgula
+     * Gelen TİCARİ FATURA'yı reddet
+     *
+     * Endpoint: POST /cp/{accountId}/inbox/AcceptReject
+     * Payload:  {"id":"...","operation":"reject","description":"Red gerekçesi"}
+     *
+     * @param string $reason Red gerekçesi (zorunlu olabilir)
      */
-    public function status(string $invoiceId): array
+    public function reject(string $invoiceId, string $reason = ''): array
     {
-        return $this->http->get($this->cp('einvoice/GetInvoiceStatus'), ['id' => $invoiceId]);
+        return $this->http->post($this->cp('inbox/AcceptReject'), [
+            'id'          => $invoiceId,
+            'operation'   => 'reject',
+            'description' => $reason,
+        ]);
+    }
+
+    /**
+     * Gelen fatura durum sorgulama
+     *
+     * State kodları:
+     *   1000 = Fatura oluşturuldu
+     *   1002 = Fatura zarflandı (imzalandı)
+     *   1200 = GİB tarafından işlendi
+     *   1300 = Başarıyla tamamlandı
+     *
+     * IsPassedExpiryDate = true → TİCARİFATURA'da 8 günlük süre doldu
+     * Responses[n].IsApplicationResponse = true → Alıcının kabul/red yanıtı
+     */
+    public function incomingStatus(string $invoiceId): array
+    {
+        $page = 1;
+        while (true) {
+            $result = $this->listIncoming(['page' => $page, 'recordPerPage' => 50,
+                'firstDate' => '2020-01-01T00:00:00.000Z',
+                'lastDate'  => date('Y-m-d\T23:59:59.999\Z'),
+            ]);
+            foreach ($result['incomingInvoices'] ?? [] as $inv) {
+                if (strtolower($inv['Id']) === strtolower($invoiceId)) {
+                    return $this->formatStatus($inv);
+                }
+            }
+            $total = $result['pagination']['totalRecord'] ?? 0;
+            if ($page * 50 >= $total) break;
+            $page++;
+        }
+        throw new \RuntimeException("Fatura bulunamadı: {$invoiceId}");
+    }
+
+    /**
+     * Giden fatura durum sorgulama
+     *
+     * Responses dizisinde IsApplicationResponse=true olan kayıt varsa
+     * alıcının kabul/red yanıtı gelmiş demektir.
+     */
+    public function outgoingStatus(string $invoiceId): array
+    {
+        $page = 1;
+        while (true) {
+            $result = $this->listOutgoing(['page' => $page, 'recordPerPage' => 50,
+                'firstDate' => '2020-01-01T00:00:00.000Z',
+                'lastDate'  => date('Y-m-d\T23:59:59.999\Z'),
+            ]);
+            foreach ($result['submittedInvoices'] ?? [] as $inv) {
+                if (strtolower($inv['Id']) === strtolower($invoiceId)) {
+                    return $this->formatStatus($inv);
+                }
+            }
+            $total = $result['pagination']['totalRecord'] ?? 0;
+            if ($page * 50 >= $total) break;
+            $page++;
+        }
+        throw new \RuntimeException("Fatura bulunamadı: {$invoiceId}");
+    }
+
+    private function formatStatus(array $inv): array
+    {
+        $appResponses = array_filter(
+            $inv['Responses'] ?? [],
+            fn($r) => $r['IsApplicationResponse'] ?? false
+        );
+
+        return [
+            'id'                 => $inv['Id'],
+            'number'             => ($inv['TransectionSerial'] ?? '') . ($inv['TransectionNumber'] ?? ''),
+            'profile'            => $inv['Profile'] ?? null,
+            'state'              => $inv['State'] ?? null,
+            'envelopeState'      => $inv['EnvelopeState'] ?? null,
+            'objectionState'     => $inv['ObjectionState'] ?? null,
+            'isPassedExpiryDate' => $inv['IsPassedExpiryDate'] ?? false,
+            'gibResponses'       => array_values(array_filter($inv['Responses'] ?? [], fn($r) => !($r['IsApplicationResponse'] ?? false))),
+            'applicationResponse'=> array_values($appResponses), // alıcı kabul/red yanıtı
+            'isAccepted'         => !empty($appResponses),
+            'customerTitle'      => $inv['CustomerTitle'] ?? null,
+        ];
     }
 }

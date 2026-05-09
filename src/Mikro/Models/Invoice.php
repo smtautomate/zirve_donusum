@@ -44,7 +44,12 @@ class Invoice
      */
     public static function fromResponse(array $response): self
     {
-        $invoiceData = $response['invoice'] ?? $response;
+        // Mikro API farklı yapılarda dönebilir
+        $invoiceData = $response['invoice']
+            ?? $response['Invoice']
+            ?? $response['data']
+            ?? $response;
+
         return new self($invoiceData);
     }
 
@@ -158,21 +163,28 @@ class Invoice
     /**
      * Müşteri bilgilerini set et
      *
-     * @param string $taxNumber VKN veya TCKN
-     * @param string $title Firma ünvanı
+     * @param string     $taxNumber VKN veya TCKN
+     * @param string     $title     Firma ünvanı
      * @param string|null $taxOffice Vergi dairesi
-     * @param string|null $alias E-fatura alias'ı (posta kutusu)
+     * @param array|null  $aliasObj  checkEInvoiceRegistered()'dan gelen tam alias nesnesi
+     *                               ['Alias'=>'urn:mail:...','Id'=>'...','Title'=>'...', ...]
      */
-    public function customer(string $taxNumber, string $title, ?string $taxOffice = null, ?string $alias = null): self
+    public function customer(string $taxNumber, string $title, ?string $taxOffice = null, array|string|null $aliasObj = null): self
     {
         $this->data['Customer']['TaxNumber'] = $taxNumber;
-        $this->data['Customer']['Title'] = $title;
+        $this->data['Customer']['Title']     = $title;
+        $this->data['Customer']['TaxOffice'] = $taxOffice;
+        $this->data['Customer']['Name']      = '';
+        $this->data['Customer']['Surname']   = '';
+        $this->data['Customer']['DealerNo']  = '';
 
-        if ($taxOffice) {
-            $this->data['Customer']['TaxOffice'] = $taxOffice;
-        }
-        if ($alias) {
-            $this->data['Customer']['Alias'] = $alias;
+        if (is_array($aliasObj)) {
+            $this->data['Customer']['Alias']         = $aliasObj;
+            $this->data['Customer']['EInvoiceUsers'] = [$aliasObj];
+        } elseif (is_string($aliasObj)) {
+            // Geriye uyumluluk: sadece alias string verilmişse
+            $this->data['Customer']['Alias']         = $aliasObj;
+            $this->data['Customer']['EInvoiceUsers'] = [];
         }
 
         return $this;
@@ -180,6 +192,8 @@ class Invoice
 
     /**
      * Müşteri adres bilgisi
+     *
+     * Country: API {"Code":"TR","Name":"TÜRKİYE"} nesne formatı bekler, string değil.
      */
     public function customerAddress(
         ?string $city = null,
@@ -187,7 +201,8 @@ class Invoice
         ?string $street = null,
         ?string $buildingNumber = null,
         ?string $postalZone = null,
-        ?string $country = 'Türkiye'
+        ?string $countryCode = 'TR',
+        ?string $countryName = 'TÜRKİYE'
     ): self {
         $address = &$this->data['Customer']['Address'];
         if ($city) $address['City'] = $city;
@@ -195,7 +210,9 @@ class Invoice
         if ($street) $address['Street'] = $street;
         if ($buildingNumber) $address['BuildingNumber'] = $buildingNumber;
         if ($postalZone) $address['PostalZone'] = $postalZone;
-        if ($country) $address['Country'] = $country;
+        if ($countryCode) {
+            $address['Country'] = ['Code' => $countryCode, 'Name' => $countryName];
+        }
 
         return $this;
     }
@@ -221,12 +238,19 @@ class Invoice
     /**
      * Fatura kalemi ekle
      *
-     * @param string $name Ürün/hizmet adı
-     * @param float $quantity Miktar
-     * @param float $unitPrice Birim fiyat (KDV hariç)
-     * @param int $vatRate KDV oranı (0, 1, 10, 20)
-     * @param string $unit Birim (C62=Adet, KGM=Kg, MTR=Metre, LTR=Litre vb.)
-     * @param float $discount İndirim tutarı
+     * Gerçek API payload'ına göre (Chrome DevTools ile doğrulandı):
+     *   - Alan adları: StockName, VATRate (Name/TaxRate değil)
+     *   - Taxes: [] boş gönderilir, sunucu hesaplar
+     *   - Discounts: her zaman bir eleman içerir (indirim olmasa da)
+     *
+     * @param string $name        Ürün/hizmet adı
+     * @param float  $quantity    Miktar
+     * @param float  $unitPrice   Birim fiyat (KDV hariç)
+     * @param int    $vatRate     KDV oranı (0, 1, 10, 20)
+     * @param string $unit        Birim kodu (C62=Adet, KGM=Kg, MTR=Metre, LTR=Litre vb.)
+     * @param float  $discountAmount İndirim tutarı
+     * @param string|null $stockCode Stok kodu
+     * @param array  $withholding Tevkifat: ['rate'=>50,'code'=>'601','name'=>'...']
      */
     public function addLine(
         string $name,
@@ -234,30 +258,48 @@ class Invoice
         float $unitPrice,
         int $vatRate = 20,
         string $unit = 'C62',
-        float $discount = 0.0
+        float $discountAmount = 0.0,
+        ?string $stockCode = null,
+        array $withholding = []
     ): self {
-        $lineTotal = $quantity * $unitPrice;
-        $discountedTotal = $lineTotal - $discount;
-        $taxAmount = $discountedTotal * $vatRate / 100;
+        $rowNumber   = count($this->data['Details']) + 1;
+        $amount      = round($quantity * $unitPrice, 2);
+        $kdvAmount   = round($amount * $vatRate / 100, 2);
+        $totalAmount = round($amount + $kdvAmount, 2);
 
         $this->data['Details'][] = [
-            'Name' => $name,
-            'Quantity' => $quantity,
-            'UnitCode' => $unit,
-            'UnitPrice' => $unitPrice,
-            'Amount' => $lineTotal,
-            'Discount' => $discount,
-            'DiscountedAmount' => $discountedTotal,
-            'Taxes' => [
-                [
-                    'TaxCode' => '0015', // KDV
-                    'TaxName' => 'KDV',
-                    'TaxRate' => $vatRate,
-                    'TaxAmount' => round($taxAmount, 2),
-                    'TaxBase' => round($discountedTotal, 2),
-                ],
-            ],
-            'Withholdings' => [],
+            'RowNumber'              => $rowNumber,
+            'StockName'              => $name,
+            'StockCode'              => $stockCode,
+            'Unit'                   => $unit,
+            'Quantity'               => $quantity,
+            'UnitPrice'              => $unitPrice,
+            'Amount'                 => $amount,
+            'UnFixedAmount'          => $amount,
+            'KdvAmount'              => $kdvAmount,
+            'TotalAmount'            => $totalAmount,
+            'VATRate'                => $vatRate,
+            'Currency'               => $this->data['Currency']['Code'] ?? 'TRY',
+            'Taxes'                  => [],           // sunucu hesaplar
+            'Discounts'              => [[
+                'Amount'         => $amount,
+                'DiscountRate'   => 0,
+                'DiscountAmount' => $discountAmount,
+                'Description'    => null,
+            ]],
+            'IdisTagNumbers'         => [],
+            'IsProductSelected'      => true,
+            'isProductExist'         => $stockCode !== null,
+            'ExemptionReason'        => null,
+            'TaxAmountForTaxAssesment' => null,
+            'FreightCharge'          => 0,
+            'InnsuranceCharge'       => 0,
+            'ContainerQuantity'      => 0,
+            'ContainerNumber'        => null,
+            'PackagingTypeCode'      => null,
+            'DeliveryTerm'           => 'Belirtilmedi',
+            'TransportMode'          => 'Belirtilmedi',
+            'GTIP'                   => null,
         ];
 
         return $this;
@@ -383,43 +425,68 @@ class Invoice
 
     private function defaults(): array
     {
+        $now = date('Y-m-d\TH:i:s.000\Z');
         return [
+            'Id'          => '',
+            'UUID'        => null,
             'InvoiceType' => 'EInvoice',
-            'Number' => ['Serial' => 'EFAB', 'Number' => 0],
-            'Profile' => 'TEMELFATURA',
-            'TypeCode' => 'SATIS',
-            'IsFree' => false,
-            'AddPaymentTimeAndType' => false,
-            'Currency' => ['Code' => 'TRY', 'Name' => 'Türk Lirası', 'Id' => null],
-            'ExchangeRate' => 1.0,
-            'Date' => date('Y-m-d') . 'T00:00:00',
+            'Profile'     => 'TEMELFATURA',
+            'TypeCode'    => 'SATIS',
+            'Number'      => ['Serial' => '', 'Number' => 0],
+            'Date'        => $now,
+            'Time'        => date('H:i'),
+            'Currency'    => ['Code' => 'TRY', 'Name' => 'Türk Lirası'],
+            'ExchangeRate'=> 1,
+            'ExchangeType'=> 'Buying',
+            'IbanAccountCurrency'  => ['Code' => 'TRY', 'Name' => 'Türk Lirası'],
+            'IbanAccountCurrency2' => ['Code' => 'TRY', 'Name' => 'Türk Lirası'],
             'Customer' => [
-                'TaxNumber' => null,
-                'Title' => null,
-                'TaxOffice' => null,
-                'Alias' => null,
-                'Email' => null,
+                'TaxNumber'   => null,
+                'Title'       => null,
+                'Name'        => '',
+                'Surname'     => '',
+                'TaxOffice'   => null,
+                'DealerNo'    => '',
+                'VehicleNumberPlate'           => '',
+                'VehicleIdentificationNumber'  => '',
+                'Alias'       => null,
+                'Email'       => null,
                 'IsEmailSend' => false,
-                'Phone' => null,
-                'Address' => [
-                    'City' => null,
-                    'CitySubdivisionName' => null,
-                    'Street' => null,
-                    'BuildingNumber' => null,
-                    'PostalZone' => null,
-                    'Country' => 'Türkiye',
-                ],
+                'Phone'       => null,
                 'EInvoiceUsers' => [],
+                'Address' => [
+                    'Country'              => null, // ['Code'=>'TR','Name'=>'TÜRKİYE']
+                    'City'                 => null,
+                    'CitySubdivisionName'  => null,
+                    'Street'               => null,
+                    'BuildingNumber'       => null,
+                    'PostalZone'           => null,
+                ],
             ],
-            'Payment' => [
-                'Type' => 'KREDIKARTI_BANKAKARTI',
-                'IsOnlineSale' => false,
-            ],
-            'Details' => [],
-            'Description' => null,
-            'HasDispatch' => false,
-            'Dispatchs' => [],
+            'Passenger'        => (object) [],
+            'TaxRepresentative'=> (object) [],
+            'Payment'    => ['Type' => 'KREDIKARTI_BANKAKARTI', 'IsOnlineSale' => false],
+            'Details'    => [],
+            'CancelInfo' => [],
+            'Dispatchs'  => [(object) []],
             'AdditionalDocuments' => [],
+            'AdditionalFields'    => [],
+            'AselsanAdditionalFields' => [],
+            'SelectedTechnologies'=> ['IMEInumbers' => [''], 'MACnumbers' => ['']],
+            'Description'         => null,
+            'IsFree'              => false,
+            'FromDespatch'        => false,
+            'FromDespatchDate'    => $now,
+            'IsDespatch'          => false,
+            'HasDispatch'         => false,
+            'BuyerCustomerNo'     => '',
+            'PayableAmountForManuelSet' => 0,
+            'IsSpecialBudgetPublicInstitution' => false,
+            'PublicPayingCustomerCountry' => ['Code' => 'TR', 'Name' => 'TÜRKİYE'],
+            'ExemptionReason'     => null,
+            'IBANNo'              => null,
+            'InvestmentIncentiveDocumentDate' => $now,
+            'SubAccountId'        => null,
         ];
     }
 }
