@@ -9,12 +9,16 @@ use ZirveDonusum\Exceptions\ApiException;
 use ZirveDonusum\Exceptions\AuthenticationException;
 
 /**
- * Parasut V4 OAuth2 (password grant) HttpClient.
+ * Parasut V4 HttpClient.
  * Base: https://api.parasut.com/v4
- * Auth: https://api.parasut.com/oauth/token
+ *
+ * Auth yöntemleri (öncelik sırasıyla):
+ *   1. session_cookie: Browser session cookie (uygulama.parasut.com → api.parasut.com)
+ *      Paraşüt Keycloak'a geçtikten sonra sunucu tarafı OAuth2 kapatıldı.
+ *      Kullanıcı browser'dan giriş yapıp cookie'yi kopyalar, DB'de saklanır.
+ *   2. OAuth2 password grant (eski sistem — artık çalışmıyor, backward compat için)
  *
  * Endpoint pattern: /{companyId}/{resource}
- * 401 alindiginda once refresh, basarisizsa yeniden password grant.
  */
 class HttpClient
 {
@@ -33,6 +37,10 @@ class HttpClient
     private bool $authenticated = false;
     private ?string $accessToken = null;
 
+    // Cookie-based auth (yeni yöntem)
+    private ?string $sessionCookie = null;
+    private bool $cookieMode = false;
+
     public function __construct(array $config)
     {
         $this->baseUrl = rtrim($config['base_url'] ?? 'https://api.parasut.com/v4', '/');
@@ -45,33 +53,44 @@ class HttpClient
         $this->redirectUri = $config['redirect_uri'] ?? 'urn:ietf:wg:oauth:2.0:oob';
         $this->timeout = $config['timeout'] ?? 30;
 
+        // Session cookie mode (Keycloak'a geçiş sonrası)
+        if (!empty($config['session_cookie'])) {
+            $this->sessionCookie = $config['session_cookie'];
+            $this->cookieMode = true;
+            $this->authenticated = true;
+        }
+
         $cacheDir = $config['cache_dir'] ?? sys_get_temp_dir() . '/parasut';
         $this->tokenManager = new TokenManager(
             ($config['cache_token'] ?? true) ? $cacheDir : null
         );
 
-        $cached = $this->tokenManager->load();
-        if ($cached) {
-            $this->accessToken = $cached['access_token'];
-            $this->authenticated = true;
+        if (!$this->cookieMode) {
+            $cached = $this->tokenManager->load();
+            if ($cached) {
+                $this->accessToken = $cached['access_token'];
+                $this->authenticated = true;
+            }
         }
 
         $verify = $config['verify_ssl'] ?? true;
 
         $this->http = new GuzzleClient([
             'base_uri' => $this->baseUrl . '/',
-            'timeout' => $this->timeout,
-            'verify' => $verify,
+            'timeout'  => $this->timeout,
+            'verify'   => $verify,
             'http_errors' => false,
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
+            'headers'  => [
+                'Accept'       => 'application/vnd.api+json',
+                'Content-Type' => 'application/vnd.api+json',
+                'Origin'       => 'https://uygulama.parasut.com',
+                'Referer'      => 'https://uygulama.parasut.com/',
             ],
         ]);
 
         $this->authHttp = new GuzzleClient([
             'timeout' => $this->timeout,
-            'verify' => $verify,
+            'verify'  => $verify,
             'http_errors' => false,
         ]);
     }
@@ -166,6 +185,11 @@ class HttpClient
 
     public function ensureAuthenticated(): void
     {
+        if ($this->cookieMode) {
+            // Cookie mode'da ek işlem yok — cookie zaten set
+            return;
+        }
+
         if (!$this->authenticated) {
             $this->login();
             return;
@@ -181,6 +205,24 @@ class HttpClient
         return $this->authenticated;
     }
 
+    public function isCookieMode(): bool
+    {
+        return $this->cookieMode;
+    }
+
+    public function getSessionCookie(): ?string
+    {
+        return $this->sessionCookie;
+    }
+
+    public function setSessionCookie(string $cookie): self
+    {
+        $this->sessionCookie = $cookie;
+        $this->cookieMode = true;
+        $this->authenticated = true;
+        return $this;
+    }
+
     public function getCompanyId(): string
     {
         return $this->companyId;
@@ -190,6 +232,8 @@ class HttpClient
     {
         $this->authenticated = false;
         $this->accessToken = null;
+        $this->sessionCookie = null;
+        $this->cookieMode = false;
         $this->tokenManager->clear();
     }
 
@@ -345,9 +389,11 @@ class HttpClient
 
     private function authHeaders(): array
     {
-        return [
-            'Authorization' => 'Bearer ' . $this->accessToken,
-        ];
+        if ($this->cookieMode && $this->sessionCookie) {
+            return ['Cookie' => $this->sessionCookie];
+        }
+
+        return ['Authorization' => 'Bearer ' . $this->accessToken];
     }
 
     public function getBaseUrl(): string
