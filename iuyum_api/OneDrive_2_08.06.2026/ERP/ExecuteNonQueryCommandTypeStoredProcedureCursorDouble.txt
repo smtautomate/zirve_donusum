@@ -1,0 +1,30 @@
+{
+	"value": {
+		"cmdProcess": {
+			"commandType": "StoredProcedure",
+			"commandText": "DENEME_PROD3",
+			"executeType": "ExecuteNonQuery"
+		},
+		"cmdDetailProcess": [
+			{
+				"dbType": "Int32",
+				"parameterType": "CreateParameter",
+				"parameterDirection": "Input",
+				"paramName": "pInvoiceMId",
+				"paramValue": 62963
+			},
+			{
+				"parameterType": "CreateParameterRefCursor",
+				"parameterDirection": "Output",
+				"paramName": "get_invoice_value",
+				"tableName": "poyraz1"
+			},
+			{
+				"parameterType": "CreateParameterRefCursor",
+				"parameterDirection": "Output",
+				"paramName": "get_invoice_value2",
+				"tableName": "poyraz2"
+			}
+		]
+	}
+}

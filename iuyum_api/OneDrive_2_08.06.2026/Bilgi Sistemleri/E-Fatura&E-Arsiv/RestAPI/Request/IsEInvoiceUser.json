@@ -1,0 +1,10 @@
+{
+  "Action": "IsEInvoiceUser",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "vknTckn": "0330014038"
+  }
+}

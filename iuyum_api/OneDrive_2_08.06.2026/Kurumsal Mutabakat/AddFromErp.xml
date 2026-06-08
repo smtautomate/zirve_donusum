@@ -1,0 +1,29 @@
+{
+"CompanyTaxNo": "Gönderici VKN",
+"StartDate": ""Mutabakat Başlangış Tarihi",",
+"EndDate": "Mutabakat Bitiş Tarihi",
+"Note": "string",
+"EntityExtreRequired": true, //Karşı taraf mutabık olsun, olmasın bir dosya (ekstre, mutabık/mutabık değil belgesi vb) eklemesi isteniyor ise True gönderilir.  Aksi halde False gönderilir.
+"ExtreRequired": true, // Karşı taraf mutabık değil ise zorunlu olarak bir ekstre dosya ekleyerek isteniyor ise True gönderilir. Diğer türlü False gönderilir.
+"InformByMail": true, // Gönderen kişi, karşı taraf cevapladığında kendisine bildirim mail ile gelmesini istiyor ise True gönderilmeli. İstenmiyor ise False gönderilir.
+"Agreements": [
+{
+"AgreementCaseId": 0,
+"EntityCode": "Cari kodu",
+"EntityName": "Cari Adı. Zorunlu",
+"TaxNo": "Vergi No veya TCKN numarasıdır.",
+"TaxOfficeCode": "Vergi dairesi",
+"TaxOfficeDesc": "Vergi Dairesi",
+"Email": "Gidecek mail adresi, yanyana n tane gönderilebilir araları ; kullanılır. Zorunludur.",
+"DebitCredit": 1, //:1 ise Borç, 2 ise Alacak. Zorunludur. Bakiye 0 ise de gönderilmelidir. Bakiye sıfır ise etkisi yoktur. Zorunludur.
+"Currency": 1, //para birimidir. Bakiye 0 (sıfır) ise TRL denir. Zorunludur. Enum değerler aşağıdaki gibidir.
+TRL = 1,
+USD = 2,
+EUR = 3,
+GBP = 4,
+CHF = 5
+"Balance": Bakiye bilgisidir. Bakiye yok ise 0 (sıfır) gönderilmelidir. Zorunludur.,
+"Note": "test"
+}
+]
+}

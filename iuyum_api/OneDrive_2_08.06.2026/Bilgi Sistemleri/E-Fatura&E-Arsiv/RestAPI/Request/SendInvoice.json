@@ -1,0 +1,326 @@
+{
+  "Action": "SendInvoice",
+  "parameters": {
+    "invoices": [
+      {
+        "Invoice": {
+          "UblVersionId": {
+            "value": 2.1
+          },
+          "CustomizationId": {
+            "value": "TR1.2"
+          },
+          "ProfileId": {
+            "value": "TICARIFATURA"
+          },
+          "CopyIndicator": {
+            "value": false
+          },
+          "IssueDate": {
+            "value": "2020-06-02"
+          },
+          "IssueTime": {
+            "value": "00:00:00.0000000+03:00"
+          },
+          "InvoiceTypeCode": {
+            "value": "SATIS"
+          },
+          "Note": [
+            {
+              "value": "Fatura Notu -1"
+            },
+            {
+              "value": "Yalnız #Yüz Altmış Bir Türk Lirası Elli Üç Kuruş#"
+            }
+          ],
+          "DocumentCurrencyCode": {
+            "value": "TRY"
+          },
+          "LineCountNumeric": {
+            "value": 1
+          },
+          "OrderReference": {
+            "Id": {
+              "value": "ORD1234567890"
+            },
+            "IssueDate": {
+              "value": "2020-06-02"
+            }
+          },
+          "AccountingSupplierParty": {
+            "Party": {
+              "PartyIdentification": [
+                {
+                  "Id": {
+                    "schemeId": "VKN",
+                    "value": "9000068418"
+                  }
+                },
+                {
+                  "Id": {
+                    "schemeId": "MERSISNO",
+                    "value": "12345669-111"
+                  }
+                },
+                {
+                  "Id": {
+                    "schemeId": "TICARETSICILNO",
+                    "value": "12345669-111"
+                  }
+                }
+              ],
+              "PartyName": {
+                "Name": {
+                  "value": "Uyumsoft Bilgi Sistemleri ve Teknolojileri A.Ş."
+                }
+              },
+              "PostalAddress": {
+                "Room": {
+                  "value": "401"
+                },
+                "StreetName": {
+                  "value": "YTÜ Davutpaşa Kampüsü"
+                },
+                "BuildingNumber": {
+                  "value": "401"
+                },
+                "CitySubdivisionName": {
+                  "value": "Esenler"
+                },
+                "CityName": {
+                  "value": "İstanbul"
+                },
+                "Country": {
+                  "Name": {
+                    "value": "Türkiye"
+                  }
+                }
+              },
+              "PartyTaxScheme": {
+                "TaxScheme": {
+                  "Name": {
+                    "value": "Esenler"
+                  }
+                }
+              },
+              "Person": {
+                "FirstName": {
+                  "value": "Yunus Emre"
+                },
+                "FamilyName": {
+                  "value": "BAYRAM"
+                }
+              }
+            }
+          },
+          "AccountingCustomerParty": {
+            "Party": {
+              "WebsiteURI": {
+                "Value": "Web Sitesi"
+              },
+              "PartyIdentification": [
+                {
+                  "ID": {
+                    "schemeID": "VKN",
+                    "Value": "2150240232"
+                  }
+                }
+              ],
+              "PartyName": {
+                "Name": {
+                  "value": "XYZ Company Gmbh."
+                }
+              },
+              "PostalAddress": {
+                "Room": {
+                  "value": ""
+                },
+                "StreetName": {
+                  "value": "Ostersunds"
+                },
+                "BuildingNumber": {
+                  "value": "10"
+                },
+                "CitySubdivisionName": {
+                  "value": "Esenler"
+                },
+                "CityName": {
+                  "value": "Berlin"
+                },
+                "Country": {
+                  "Name": {
+                    "value": "Germany"
+                  }
+                }
+              },
+              "PartyTaxScheme": {
+                "TaxScheme": {
+                  "Name": {
+                    "value": ""
+                  }
+                }
+              },
+              "Contact": {
+                "Telephone": {
+                  "value": "02122000022"
+                },
+                "Telefax": {
+                  "value": "22111222",
+                  "ElectronicMail": {
+                    "value": "test@test.com"
+                  }
+                }
+              }
+            }
+          },
+          "TaxTotal": [
+            {
+              "TaxAmount": {
+                "currencyId": "TRY",
+                "value": 24.64
+              },
+              "TaxSubtotal": [
+                {
+                  "TaxableAmount": {
+                    "currencyId": "TRY",
+                    "value": 136.89
+                  },
+                  "TaxAmount": {
+                    "currencyId": "TRY",
+                    "value": 24.64
+                  },
+                  "Percent": {
+                    "value": 18
+                  },
+                  "TaxCategory": {
+                    "TaxScheme": {
+                      "Name": {
+                        "value": "KDV"
+                      },
+                      "TaxTypeCode": {
+                        "value": "0015"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "LegalMonetaryTotal": {
+            "LineExtensionAmount": {
+              "currencyId": "TRY",
+              "value": 1500
+            },
+            "TaxExclusiveAmount": {
+              "currencyId": "TRY",
+              "value": 1390
+            },
+            "TaxInclusiveAmount": {
+              "currencyId": "TRY",
+              "value": 1390
+            },
+            "AllowanceTotalAmount": {
+              "currencyId": "TRY",
+              "value": 110
+            },
+            "PayableAmount": {
+              "currencyId": "TRY",
+              "value": 110
+            }
+          },
+          "InvoiceLine": [
+            {
+              "Id": {
+                "value": "1"
+              },
+              "Note": [
+                {
+                  "value": "Satır Notu"
+                }
+              ],
+              "InvoicedQuantity": {
+                "unitCode": "NIU",
+                "value": "1"
+              },
+              "LineExtensionAmount": {
+                "currencyId": "TRY",
+                "value": "136.89"
+              },
+              "TaxTotal": {
+                "TaxAmount": {
+                  "currencyId": "TRY",
+                  "value": "24.64"
+                },
+                "TaxSubtotal": [
+                  {
+                    "TaxableAmount": {
+                      "currencyId": "TRY",
+                      "value": "136.89"
+                    },
+                    "TaxAmount": {
+                      "currencyId": "TRY",
+                      "value": "24.64"
+                    },
+                    "Percent": {
+                      "value": "18"
+                    },
+                    "TaxCategory": {
+                      "TaxScheme": {
+                        "Name": {
+                          "value": "KDV"
+                        },
+                        "TaxTypeCode": {
+                          "value": "0015"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "Item": {
+                "Description": {
+                  "value": "Sipariş No: TS160416150 Sipariş Tarihi: 16.04.2019 Sipariş Satır No: 1"
+                },
+                "Name": {
+                  "value": "RASPBERRY Pİ POE HAT"
+                },
+                "ModelName": {
+                  "value": "MP00371"
+                }
+              },
+              "Price": {
+                "PriceAmount": {
+                  "currencyId": "TRY",
+                  "value": "24.64"
+                },
+              }
+
+            }
+          ]
+        },
+        "EArchiveInvoiceInfo": {
+          "DeliveryType": "Electronic"
+        },
+        "Scenario": 0,
+        "Notification": {
+          "Mailing": [
+            {
+              "Subject": "1234567890 abone nonuza ait faturanız.",
+              "EnableNotification": true,
+              "To": "test@teasdasda.com",
+              "Attachment": {
+                "Xml": true,
+                "Pdf": true,
+              }
+            }
+          ]
+        },
+        "LocalDocumentId": "E-FATURA-001"
+      }
+    ],
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}

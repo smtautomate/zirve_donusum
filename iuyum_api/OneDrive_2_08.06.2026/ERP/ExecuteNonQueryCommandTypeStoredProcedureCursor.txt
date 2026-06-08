@@ -1,0 +1,24 @@
+{
+	"value": {
+		"cmdProcess": {
+			"commandType": "StoredProcedure",
+			"commandText": "DENEME_PROD1",
+			"executeType": "ExecuteNonQuery"
+		},
+		"cmdDetailProcess": [
+			{
+				"dbType": "Int32",
+				"parameterType": "CreateParameter",
+				"parameterDirection": "Input",
+				"paramName": "pInvoiceMId",
+				"paramValue": 62963
+			},
+			{
+				"dbType": "Int32",
+				"parameterType": "CreateParameterRefCursor",
+				"parameterDirection": "Output",
+				"paramName": "get_invoice_value"
+			}
+		]
+	}
+}

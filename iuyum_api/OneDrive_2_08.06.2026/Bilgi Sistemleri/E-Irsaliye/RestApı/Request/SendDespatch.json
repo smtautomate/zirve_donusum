@@ -1,0 +1,303 @@
+{
+  "Action": "SendDespatch",
+  "parameters": {
+    "despatches": [
+      {
+        "DespatchAdvice": {
+          "ProfileId": {
+            "value": "TEMELIRSALIYE"
+          },
+          "CopyIndicator": {
+            "value": false
+          },
+          "IssueDate": {
+            "value": "2020-06-02"
+          },
+          "IssueTime": {
+            "value": "00:00:00.0000000+03:00"
+          },
+          "DespatchAdviceTypeCode": {
+            "value": "SEVK"
+          },
+          "Note": [
+            {
+              "value": "Irsaliye Notu -1"
+            },
+            {
+              "value": "Yalnız #Yüz Altmış Bir Türk Lirası Elli Üç Kuruş#"
+            }
+          ],
+          "LineCountNumeric": {
+            "value": 1
+          },
+          "DespatchSupplierParty": {
+            "Party": {
+              "PartyIdentification": [
+                {
+                  "Id": {
+                    "schemeId": "VKN",
+                    "value": "9000068418"
+                  }
+                },
+                {
+                  "Id": {
+                    "schemeId": "MERSISNO",
+                    "value": "12345669-111"
+                  }
+                },
+                {
+                  "Id": {
+                    "schemeId": "TICARETSICILNO",
+                    "value": "12345669-111"
+                  }
+                }
+              ],
+              "PartyName": {
+                "Name": {
+                  "value": "Uyumsoft Bilgi Sistemleri ve Teknolojileri A.Ş."
+                }
+              },
+              "PostalAddress": {
+                "Room": {
+                  "value": "401"
+                },
+                "StreetName": {
+                  "value": "YTÜ Davutpaşa Kampüsü"
+                },
+                "BuildingNumber": {
+                  "value": "401"
+                },
+                "CitySubdivisionName": {
+                  "value": "Esenler"
+                },
+                "CityName": {
+                  "value": "İstanbul"
+                },
+                "Country": {
+                  "Name": {
+                    "value": "Türkiye"
+                  }
+                }
+              },
+              "PartyTaxScheme": {
+                "TaxScheme": {
+                  "Name": {
+                    "value": "Esenler"
+                  }
+                }
+              },
+              "Person": {
+                "FirstName": {
+                  "value": "Yunus Emre"
+                },
+                "FamilyName": {
+                  "value": "BAYRAM"
+                }
+              }
+            }
+          },
+          "DeliveryCustomerParty": {
+            "Party": {
+              "WebsiteURI": {
+                "Value": "Web Sitesi"
+              },
+              "PartyIdentification": [
+                {
+                  "ID": {
+                    "schemeID": "VKN",
+                    "Value": "2150240232"
+                  }
+                }
+              ],
+              "PartyName": {
+                "Name": {
+                  "value": "XYZ Company Gmbh."
+                }
+              },
+              "PostalAddress": {
+                "Room": {
+                  "value": ""
+                },
+                "StreetName": {
+                  "value": "Ostersunds"
+                },
+                "BuildingNumber": {
+                  "value": "10"
+                },
+                "CitySubdivisionName": {
+                  "value": "Esenler"
+                },
+                "CityName": {
+                  "value": "Berlin"
+                },
+                "Country": {
+                  "Name": {
+                    "value": "Germany"
+                  }
+                }
+              },
+              "PartyTaxScheme": {
+                "TaxScheme": {
+                  "Name": {
+                    "value": ""
+                  }
+                }
+              },
+              "Contact": {
+                "Telephone": {
+                  "value": "02122000022"
+                },
+                "Telefax": {
+                  "value": "22111222",
+                  "ElectronicMail": {
+                    "value": "test@test.com"
+                  }
+                }
+              }
+            }
+          },
+          "Shipment": {
+            "Id": {
+              "value": "1"
+            },
+            "Delivery": {
+              "Id": {
+                "value": "1"
+              },
+              "DeliveryAddress": {
+                "Room": {
+                  "value": ""
+                },
+                "StreetName": {
+                  "value": "Ostersunds"
+                },
+                "BuildingNumber": {
+                  "value": "10"
+                },
+                "PostalZone": {
+                  "value": "60200"
+                },
+                "CitySubdivisionName": {
+                  "value": "Esenler"
+                },
+                "CityName": {
+                  "value": "Berlin"
+                },
+                "Country": {
+                  "Name": {
+                    "value": "Germany"
+                  }
+                }
+              },
+              "CarrierParty": {
+                "PartyIdentification": [
+                  {
+                    "Id": {
+                      "schemeId": "VKN",
+                      "value": "9000068418"
+                    }
+                  },
+                  {
+                    "Id": {
+                      "schemeId": "MERSISNO",
+                      "value": "12345669-111"
+                    }
+                  },
+                  {
+                    "Id": {
+                      "schemeId": "TICARETSICILNO",
+                      "value": "12345669-111"
+                    }
+                  }
+                ],
+                "PartyName": {
+                  "Name": {
+                    "value": "Uyumsoft Bilgi Sistemleri ve Teknolojileri A.Ş."
+                  }
+                },
+                "PostalAddress": {
+                  "Room": {
+                    "value": "401"
+                  },
+                  "StreetName": {
+                    "value": "YTÜ Davutpaşa Kampüsü"
+                  },
+                  "BuildingNumber": {
+                    "value": "401"
+                  },
+                  "CitySubdivisionName": {
+                    "value": "Esenler"
+                  },
+                  "CityName": {
+                    "value": "İstanbul"
+                  },
+                  "Country": {
+                    "Name": {
+                      "value": "Türkiye"
+                    }
+                  }
+                },
+                "PartyTaxScheme": {
+                  "TaxScheme": {
+                    "Name": {
+                      "value": "Esenler"
+                    }
+                  }
+                }
+              },
+              "Despatch": {
+                "ActualDespatchDate": {
+                  "value": "2020-06-02"
+                },
+                "ActualDespatchTime": {
+                  "value": "00:00:00.0000000+03:00"
+                }
+              }
+            }
+          },
+          "DespatchLine": [
+            {
+              "Id": {
+                "value": "1"
+              },
+              "Note": [
+                {
+                  "value": "Satır Notu"
+                }
+              ],
+              "DeliveredQuantity": {
+                "unitCode": "NIU",
+                "value": "10"
+              },
+              "OutstandingQuantity": {
+                "unitCode": "NIU",
+                "value": "1"
+              },
+              "OrderLineReference": {
+                "LineID": {
+                  "value": "1"
+                }
+              },
+              "Item": {
+                "Name": {
+                  "value": "RASPBERRY Pİ POE HAT"
+                }
+              },
+              "Price": {
+                "PriceAmount": {
+                  "currencyId": "TRY",
+                  "value": "24.64"
+                }
+              }
+
+            }
+          ]
+        }
+      }
+    ],
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}

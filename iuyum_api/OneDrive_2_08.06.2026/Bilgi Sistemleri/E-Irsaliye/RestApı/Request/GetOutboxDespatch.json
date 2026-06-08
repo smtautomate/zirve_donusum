@@ -1,0 +1,10 @@
+{
+  "Action": "GetOutboxDespatch",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "despatchId": "f32ed8b5-d193-4670-9334-99d2789cd463"
+  }
+}

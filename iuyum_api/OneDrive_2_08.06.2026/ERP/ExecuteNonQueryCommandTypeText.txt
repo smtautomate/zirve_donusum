@@ -1,0 +1,25 @@
+{
+	"value": {
+		"cmdProcess": {
+			"commandType": "Text",
+			"commandText": "UPDATE PSMT_INVOICE_M SET ADDRESS1=:pAddress WHERE INVOICE_M_ID = :pInvoiceMId",
+			"executeType": "ExecuteNonQuery"
+		},
+		"cmdDetailProcess": [
+			{
+				"dbType": "String",
+				"parameterType": "CreateParameter",
+				"parameterDirection": "Input",
+				"paramName": ":pAddress",
+				"paramValue": "deneme adres1"
+			},
+			{
+				"dbType": "Int32",
+				"parameterType": "CreateParameter",
+				"parameterDirection": "Input",
+				"paramName": ":pInvoiceMId",
+				"paramValue": 62963
+			}
+		]
+	}
+}

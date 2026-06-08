@@ -1,0 +1,13 @@
+{
+  "Action": "GetInboxDespatchList",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "query": {
+      "CreateStartDate": "2020-08-30T23:59:59.999",
+      "CreateEndDate": "2020-09-04T23:59:59.999"
+    }
+  }
+}

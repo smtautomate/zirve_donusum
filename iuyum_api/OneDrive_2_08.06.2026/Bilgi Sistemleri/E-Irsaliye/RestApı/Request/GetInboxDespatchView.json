@@ -1,0 +1,10 @@
+{
+  "Action": "GetInboxDespatchView",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "despatchId": "0da8bc22-ea3e-4a35-a956-73a9b6ad86b5"
+  }
+}

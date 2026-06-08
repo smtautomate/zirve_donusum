@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="e_İrsaliyeDemo_v1._0._0.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WebServiceTestUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://efatura-test.uyumsoft.com.tr/services/DespatchIntegration</Value>
+    </Setting>
+    <Setting Name="WebServiceTestUsername" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Uyumsoft</Value>
+    </Setting>
+    <Setting Name="WebServiceTestPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Uyumsoft</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

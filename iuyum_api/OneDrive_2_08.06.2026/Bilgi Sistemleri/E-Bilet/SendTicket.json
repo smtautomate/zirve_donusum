@@ -1,0 +1,29 @@
+{
+  "Action": "SendTicket",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "ticket": {
+        "AdditionalData":[
+            {
+            "Name":"YOLCUADI",
+            "Value":"FARUK"
+        },
+            {
+               "Name":"YOLCUSOYADI",
+            "Value":"FARUK"
+        }
+        ],
+      "TravelDate": "2023-01-01T00:59:59.999",
+      "PreperationDate": "2023-01-01T23:59:59.999",
+       "DocumentId": "5aa4b3bb-f1e0-4995-a47a-d9d809f7b11b",
+
+        "ExpenseOwnerTcknVkn": "15058023598",
+     "PaymentType": "0",
+        "Amount": 50.00,
+         "Tax": 3.70
+    }
+  }
+}

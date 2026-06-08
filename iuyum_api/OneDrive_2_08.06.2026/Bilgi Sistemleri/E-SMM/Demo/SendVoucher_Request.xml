@@ -1,0 +1,78 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+	<s:Header>
+		<o:Security s:mustUnderstand="1" xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+			<u:Timestamp u:Id="_0">
+				<u:Created>2019-10-22T19:57:42.056Z</u:Created>
+				<u:Expires>2019-10-22T20:02:42.056Z</u:Expires>
+			</u:Timestamp>
+			<o:UsernameToken u:Id="uuid-63f36b99-318d-4a01-b3a2-dacf1a9a9951-3">
+				<o:Username>Uyumsoft</o:Username>
+				<o:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">Uyumsoft</o:Password>
+			</o:UsernameToken>
+		</o:Security>
+	</s:Header>
+	<s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<SendVoucher xmlns="http://tempuri.org/">
+			<vouchers>
+				<VoucherSource>
+					<AdditionalData Name="Not" Id="1" xmlns="urn:names:myinvoice:domain">
+						<Value>Ödeme süresi 7 gündür</Value>
+					</AdditionalData>
+					<AdditionalData Name="Not" Id="2" xmlns="urn:names:myinvoice:domain">
+						<Value>Yalnız:Yüz Türk Lirası</Value>
+					</AdditionalData>
+					<AdditionalData Name="Not" Id="3" xmlns="urn:names:myinvoice:domain">
+						<Value>iletişim için info@asadas.com adresine e-posta gönderebilirsiniz</Value>
+					</AdditionalData>
+					<AdditionalData Name="Kur" Id="4" xmlns="urn:names:myinvoice:domain">
+						<Value>6.05</Value>
+					</AdditionalData>
+					<Notification xmlns="http://earsiv.efatura.gov.tr">
+						<Mailing EnableNotification="true" To="faruk.kaygisiz@uyumsoft.com.tr" xmlns="urn:names:myinvoice:domain">
+							<Subject>x nolu makbuzunuz</Subject>
+							<Attachment Xml="true" Pdf="true" Html="false" AdditionalDocuments="false"/>
+						</Mailing>
+					</Notification>
+					<eArsivVeriSerbestMeslekMakbuz xmlns="http://earsiv.efatura.gov.tr">
+						<ETTN>36b9edd5-dd1c-45d2-9598-87c176838f63</ETTN>
+						<gonderimSekli>ELEKTRONIK</gonderimSekli>
+						<belgeTarihi>2019-08-01</belgeTarihi>
+						<belgeZamani>12:00:00</belgeZamani>
+						<toplamTutar>118.00</toplamTutar>
+						<odenecekTutar>118.00</odenecekTutar>
+						<paraBirimi>USD</paraBirimi>
+						<kur>5.51</kur>
+						<vergiBilgisi>
+							<vergilerToplami>0</vergilerToplami>
+							<vergi>
+								<matrah>0</matrah>
+								<vergiKodu>0003</vergiKodu>
+								<vergiTutari>18</vergiTutari>
+							</vergi>
+						</vergiBilgisi>
+						<aliciBilgileri>
+							<gercekKisi>
+								<tckn> 12345678901</tckn>
+								<adiSoyadi>Faruk Kaygısız</adiSoyadi>
+							</gercekKisi>
+						</aliciBilgileri>
+						<malHizmetBilgisi>
+							<malHizmet>
+								<ad>Avukatlık Ücreti</ad>
+								<vergiBilgisi>
+									<vergilerToplami>0</vergilerToplami>
+									<vergi>
+										<matrah>100.00</matrah>
+										<vergiKodu>0015</vergiKodu>
+										<vergiTutari>18.00</vergiTutari>
+									</vergi>
+								</vergiBilgisi>
+								<burutUcret>119.00</burutUcret>
+							</malHizmet>
+						</malHizmetBilgisi>
+					</eArsivVeriSerbestMeslekMakbuz>
+				</VoucherSource>
+			</vouchers>
+		</SendVoucher>
+	</s:Body>
+</s:Envelope>

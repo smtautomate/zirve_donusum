@@ -1,0 +1,52 @@
+{
+    "value": {
+        "coCode": "Firma Kodu",        
+        "branchCode": "İşyeri Kodu",
+        "docDate": "2021-12-14(Belge Tarihi)",
+        "docNo": "Belge Numarası(e-faturada , e-Arşiv için otomatik e-Belge Numaratöründen alacaktır.)",     
+        "cardType": "Cari/Muhasebe/Banka",       
+        "cardCode": "Hesap Kodu(Cari Kodu)",
+		"docTraCode": "Fatura Hareket Kodu",    
+		"voucherSerial": "Fatura Seri No(ABC vs.)", 
+        "voucherNo": "Fatura Sıra No",        
+		"curCode": "Kur Kodu", 
+		"curRateTypeCode": "Kur Tip Kodu",		
+		"curTra": Kur,   
+		"currencyOption": "Sevk_Tarihindeki_Kur",    		
+        "details": [
+            { 
+                "lineNo": Satır No,                                               
+                "lineType": "Satır Tipi(S/H/M)",      
+				"whouseCode": "Depo Kodu",   				
+                "dcardCode": "Kart Kodu(Stok/Hizmet/Muhasebe)",              
+                "unitCode": "Birim Kodu(Adet,Kg vs..)",
+				"itemNameManual": "Stok Manuel Ad",      
+                "qty": Miktar,
+                "qtyPrm": Miktar,                                                   
+                "unitPrice": Birim Fiyat,				
+				"curCode": "Detay Kur Kodu",              
+                "curRateTypeCode": "Detay Kur Tipi",
+                "curRateTra": Kur,
+                "vatStatus": "Kdv Durumu (Dahil/Hariç)",             
+                "vatCode": "Kdv Kodu",                
+                "amtVat": Kdv Tutarı,                             
+                "priceListCode": "string",                                                                                                                                                                                                            
+                "note1": "Detay Acıklama1",
+                "note2": "Detay Acıklama2",
+                "note3": "Detay Acıklama3",                                                             
+                "sourceApp": "Fatura",
+                "sourceApp2": "Fatura",
+                "sourceApp3": "Fatura"
+            }
+        ],    
+		"note1": "Master Açıklama1",
+        "note2": "Master Açıklama2",
+        "note3": "Master Açıklama3",  		
+        "address1": "Fatura Adresi1",
+        "address2": "Fatura Adresi2",
+        "address3": "Fatura Adresi3",                                                                                 
+        "sourceApp": "Fatura",
+        "sourceApp2": "Fatura",
+        "sourceApp3": "Fatura"                             
+    }   
+}

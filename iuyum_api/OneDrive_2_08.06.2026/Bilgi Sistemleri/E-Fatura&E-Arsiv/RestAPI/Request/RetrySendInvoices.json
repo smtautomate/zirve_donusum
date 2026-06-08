@@ -1,0 +1,12 @@
+{
+  "Action": "RetrySendInvoices",
+  "parameters": {
+    "invoiceIds": [
+      "c6f78d37-3eb5-4c01-93e5-5f9fa7764d10"
+    ],
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <s:Header>
+  </s:Header>
+  <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <SaveAsDraft xmlns="http://tempuri.org/">
+      <userInfo Username="Uyumsoft" Password="Uyumsoft"/>
+      <despatches>
+        <DespatchInfo>
+          <DespatchAdvice xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">
+            <ProfileID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TEMELIRSALIYE</ProfileID>
+            <CopyIndicator xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">false</CopyIndicator>
+            <UUID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">26f85081-01a8-4311-b199-cd66e83a83d1</UUID>
+            <IssueDate xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">2024-10-17</IssueDate>
+            <IssueTime xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">16:17:53.6611157+03:00</IssueTime>
+            <DespatchAdviceTypeCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">SEVK</DespatchAdviceTypeCode>
+            <Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">İş bu sevk irsaliyesi muhteviyatına 7 gün içerisinde itiraz edilmediği taktirde aynen kabul edilmiş sayılır.</Note>
+            <LineCountNumeric xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">2</LineCountNumeric>
+            <OrderReference xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+              <ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">SIP2018012984</ID>
+              <IssueDate xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">2023-07-26</IssueDate>
+            </OrderReference>
+            <DespatchSupplierParty xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+              <Party>
+                <PartyIdentification>
+                  <ID schemeID="VKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">9000068418</ID>
+                </PartyIdentification>
+                <PartyName>
+                  <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Malların Sevkiyatını Sağlayan Firma</Name>
+                </PartyName>
+                <PostalAddress>
+                  <Room xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">401</Room>
+                  <StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">YILDIZ TEKNİK ÜNİ. DAVUTPAŞA KAMP. TEKNOPARK</StreetName>
+                  <BuildingName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">B1</BuildingName>
+                  <CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ESENLER</CitySubdivisionName>
+                  <CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">İSTANBUL</CityName>
+                  <Country>
+                    <IdentificationCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TR</IdentificationCode>
+                    <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TÜRKİYE</Name>
+                  </Country>
+                </PostalAddress>
+              </Party>
+            </DespatchSupplierParty>
+            <DeliveryCustomerParty xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+              <Party>
+                <PartyIdentification>
+                  <ID schemeID="VKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">9000068418</ID>
+                </PartyIdentification>
+                <PartyName>
+                  <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Malları Teslim Alan Firma</Name>
+                </PartyName>
+                <PostalAddress>
+                  <Room xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">401</Room>
+                  <StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">YILDIZ TEKNİK ÜNİ. DAVUTPAŞA KAMP. TEKNOPARK</StreetName>
+                  <BuildingName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">B1</BuildingName>
+                  <CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ESENLER</CitySubdivisionName>
+                  <CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">İSTANBUL</CityName>
+                  <Country>
+                    <IdentificationCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TR</IdentificationCode>
+                    <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TÜRKİYE</Name>
+                  </Country>
+                </PostalAddress>
+              </Party>
+            </DeliveryCustomerParty>
+            <BuyerCustomerParty xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+              <Party>
+                <PartyIdentification>
+                  <ID schemeID="VKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">9000068418</ID>
+                </PartyIdentification>
+                <PartyName>
+                  <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Malların Satın Alımını Sağlayan firma</Name>
+                </PartyName>
+                <PostalAddress>
+                  <Room xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">401</Room>
+                  <StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">YILDIZ TEKNİK ÜNİ. DAVUTPAŞA KAMP. TEKNOPARK</StreetName>
+                  <BuildingName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">B1</BuildingName>
+                  <CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ESENLER</CitySubdivisionName>
+                  <CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">İSTANBUL</CityName>
+                  <Country>
+                    <IdentificationCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TR</IdentificationCode>
+                    <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TÜRKİYE</Name>
+                  </Country>
+                </PostalAddress>
+              </Party>
+            </BuyerCustomerParty>
+            <SellerSupplierParty xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+              <Party>
+                <PartyIdentification>
+                  <ID schemeID="VKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">9000068418</ID>
+                </PartyIdentification>
+                <PartyName>
+                  <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Malları Satan Firma</Name>
+                </PartyName>
+                <PostalAddress>
+                  <Room xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">401</Room>
+                  <StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">YILDIZ TEKNİK ÜNİ. DAVUTPAŞA KAMP. TEKNOPARK</StreetName>
+                  <BuildingName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">B1</BuildingName>
+                  <CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ESENLER</CitySubdivisionName>
+                  <CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">İSTANBUL</CityName>
+                  <Country>
+                    <IdentificationCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TR</IdentificationCode>
+                    <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TÜRKİYE</Name>
+                  </Country>
+                </PostalAddress>
+              </Party>
+            </SellerSupplierParty>
+            <Shipment xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+              <ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</ID>
+              <GoodsItem>
+                <Description xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Taşıma özenli olmalı</Description>
+                <Item>
+                  <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">asdasd</Name>
+                </Item>
+                <InvoiceLine>
+                  <ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</ID>
+                  <InvoicedQuantity unitCode="NIU" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</InvoicedQuantity>
+                  <LineExtensionAmount currencyID="TRY" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</LineExtensionAmount>
+                  <Item>
+                    <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">test</Name>
+                  </Item>
+                  <Price>
+                    <PriceAmount currencyID="TRY" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</PriceAmount>
+                  </Price>
+                </InvoiceLine>
+              </GoodsItem>
+              <ShipmentStage>
+                <TransportMeans>
+                  <RoadTransport>
+                    <LicensePlateID schemeID="PLAKA" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">34AS34</LicensePlateID>
+                  </RoadTransport>
+                </TransportMeans>
+                <DriverPerson>
+                  <FirstName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Yunus</FirstName>
+                  <FamilyName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Şimşek</FamilyName>
+                  <NationalityID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">11111111111</NationalityID>
+                </DriverPerson>
+              </ShipmentStage>
+              <Delivery>
+                <ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</ID>
+                <DeliveryAddress>
+                  <StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">deneme mah</StreetName>
+                  <CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">merkez</CitySubdivisionName>
+                  <CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">tokat</CityName>
+                  <PostalZone xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">60100</PostalZone>
+                  <Country>
+                    <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">türkiye</Name>
+                  </Country>
+                </DeliveryAddress>
+                <CarrierParty>
+                  <PartyIdentification>
+                    <ID schemeID="VKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1234567890</ID>
+                  </PartyIdentification>
+                  <PartyName>
+                    <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Deneme</Name>
+                  </PartyName>
+                  <PostalAddress>
+                    <Room xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">401</Room>
+                    <StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">YILDIZ TEKNİK ÜNİ. DAVUTPAŞA KAMP. TEKNOPARK</StreetName>
+                    <BuildingName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">B1</BuildingName>
+                    <CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ESENLER</CitySubdivisionName>
+                    <CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">İSTANBUL</CityName>
+                    <Country>
+                      <IdentificationCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TR</IdentificationCode>
+                      <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TÜRKİYE</Name>
+                    </Country>
+                  </PostalAddress>
+                </CarrierParty>
+                <Despatch>
+                  <ActualDespatchDate xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">2021-11-05</ActualDespatchDate>
+                  <ActualDespatchTime xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">16:17:53.6651056+03:00</ActualDespatchTime>
+                </Despatch>
+              </Delivery>
+              <TransportHandlingUnit>
+                <TransportEquipment>
+                  <ID schemeID="DORSEPLAKA" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">66 RM 7737</ID>
+                </TransportEquipment>
+              </TransportHandlingUnit>
+            </Shipment>
+            <DespatchLine xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+              <ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</ID>
+              <Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1 koli 2 gün sonra gelecek</Note>
+              <DeliveredQuantity unitCode="NIU" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">10</DeliveredQuantity>
+              <OutstandingQuantity unitCode="NIU" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</OutstandingQuantity>
+              <OutstandingReason xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Stok Yok</OutstandingReason>
+              <OversupplyQuantity unitCode="NIU" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</OversupplyQuantity>
+              <OrderLineReference>
+                <LineID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</LineID>
+              </OrderLineReference>
+              <Item>
+                <Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1 LT Kola</Name>
+              </Item>
+              <Shipment>
+                <ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</ID>
+                <Delivery>
+                  <ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</ID>
+                </Delivery>
+              </Shipment>
+            </DespatchLine>
+          </DespatchAdvice>
+        </DespatchInfo>
+      </despatches>
+    </SaveAsDraft>
+  </s:Body>
+</s:Envelope>

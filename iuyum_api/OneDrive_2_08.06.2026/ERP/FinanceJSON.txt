@@ -1,0 +1,37 @@
+{
+    "value": {
+        "coCode": "Firma Kodu",
+        "branchCode": "İşyeri Kodu",
+        "receiptTypeCode": "Fiş Tipi",
+        "cardCode": "Hesap Kodu",
+        "docDate": "Fiş Tarihi(yıl-ay-gün)",
+        "docNo": "Fiş Belge No",
+        "sourceApp": "Kaynak(Finans-Muhasebe)",
+        "sourceApp2": "Kaynak(Finans-Muhasebe)",
+        "sourceApp3": "Kaynak(Finans-Muhasebe)",
+        "note1": "Master Acıklama1",
+        "note2": "Master Acıklama2",
+        "note3": "Master Acıklama3",
+        "currencyOption": "Sevk_Tarihindeki_Kur",
+        "amtCredit": 100.00(Yerel Alacak),
+        "amtDebit": 100.00(Yerel Borç),
+        "details": [
+            {
+                "lineNo": 10(Detay SıraNo),
+                "traTypeCode": "İşlem Tipi",
+                "cardCode": "120.01.0001",
+                "docNo": "Fiş Belge No(Detay)", 
+				"amt": 100.00(Tutar(Yerel)),				
+                "amtTra": 100.00(Tutar(Hareket)),
+                "curCode": "TRY(Para)",
+                "curRateTra": 1(Kur),
+                "note1": "Detay Acıklama1",
+                "note2": "Detay Acıklama2",
+                "note3": "Detay Acıklama3",                
+                "sourceApp": "Finans",
+                "sourceApp2": "Finans",
+                "sourceApp3": "Finans"
+            }
+        ]
+    }
+}

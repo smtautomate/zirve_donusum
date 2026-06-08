@@ -7,3 +7,12 @@ composer.lock
 *.cache
 test_connection.php
 .ai-team
+
+# iuyum_api — büyük dosyalar (GitHub 100MB sınırı)
+iuyum_api/**/*.zip
+iuyum_api/OneDrive_2_08.06.2026.zip
+iuyum_api/OneDrive_2_08.06.2026/Bilgi Sistemleri/E-Fatura&E-Arsiv/Belgeler/DataTypes.html
+iuyum_api/OneDrive_2_08.06.2026/Bilgi Sistemleri/E-Fatura&E-Arsiv/Belgeler/portType_http___tempuri_org__IBasicIntegration.html
+# macOS
+.DS_Store
+iuyum_api/**/.DS_Store

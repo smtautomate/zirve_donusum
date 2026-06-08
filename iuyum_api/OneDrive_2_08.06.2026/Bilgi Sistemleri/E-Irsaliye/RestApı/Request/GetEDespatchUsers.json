@@ -1,0 +1,13 @@
+{
+  "Action": "GetEDespatchUsers",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "pagination": {
+      "PageIndex": "0",
+      "PageSize": "10"
+    }
+  }
+}

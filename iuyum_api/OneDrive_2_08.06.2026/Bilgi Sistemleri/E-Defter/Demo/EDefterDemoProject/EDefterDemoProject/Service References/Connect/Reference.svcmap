@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3fba5c0d-a127-404a-9b7a-b580bb2fe734" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://efatura-test.uyumsoft.com.tr/services/LedgerIntegration" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LedgerIntegration1.disco" MetadataType="Disco" ID="ec8caab2-6e66-430b-8d0d-a7dab1ed6235" SourceId="1" SourceUrl="https://efatura-test.uyumsoft.com.tr/Services/LedgerIntegration?disco" />
+    <MetadataFile FileName="LedgerIntegration1.xsd" MetadataType="Schema" ID="1c4fd194-ce40-4448-8882-58461b1acc40" SourceId="1" SourceUrl="https://efatura-test.uyumsoft.com.tr/Services/LedgerIntegration?xsd=xsd0" />
+    <MetadataFile FileName="LedgerIntegration1.wsdl" MetadataType="Wsdl" ID="a6a866a7-97de-4ab2-8fb1-af5cb6fe9f96" SourceId="1" SourceUrl="https://efatura-test.uyumsoft.com.tr/Services/LedgerIntegration?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

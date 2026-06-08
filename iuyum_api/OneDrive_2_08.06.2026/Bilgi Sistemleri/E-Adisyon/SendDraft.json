@@ -1,0 +1,14 @@
+{
+  "Action": "SendDraft",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "parameters": {
+      "documentIds": [ "7cb9a86a-833a-46f7-a27b-2e28bba1debf" ]
+
+
+    }
+  }
+}

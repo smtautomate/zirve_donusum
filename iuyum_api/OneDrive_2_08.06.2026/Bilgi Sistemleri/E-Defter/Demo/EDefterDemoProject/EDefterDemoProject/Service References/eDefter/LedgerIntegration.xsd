@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="UploadSource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="request" type="tns:LedgerSourceRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="LedgerSourceRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Data" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute name="FileName" type="xs:string" />
+  </xs:complexType>
+  <xs:element name="UploadSourceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="UploadSourceResult" type="tns:StringResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="StringResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:attribute name="Value" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Response">
+    <xs:attribute name="IsSucceded" type="xs:boolean" use="required" />
+    <xs:attribute name="Message" type="xs:string" />
+  </xs:complexType>
+  <xs:element name="GetSourceInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="identifier" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSourceInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="GetSourceInformationResult" type="tns:ResponseOfLedgerSourceInformation" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ResponseOfLedgerSourceInformation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Value" type="tns:LedgerSourceInformation" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LedgerSourceInformation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:LedgerSourceStatusWithLogInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Ledgers" type="tns:LedgerStatusWithLogInfo" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LedgerSourceStatusWithLogInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:LedgerSourceStatusInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Logs" type="tns:LogRecordItem" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LedgerSourceStatusInfo">
+    <xs:attribute name="Status" type="tns:LedgerSourceStatus" use="required" />
+    <xs:attribute name="StatusCode" type="xs:int" use="required" />
+    <xs:attribute name="Identifier" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="LedgerSourceStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Waiting" />
+      <xs:enumeration value="Processing" />
+      <xs:enumeration value="Completed" />
+      <xs:enumeration value="Error" />
+      <xs:enumeration value="Canceled" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="LogRecordItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Creator" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="CreateDateUtc" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="RemoteIpAddress" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="LocalIpAddress" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="MachineName" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Type" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LedgerStatusWithLogInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:LedgerStatusInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Logs" type="tns:LogRecordItem" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LedgerStatusInfo">
+    <xs:attribute name="Status" type="tns:LedgerStatus" use="required" />
+    <xs:attribute name="StatusCode" type="xs:int" use="required" />
+    <xs:attribute name="Identifier" type="xs:string" />
+    <xs:attribute name="DocumentId" type="xs:string" />
+    <xs:attribute name="Type" type="tns:LedgerType" use="required" />
+  </xs:complexType>
+  <xs:simpleType name="LedgerStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WaitingForBuild" />
+      <xs:enumeration value="Building" />
+      <xs:enumeration value="UnsignedFileReady" />
+      <xs:enumeration value="FileSigned" />
+      <xs:enumeration value="BeratGenerated" />
+      <xs:enumeration value="BeratSignedByCustomer" />
+      <xs:enumeration value="BeratReadyToSend" />
+      <xs:enumeration value="BeratSentToGIB" />
+      <xs:enumeration value="Completed" />
+      <xs:enumeration value="Canceled" />
+      <xs:enumeration value="Error" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LedgerType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Journal" />
+      <xs:enumeration value="Ledger" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GetLedgerData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="identifier" type="xs:string" />
+        <xs:element minOccurs="1" maxOccurs="1" name="certificateFile" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLedgerDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="GetLedgerDataResult" type="tns:ResponseOfLedgerData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ResponseOfLedgerData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Value" type="tns:LedgerData" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LedgerData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:LedgerStatusInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="FileName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Data" type="xs:base64Binary" />
+          <xs:element minOccurs="1" maxOccurs="1" name="FileType" type="tns:LedgerFileType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="LedgerFileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UnsignedLedgerFile" />
+      <xs:enumeration value="SignedLedgerFile" />
+      <xs:enumeration value="UnsignedCertificateFile" />
+      <xs:enumeration value="SignedCertificateFile" />
+      <xs:enumeration value="FinalCertificateFile" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CancelLedgerSource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="identifier" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelLedgerSourceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="CancelLedgerSourceResult" type="tns:FlagResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="FlagResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:attribute name="Value" type="xs:boolean" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CancelLedger">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="identifier" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelLedgerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="CancelLedgerResult" type="tns:FlagResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

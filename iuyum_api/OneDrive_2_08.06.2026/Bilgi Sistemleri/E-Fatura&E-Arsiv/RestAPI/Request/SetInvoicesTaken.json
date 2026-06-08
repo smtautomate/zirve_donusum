@@ -1,0 +1,10 @@
+{
+  "Action": "SetInvoicesTaken",
+  "parameters": {
+    "invoices": ["76c4807a-198a-4f98-8ebb-0b6d09c7e87d"],
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}

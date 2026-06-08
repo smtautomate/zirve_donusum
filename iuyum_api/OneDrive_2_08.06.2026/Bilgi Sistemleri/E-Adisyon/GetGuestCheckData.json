@@ -1,0 +1,11 @@
+{
+  "Action": "GetGuestCheckData",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+
+    "documentId": "1b984dff-3c49-491f-ba7f-993019b74291"
+  }
+}

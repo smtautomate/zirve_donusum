@@ -1,0 +1,35 @@
+{
+    "value": {
+        "coCode": "Firma Kodu",
+        "branchCode": "İşyeri Kodu",
+        "docDate": "Belge Tarihi",
+        "docNo": "Belge Numarası",
+        "docTraCode": "Hareket Kodu",
+        "entityCode": "Cari Kodu",
+        "curCode": "Kur Kodu",
+        "curTra": Kur,
+        "sourceApp": "SatışSiparişi",
+        "note1": "Master Açıklama-1",
+        "note2": "Master Açıklama-2",
+        "note3": "Master Açıklama-3",
+        "currencyOption": "Sevk_Tarihindeki_Kur",
+        "details": [
+            {
+                "lineNo": Satır No,
+                "lineType": "Stok Tipi",
+                "whouseCode": "Depo Kodu",
+                "dcardCode": "Stok/Hizmet Kodu",
+                "UnitCode": "Birim Kodu",
+                "qty": Miktar,
+                "unitPrice": Birim Fiyat,
+                "curCode": "Kur Kodu",
+                "curRateTra": Kur,
+                "vatStatus": "KDV Durumu",
+                "vatCode": "Kdv Kodu",
+                "note1": "Detay Açıklama-1",
+                "note2": "Detay Açıklama-2",
+                "note3": "Detay Açıklama-3"
+            }
+        ]
+    }
+}

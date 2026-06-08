@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LedgerIntegration" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_ILedgerIntegration_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Lax />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss10>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://efatura-test.uyumsoft.com.tr/Services/LedgerIntegration?xsd=xsd0" namespace="http://tempuri.org/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILedgerIntegration_GetSystemDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemDate" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetSystemDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetSystemDateWithFormat_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemDateWithFormat" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetSystemDateWithFormat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemDateWithFormatResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_UploadSource_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSource" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_UploadSource_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerSources_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerSources" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerSources_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerSourcesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetSourceInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSourceInformation" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetSourceInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSourceInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerData" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedgerSource_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedgerSource" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedgerSource_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedgerSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedger_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedger" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedger_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedgerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgers" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_UploadSignedLedger_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSignedLedger" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_UploadSignedLedger_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSignedLedgerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerLogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerLogs" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerLogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerSchematronResults_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerSchematronResults" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerSchematronResults_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerSchematronResultsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CreateCertificate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateCertificate" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CreateCertificate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateCertificateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SendCertificate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendCertificate" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SendCertificate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendCertificateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_TransformLedgerToPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransformLedgerToPdf" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_TransformLedgerToPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransformLedgerToPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_TransformLedgerToCompressedPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransformLedgerToCompressedPdf" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_TransformLedgerToCompressedPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransformLedgerToCompressedPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_TransformLedgerToCompressedHtml_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransformLedgerToCompressedHtml" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_TransformLedgerToCompressedHtml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransformLedgerToCompressedHtmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerCompressedData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerCompressedData" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerCompressedData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerCompressedDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerCompressedAllData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerCompressedAllData" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerCompressedAllData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerCompressedAllDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerSourceLogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerSourceLogs" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerSourceLogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerSourceLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetCompanyInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCompanyInformation" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetCompanyInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCompanyInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SaveCompanyInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveCompanyInformation" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SaveCompanyInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveCompanyInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetAccountantInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountantInformation" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetAccountantInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountantInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SaveAccountantInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAccountantInformation" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SaveAccountantInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAccountantInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_DeleteAccountantInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccountantInformation" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_DeleteAccountantInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccountantInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CanPrepareLedger_InputMessage">
+    <wsdl:part name="parameters" element="tns:CanPrepareLedger" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CanPrepareLedger_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CanPrepareLedgerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_StoreCompletedLedger_InputMessage">
+    <wsdl:part name="parameters" element="tns:StoreCompletedLedger" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_StoreCompletedLedger_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StoreCompletedLedgerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_ImportLedger_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportLedger" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_ImportLedger_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportLedgerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CreateLedgerReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateLedgerReport" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CreateLedgerReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateLedgerReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SendLedgerReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendLedgerReport" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_SendLedgerReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendLedgerReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_UploadSignedLedgerReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSignedLedgerReport" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_UploadSignedLedgerReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSignedLedgerReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReportCompressedData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReportCompressedData" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReportCompressedData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReportCompressedDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReportCsvData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReportCsvData" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReportCsvData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReportCsvDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReportPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReportPdf" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReportPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReportPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReports_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReports" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerReports_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerReportsResponse" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="false" name="ILedgerIntegration">
+    <wsdl:operation name="GetSystemDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerServiceBase/GetSystemDate" message="tns:ILedgerIntegration_GetSystemDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerServiceBase/GetSystemDateResponse" message="tns:ILedgerIntegration_GetSystemDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemDateWithFormat">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerServiceBase/GetSystemDateWithFormat" message="tns:ILedgerIntegration_GetSystemDateWithFormat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerServiceBase/GetSystemDateWithFormatResponse" message="tns:ILedgerIntegration_GetSystemDateWithFormat_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadSource">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSource" message="tns:ILedgerIntegration_UploadSource_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSourceResponse" message="tns:ILedgerIntegration_UploadSource_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerSources">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerSources" message="tns:ILedgerIntegration_GetLedgerSources_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerSourcesResponse" message="tns:ILedgerIntegration_GetLedgerSources_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSourceInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetSourceInformation" message="tns:ILedgerIntegration_GetSourceInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetSourceInformationResponse" message="tns:ILedgerIntegration_GetSourceInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerData" message="tns:ILedgerIntegration_GetLedgerData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerDataResponse" message="tns:ILedgerIntegration_GetLedgerData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedgerSource">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedgerSource" message="tns:ILedgerIntegration_CancelLedgerSource_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedgerSourceResponse" message="tns:ILedgerIntegration_CancelLedgerSource_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedger">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedger" message="tns:ILedgerIntegration_CancelLedger_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedgerResponse" message="tns:ILedgerIntegration_CancelLedger_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgers">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgers" message="tns:ILedgerIntegration_GetLedgers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgersResponse" message="tns:ILedgerIntegration_GetLedgers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadSignedLedger">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSignedLedger" message="tns:ILedgerIntegration_UploadSignedLedger_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSignedLedgerResponse" message="tns:ILedgerIntegration_UploadSignedLedger_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerLogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerLogs" message="tns:ILedgerIntegration_GetLedgerLogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerLogsResponse" message="tns:ILedgerIntegration_GetLedgerLogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerSchematronResults">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerSchematronResults" message="tns:ILedgerIntegration_GetLedgerSchematronResults_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerSchematronResultsResponse" message="tns:ILedgerIntegration_GetLedgerSchematronResults_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateCertificate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/CreateCertificate" message="tns:ILedgerIntegration_CreateCertificate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/CreateCertificateResponse" message="tns:ILedgerIntegration_CreateCertificate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendCertificate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/SendCertificate" message="tns:ILedgerIntegration_SendCertificate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/SendCertificateResponse" message="tns:ILedgerIntegration_SendCertificate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransformLedgerToPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/TransformLedgerToPdf" message="tns:ILedgerIntegration_TransformLedgerToPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/TransformLedgerToPdfResponse" message="tns:ILedgerIntegration_TransformLedgerToPdf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransformLedgerToCompressedPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/TransformLedgerToCompressedPdf" message="tns:ILedgerIntegration_TransformLedgerToCompressedPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/TransformLedgerToCompressedPdfResponse" message="tns:ILedgerIntegration_TransformLedgerToCompressedPdf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransformLedgerToCompressedHtml">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/TransformLedgerToCompressedHtml" message="tns:ILedgerIntegration_TransformLedgerToCompressedHtml_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/TransformLedgerToCompressedHtmlResponse" message="tns:ILedgerIntegration_TransformLedgerToCompressedHtml_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerCompressedData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerCompressedData" message="tns:ILedgerIntegration_GetLedgerCompressedData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerCompressedDataResponse" message="tns:ILedgerIntegration_GetLedgerCompressedData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerCompressedAllData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerCompressedAllData" message="tns:ILedgerIntegration_GetLedgerCompressedAllData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerCompressedAllDataResponse" message="tns:ILedgerIntegration_GetLedgerCompressedAllData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerSourceLogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerSourceLogs" message="tns:ILedgerIntegration_GetLedgerSourceLogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerSourceLogsResponse" message="tns:ILedgerIntegration_GetLedgerSourceLogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetCompanyInformation" message="tns:ILedgerIntegration_GetCompanyInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetCompanyInformationResponse" message="tns:ILedgerIntegration_GetCompanyInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveCompanyInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/SaveCompanyInformation" message="tns:ILedgerIntegration_SaveCompanyInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/SaveCompanyInformationResponse" message="tns:ILedgerIntegration_SaveCompanyInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountantInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetAccountantInformation" message="tns:ILedgerIntegration_GetAccountantInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetAccountantInformationResponse" message="tns:ILedgerIntegration_GetAccountantInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAccountantInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/SaveAccountantInformation" message="tns:ILedgerIntegration_SaveAccountantInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/SaveAccountantInformationResponse" message="tns:ILedgerIntegration_SaveAccountantInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccountantInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/DeleteAccountantInformation" message="tns:ILedgerIntegration_DeleteAccountantInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/DeleteAccountantInformationResponse" message="tns:ILedgerIntegration_DeleteAccountantInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CanPrepareLedger">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/CanPrepareLedger" message="tns:ILedgerIntegration_CanPrepareLedger_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/CanPrepareLedgerResponse" message="tns:ILedgerIntegration_CanPrepareLedger_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StoreCompletedLedger">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/StoreCompletedLedger" message="tns:ILedgerIntegration_StoreCompletedLedger_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/StoreCompletedLedgerResponse" message="tns:ILedgerIntegration_StoreCompletedLedger_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportLedger">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/ImportLedger" message="tns:ILedgerIntegration_ImportLedger_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/ImportLedgerResponse" message="tns:ILedgerIntegration_ImportLedger_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateLedgerReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/CreateLedgerReport" message="tns:ILedgerIntegration_CreateLedgerReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/CreateLedgerReportResponse" message="tns:ILedgerIntegration_CreateLedgerReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendLedgerReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/SendLedgerReport" message="tns:ILedgerIntegration_SendLedgerReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/SendLedgerReportResponse" message="tns:ILedgerIntegration_SendLedgerReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadSignedLedgerReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSignedLedgerReport" message="tns:ILedgerIntegration_UploadSignedLedgerReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSignedLedgerReportResponse" message="tns:ILedgerIntegration_UploadSignedLedgerReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReportCompressedData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReportCompressedData" message="tns:ILedgerIntegration_GetLedgerReportCompressedData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReportCompressedDataResponse" message="tns:ILedgerIntegration_GetLedgerReportCompressedData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReportCsvData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReportCsvData" message="tns:ILedgerIntegration_GetLedgerReportCsvData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReportCsvDataResponse" message="tns:ILedgerIntegration_GetLedgerReportCsvData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReportPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReportPdf" message="tns:ILedgerIntegration_GetLedgerReportPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReportPdfResponse" message="tns:ILedgerIntegration_GetLedgerReportPdf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReports">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReports" message="tns:ILedgerIntegration_GetLedgerReports_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerReportsResponse" message="tns:ILedgerIntegration_GetLedgerReports_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ILedgerIntegration" type="tns:ILedgerIntegration">
+    <wsp:PolicyReference URI="#BasicHttpBinding_ILedgerIntegration_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSystemDate">
+      <soap:operation soapAction="http://tempuri.org/ICustomerServiceBase/GetSystemDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemDateWithFormat">
+      <soap:operation soapAction="http://tempuri.org/ICustomerServiceBase/GetSystemDateWithFormat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSource">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/UploadSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerSources">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerSources" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSourceInformation">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetSourceInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerData">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedgerSource">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/CancelLedgerSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedger">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/CancelLedger" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgers">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSignedLedger">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/UploadSignedLedger" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerLogs">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerLogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerSchematronResults">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerSchematronResults" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateCertificate">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/CreateCertificate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendCertificate">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/SendCertificate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransformLedgerToPdf">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/TransformLedgerToPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransformLedgerToCompressedPdf">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/TransformLedgerToCompressedPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransformLedgerToCompressedHtml">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/TransformLedgerToCompressedHtml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerCompressedData">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerCompressedData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerCompressedAllData">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerCompressedAllData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerSourceLogs">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerSourceLogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInformation">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetCompanyInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveCompanyInformation">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/SaveCompanyInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountantInformation">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetAccountantInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAccountantInformation">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/SaveAccountantInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccountantInformation">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/DeleteAccountantInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanPrepareLedger">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/CanPrepareLedger" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StoreCompletedLedger">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/StoreCompletedLedger" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportLedger">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/ImportLedger" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateLedgerReport">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/CreateLedgerReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendLedgerReport">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/SendLedgerReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSignedLedgerReport">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/UploadSignedLedgerReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReportCompressedData">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerReportCompressedData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReportCsvData">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerReportCsvData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReportPdf">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerReportPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerReports">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerReports" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LedgerIntegration">
+    <wsdl:port name="BasicHttpBinding_ILedgerIntegration" binding="tns:BasicHttpBinding_ILedgerIntegration">
+      <soap:address location="https://efatura-test.uyumsoft.com.tr/Services/LedgerIntegration" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

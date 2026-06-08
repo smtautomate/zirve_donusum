@@ -1,0 +1,12 @@
+{
+  "Action": "QueryGuestCheckStatus",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "documentId": {
+      "value": "1b984dff-3c49-491f-ba7f-993019b74291"
+    }
+  }
+}

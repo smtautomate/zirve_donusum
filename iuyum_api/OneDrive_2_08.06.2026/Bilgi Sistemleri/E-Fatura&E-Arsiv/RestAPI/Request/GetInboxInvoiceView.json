@@ -1,0 +1,10 @@
+{
+  "Action": "GetInboxInvoiceView",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "invoiceId": "619CDAF6-09F3-4CAF-8FF0-D01F8E842281"
+  }
+}

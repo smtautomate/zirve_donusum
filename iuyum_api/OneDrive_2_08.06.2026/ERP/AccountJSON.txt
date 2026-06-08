@@ -1,0 +1,58 @@
+{
+    "value": {
+        "coCode": "Firma Kodu",
+        "branchCode": "İşyeri Kodu",
+        "docDate": "2021-12-10(Belge Tarihi)",
+        "docNo": "Belge Numarası",
+        "note1": "Master Açıklama1",
+        "note2": "Master Açıklama2",
+        "note3": "Master Açıklama3",
+        "currencyOption": "Sevk_Tarihindeki_Kur",
+        "accReceipt": "Mahsup(Fiş Tipi)",
+        "amtCredit": 100(Yerel Borç),
+        "amtDebit": 100(Yerel Alacak),
+        "sourceApp": "Muhasebe(Kaynak1)",
+        "sourceApp2": "Muhasebe(Kaynak2)",
+        "sourceApp3": "Muhasebe(Kaynak3)",
+        "details": [
+            {
+                "lineNo": 10(Sıra No),
+				"traTypeCode": "ALACAK(İşlem Tipi)",
+                "accCode": "100.01(Muhasebe Hesap Kodu)",                
+                "amt": 100(Tutar(Yerel)),
+                "amtTra": 100(Tutar(Hareket)),
+                "amtCredit": 100(Alacak Tutar),                
+                "plusMinus":"Alacak",
+                "curCode": "TRY",
+                "curRateTra": 1,
+                "note1": "Detay Açıklama1",
+                "note2": "Detay Açıklama2",
+                "note3": "Detay Açıklama3",
+                "sourceApp": "Muhasebe",
+                "sourceApp2": "Muhasebe",
+                "sourceApp3": "Muhasebe",
+                "EbookDocumentType":0,
+                "EbookPaymentMethod":0
+            },
+            {
+                "lineNo": 20(Sıra No),
+				"traTypeCode": "BORÇ(İşlem Tipi)",
+                "accCode": "100.01(Muhasebe Hesap Kodu)",
+                "amt": 100(Tutar(Yerel)),
+                "amtTra": 100(Tutar(Hareket)),
+                "amtDebit": 100(Borç tutar),                
+                "plusMinus":"Borç",
+                "curCode": "TRY",
+                "curRateTra": 1,
+                "note1": "Detay Açıklama1",
+                "note2": "Detay Açıklama2",
+                "note3": "Detay Açıklama3",
+                "sourceApp": "Muhasebe",
+                "sourceApp2": "Muhasebe",
+                "sourceApp3": "Muhasebe",
+                "EbookDocumentType":0,
+                "EbookPaymentMethod":0
+            }
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "Action": "CancelGuestCheck",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "cancellationContext": {
+      "DocumentId": "7cb9a86a-833a-46f7-a27b-2e28bba1debf"
+
+
+    }
+  }
+}

@@ -1,0 +1,81 @@
+<s:Envelope
+	xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+	<s:Body
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<SendTicket
+			xmlns="http://tempuri.org/">
+			<userInfo Username="Uyumsoft" Password="Uyumsoft"/>
+			<ticket>
+				<AdditionalData Name="Adi"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>AYKUT</Value>
+				</AdditionalData>
+				<AdditionalData Name="Soyadi"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>SARIHAN</Value>
+				</AdditionalData>
+				<AdditionalData Name="Cinsiyet"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>E</Value>
+				</AdditionalData>
+				<AdditionalData Name="Seyahat_Kodu"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>AvMa0003</Value>
+				</AdditionalData>
+				<AdditionalData Name="Pnr_Kodu"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>12220321402021</Value>
+				</AdditionalData>
+				<AdditionalData Name="Gemi_Adi"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>Computer Books</Value>
+				</AdditionalData>
+				<AdditionalData Name="Bilet_Turu"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>Yetişkin</Value>
+				</AdditionalData>
+				<AdditionalData Name="Arac_turu"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>Taksi</Value>
+				</AdditionalData>
+				<AdditionalData Name="Plaka"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>06aaa55</Value>
+				</AdditionalData>
+				<AdditionalData Name="Qr_Kodu"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA5/wAXeLrPwdp1reXlnfXn2q7SzhhsYhJI0jBioClhnO0jjnJHFc//AMLT/wCpC8c/+Cf/AOzo+Kf/ADJX/Y12P/s9eYf8XH/4XJ/zNf8AYn/CQf8ATx9m+z/aP++fL2fhj2oA9n8OePdH8R6dJeYn0vZqB03ydTCQSNcAA+WF3HLc429cg8cVTvPiVptro2q6omk6zdwaXqc2m3S2tsrsjRLueU/NgRAfxEjqMgVwEWpTaN4V8Zapbr4faey8Z3txGutglSyJuAhwQfPyPl5H8VW5obzxT4N0jTtR1rw54evtd1CHULi20y6NpJeWc8e1gVbJkmcsRg5Vio5OKAOsg+LvhW6uIre3nkmnl0wahHHG8TM7E4FqAHybgn/ln+talh490e+1G2s8T2/nxKfOuAiRx3DED7G7buLkZyYuoFeSQaLN4S+LkWljw7pt9OujiPR2tLIyrE3n7YLq84BDgr+8kQcZGK25vtmqajpGkaj/AMI5Z31r4lh1O4vdMzHZTSKdrW5dslr0kk7CMlQDmgDqJPixZ/2jqFnZ+FfFeofYLuSzmmsdOEsfmIcMAwf6HnBwRxRH8WLP+0dPs7zwr4r0/wC33cdnDNfacIo/Mc4UFi/1PGTgHivONX/4ST/hDfFP/CL/ANq/bv8AhOrvf/ZnmeZ5flnOfL5252+2cUaR/wAJJ/whvhb/AISj+1ft3/CdWmz+0/M8zy/LGMeZztzu9s5oA+h6KKKACiiigAooooA4f4o2FnfeHrH7ZaeI7jyNQjnh/wCEejD3Mcio+1+eijJ5HIO2vNHvNNtbi0TVNY+MGkwXVwlut3qVysECMx6s7cAAZJ9gT2rv/jQdSj8C/aNL1+PRZ7e485pGvGt2nVYpD5KFeWdjjC98e1cZpniqz8R/2Np15oPiPVNbfRIIYbbVrMT6a0hwq3zqSWK7yQZhzsJ7mgDP1mbw3pHh59Ii0Xxlqm/WzqFje31rHPbaleFCsYL8edDJjOFG5gSQeaPC9r9o8Q2cvjS40qzsbWVNUtr+F/L+w3CuuzS2kl4jVBvY245XGc9ar6/o3iTS9R0vxHKmuS6Jo2qxNfaYRI0cMkJLyS2kWAq2gQbY2YggcHAroL+2/t34eXP/AAi/hq+n/wCEk8QNI/8Ab9ju+z/aIjm6i8vOyNcrtk5x83WgCnPrUOjeKpdUv/EVprMFxrBk09fDl6LjVCrPujtZMkD7LgHMan75XHWpNKms/wCzr2fV9F8R/bv+Ewk16z0q0tR9t8vAKSyQtz5OcqWHG7ABrD8KaBD4E8dC4uPBXifVoLWy8mSQaUJ1F+sqky25IUeVhPkb73PvW5ol14wvtR8SXn2eC38+W6l8m/SZNfj05iDttV7KM4QfcEuaALEmn+G/7R1C8s/EPjnT/t/majNDY3scUf2xzlrIKB/x99B5Jy2AOav6F4V0fXfEOmf8T7xzqH2DytT/AOJheJLbW9wjj/R5eDsuFz8ycEAnmrE2q2f9naRpHhew0r7d5sN0974jhHl/bMbTHI8Zz/aOdpK43Y3GugsNVvNC8ZW2kajYaVp9jf6et1cXtvCYo7jVXkCtGjsQHZgCQpBcgZoA7iiiigAooooAKKKKAOD+Kumw6ho2ivcNaNBZaxBdyWk5Ba9VFfNvEhGJJXBwqcbuma888K+JPtH9tQeX/YfmarPaf2rq6/ZvsOnHaPsVvNn93cJ95IvuLtJ7V6P8SbC8vv8AhEfsdpPceR4ls55vJjL+XGu/c7Y6KMjJPArhLLwLDr/xc1K3uLPxPD4diuJdUkjv4gtpc34nAO0FSjxMh4/iK55xQBXgtoY/FUT3HifxdfeHVcRyWl5fiVp1383UiH5G01k4MnfJHStd9Wh1D4l2lw+oaz4a8H6ZZIlrI0ws7C9mjmygQ58uSJ4jwBgsq8cCrEsGm6Nb+K7jVIpLHw61veacsmoKsV+WxnyLIthPsuwHyk/vA8YrIezm1P4R2ml+G9H1nUYNQ1NLSBvFFsZmtIZINq3EWziOJAV2uAQMtxQBfTxrr1r8S7vVHgu/EXh02T29qvhdHu4EbztyGX5tgnCfewejLjg1mQ6ref2dq+rz2HiP/hKf7bmutLskhP237HjdFHMhO/7F5nDKp27uBzVPwUNS+Gviqa3TQPGt9pa2TQ3UcNm0sEl/vUPLCPlUxFU+Vj82DzUa+LtY0v8A4Se81OznivtZlurPRYZonXWofO5gCqzArbAggbM4k6A0AbGq3VnffYryC3+z309pHLqkMSBLaO8bJlW2UcjVwThA3zAdav6Fqv8AanxD0z+17DXLPRLXSorWz/4SeHy/O1FZRskXcSrXBQnDD5zhscVyHiXW/O8G+FdIl8LeK9Lvk1W0nvr1dP8AIkurgRlZHifOXuGPKlhkkZPSuv0LVf7U+Iemf2vYa5Z6Ja6VFa2f/CTw+X52orKNki7iVa4KE4YfOcNjigD2CiiigAooooAKKKKAPP8A4sSXn9neGrOz1K+0/wC3+ILWzmmsZzFJ5bhwwDD8DzkZA4rzj+1/Df8AwmX/AAi//CX/ABO+3f2h/Z/mf2lH5fmeZ5ec5ztz3xnHavR/ixHef2d4avLPTb7UPsHiC1vJobGAyyeWgcsQo/Ac4GSOa84/sjw3/wAJl/wlH/CIfE77d/aH9oeX/Zsfl+Z5nmYxjO3PbOcd6ADU5NH/AOFeazZ+NNS8R6hY2HjCeztpoZ0lufkiIQM0vG3G8nGOT061qaLq0OoeKtBuH1DxP4a8H6Zo9ulrJqUws4L2aNwUDHPlyB4jyBgsFOOBVeDRdS1nRonuPDupLBe/EIX8lpeWTBhauvLSIQRswcE8r1Ga6vx615rvg0aHofhP/mK/2Oqajpx8u3j8tkF1CEzsjXI2yYwBnigDLTxrr1r8S7vVHgu/EXh02T29qvhdHu4EbztyGX5tgnCfewejLjg1yGpaTqUlwvxH1TT/ABO09l4o3rZ3ULFoNMQmfIRhlQpyM7gg5HvWh4KGpfDXxVNbpoHjW+0tbJobqOGzaWCS/wB6h5YR8qmIqnysfmwea19MvfibdaN4ov7fSrSbS5b27mj07xHb3LXbwlQRFHGPlKFflC9N24UAZGseMYdZuNHt9L0bxrfTrrsHiRo721ErC1yRiAKxPlZI2/w8n5q6Pw5JZ33xDk1PV9Svrexny1nofiqcJcx3jShkltoG4EYBKIwO4HcBUekiG18K2PiC40DxrDqkWpxiS3s7MLOihA5t41PzDTw3Ajz1xVzwj4X/ALd+Id140vLHVfsPlPFDa+JIv9Jt7jzVlVoEIISFQSFIbIO4e9AHrFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH/2Q==</Value>
+				</AdditionalData>
+				<AdditionalData Name="Baslangic"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>Avşa</Value>
+				</AdditionalData>
+				<AdditionalData Name="Bitis"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>Marmara Adası</Value>
+				</AdditionalData>
+				<AdditionalData Name="TCKNO"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>15900000000</Value>
+				</AdditionalData>
+				<AdditionalData Name="Email"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>sarihanaykut@gmail.com</Value>
+				</AdditionalData>
+				<AdditionalData Name="Telefon"
+					xmlns="http://ticket.uyumsoft.com.tr">
+					<Value>(506) 280-2905</Value>
+				</AdditionalData>
+				<DocumentId xmlns="http://ticket.uyumsoft.com.tr">9719d7c5-af78-4ecc-9804-a74f1c7b3265</DocumentId>
+				<TicketNumber xmlns="http://ticket.uyumsoft.com.tr">HTG2021000000039</TicketNumber>
+				<PreperationDate xmlns="http://ticket.uyumsoft.com.tr">2021-03-12T22:21:57.8020085+03:00</PreperationDate>
+				<TravelDate xmlns="http://ticket.uyumsoft.com.tr">2021-02-28T10:00:00</TravelDate>
+				<Amount xmlns="http://ticket.uyumsoft.com.tr">18.00</Amount>
+				<Tax xmlns="http://ticket.uyumsoft.com.tr">0.00</Tax>
+				<PaymentType xmlns="http://ticket.uyumsoft.com.tr">BANKAKARTI</PaymentType>
+				<ExpenseOwnerTcknVkn xmlns="http://ticket.uyumsoft.com.tr">15900000000</ExpenseOwnerTcknVkn>
+			</ticket>
+		</SendTicket>
+	</s:Body>
+</s:Envelope>

@@ -1,0 +1,9 @@
+{
+	"value": {
+		"cmdProcess": {
+			"commandType": "Text",
+			"commandText": "SELECT * FROM PSMT_INVOICE_M WHERE ROWNUM<10",
+			"executeType": "ExecuteReader"
+		}
+	}
+}

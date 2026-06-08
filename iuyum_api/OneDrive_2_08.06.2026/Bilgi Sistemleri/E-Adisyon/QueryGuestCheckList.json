@@ -1,0 +1,12 @@
+{
+  "Action": "QueryGuestCheckList",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "context": {
+      "GuestCheckNumber": "GIB2021123456759"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+	<s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<SendInvoiceResponse xmlns="http://tempuri.org/">
+			<SendInvoiceResult IsSucceded="true">
+				<Value Id="c2de3eba-6560-4d59-9dd7-a55f6856eda9" Number="UYA2017000001246" InvoiceScenario="eInvoice"/>
+			</SendInvoiceResult>
+		</SendInvoiceResponse>
+	</s:Body>
+</s:Envelope>

@@ -1,0 +1,10 @@
+{
+  "Action": "GetSystemDate",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+
+  }
+}

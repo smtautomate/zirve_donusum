@@ -1,0 +1,12 @@
+{
+  "Action": "SendDraft",
+  "parameters": {
+    "invoiceIds": [
+      "b7c6fa1b-1721-4859-8e57-a33ac96dc99c"
+    ],
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}

@@ -1,0 +1,493 @@
+{
+  "Action": "SendGuestCheck",
+  "parameters": {
+    "guestChecks": [
+      {
+        "GuestCheck": {
+          "UBLExtensions": null,
+          "UBLVersionID": {
+            "schemeID": null,
+            "schemeName": null,
+            "schemeAgencyID": null,
+            "schemeAgencyName": null,
+            "schemeVersionID": null,
+            "schemeDataURI": null,
+            "schemeURI": null,
+            "Value": "2.1"
+          },
+          "CustomizationID": {
+            "schemeID": null,
+            "schemeName": null,
+            "schemeAgencyID": null,
+            "schemeAgencyName": null,
+            "schemeVersionID": null,
+            "schemeDataURI": null,
+            "schemeURI": null,
+            "Value": "TR1.2"
+          },
+          "ProfileID": {
+            "schemeID": null,
+            "schemeName": null,
+            "schemeAgencyID": null,
+            "schemeAgencyName": null,
+            "schemeVersionID": null,
+            "schemeDataURI": null,
+            "schemeURI": null,
+            "Value": "EARSIVBELGE"
+          },
+          "ProfileExecutionID": null,
+          "ID": {
+            "schemeID": null,
+            "schemeName": null,
+            "schemeAgencyID": null,
+            "schemeAgencyName": null,
+            "schemeVersionID": null,
+            "schemeDataURI": null,
+            "schemeURI": null,
+            "Value": ""
+          },
+          "CopyIndicator": {
+            "Value": false
+          },
+          "UUID": {
+            "schemeID": null,
+            "schemeName": null,
+            "schemeAgencyID": null,
+            "schemeAgencyName": null,
+            "schemeVersionID": null,
+            "schemeDataURI": null,
+            "schemeURI": null,
+            "Value": "25ff0923-193c-4138-ac01-1a3088133242"
+          },
+          "IssueDate": {
+            "Value": "2025-09-29T10:11:24.4467195+03:00"
+          },
+
+          "TaxPointDate": null,
+          "CreditNoteTypeCode": {
+            "listID": null,
+            "listAgencyID": null,
+            "listAgencyName": null,
+            "listName": null,
+            "listVersionID": null,
+            "name": null,
+            "languageID": null,
+            "listURI": null,
+            "listSchemeURI": null,
+            "Value": "ADISYON"
+          },
+          "Note": [
+            {
+              "languageID": null,
+              "languageLocaleID": null,
+              "Value": "GELÝR MERKEZÝ: Demo2022"
+            },
+            {
+              "languageID": null,
+              "languageLocaleID": null,
+              "Value": "MASA NO: 85"
+            },
+            {
+              "languageID": null,
+              "languageLocaleID": null,
+              "Value": "YALNIZ BÝNÝKÝYÜZYÝRMÝDÖRT TL. DÝR"
+            },
+            {
+              "languageID": null,
+              "languageLocaleID": null,
+              "Value": "Ödeme : NAKÝT - 1.224,00"
+            }
+          ],
+          "DocumentCurrencyCode": {
+            "listID": null,
+            "listAgencyID": null,
+            "listAgencyName": null,
+            "listName": null,
+            "listVersionID": null,
+            "name": null,
+            "languageID": null,
+            "listURI": null,
+            "listSchemeURI": null,
+            "Value": "TRY"
+          },
+
+
+          "StatementDocumentReference": null,
+          "OriginatorDocumentReference": null,
+          "Signature": null,
+          "AccountingSupplierParty": {
+            "Party": {
+              "PartyIdentification": [
+                {
+                  "ID": {
+                    "schemeID": "VKN",
+                    "schemeName": null,
+                    "schemeAgencyID": null,
+                    "schemeAgencyName": null,
+                    "schemeVersionID": null,
+                    "schemeDataURI": null,
+                    "schemeURI": null,
+                    "Value": "9000068418"
+                  }
+                }
+              ],
+              "PartyName": {
+                "Name": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "UYUMSOFT BÝLGÝ SÝSTEMLERÝ"
+                }
+              },
+              "PostalAddress": {
+                "StreetName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "No: 8 / 35 ÞÝÞLÝ ÝSTANBUL \nÝSTANBUL/ ÞÝÞLÝ "
+                },
+                "CitySubdivisionName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "Esenler"
+                },
+                "CityName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "Ýstanbul"
+                },
+                "Country": {
+                  "IdentificationCode": {
+                    "languageID": null,
+                    "languageLocaleID": null,
+                    "Value": "TR"
+                  },
+                  "Name": {
+                    "languageID": null,
+                    "languageLocaleID": null,
+                    "Value": "Türkiye"
+                  }
+                }
+              },
+              "PhysicalLocation": null,
+              "PartyTaxScheme": {
+                "RegistrationName": null,
+                "CompanyID": null,
+                "TaxScheme": {
+                  "ID": null,
+                  "Name": {
+                    "languageID": null,
+                    "languageLocaleID": null,
+                    "Value": "ÞÝÞLÝ VERGÝ DAÝRESÝ MÜD."
+                  },
+                  "TaxTypeCode": null
+                }
+              },
+              "PartyLegalEntity": null,
+              "Contact": null,
+              "Person": null,
+              "AgentParty": null
+            },
+            "DespatchContact": null
+          },
+          "AccountingCustomerParty": {
+            "Party": {
+              "PartyIdentification": [
+                {
+                  "ID": {
+                    "schemeID": "TCKN",
+                    "schemeName": null,
+                    "schemeAgencyID": null,
+                    "schemeAgencyName": null,
+                    "schemeVersionID": null,
+                    "schemeDataURI": null,
+                    "schemeURI": null,
+                    "Value": "11111111111"
+                  }
+                }
+              ],
+              "PartyName": null,
+              "PostalAddress": {
+                "StreetName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "No: 8 / 35 ÞÝÞLÝ ÝSTANBUL \nÝSTANBUL/ ÞÝÞLÝ "
+                },
+                "CitySubdivisionName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "Esenler"
+                },
+                "CityName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "Ýstanbul"
+                },
+                "Country": {
+                  "IdentificationCode": {
+                    "languageID": null,
+                    "languageLocaleID": null,
+                    "Value": "TR"
+                  },
+                  "Name": {
+                    "languageID": null,
+                    "languageLocaleID": null,
+                    "Value": "Türkiye"
+                  }
+                }
+              },
+              "PhysicalLocation": null,
+              "PartyTaxScheme": null,
+              "PartyLegalEntity": null,
+              "Contact": null,
+              "Person": {
+                "FirstName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "NIHAI"
+                },
+                "FamilyName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "TUKETICI"
+                },
+                "Title": null,
+                "MiddleName": null,
+                "NameSuffix": null,
+                "NationalityID": null,
+                "FinancialAccount": null,
+                "IdentityDocumentReference": null
+              },
+              "AgentParty": null
+            }
+          },
+          "SellerSupplierParty": {
+            "Party": {
+              "PartyIdentification": [
+                {
+                  "ID": {
+                    "schemeID": "TCKN",
+                    "schemeName": null,
+                    "schemeAgencyID": null,
+                    "schemeAgencyName": null,
+                    "schemeVersionID": null,
+                    "schemeDataURI": null,
+                    "schemeURI": null,
+                    "Value": "11111111111"
+                  }
+                }
+              ],
+              "PostalAddress": {
+                "StreetName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "No: 8 / 35 ÞÝÞLÝ ÝSTANBUL \nÝSTANBUL/ ÞÝÞLÝ "
+                },
+                "CitySubdivisionName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "Esenler"
+                },
+                "CityName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "Ýstanbul"
+                },
+                "Country": {
+                  "IdentificationCode": {
+                    "languageID": null,
+                    "languageLocaleID": null,
+                    "Value": "TR"
+                  },
+                  "Name": {
+                    "languageID": null,
+                    "languageLocaleID": null,
+                    "Value": "Türkiye"
+                  }
+                }
+              },
+              "PhysicalLocation": null,
+              "PartyTaxScheme": null,
+              "PartyLegalEntity": null,
+              "Contact": null,
+              "Person": {
+                "FirstName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "NIHAI"
+                },
+                "FamilyName": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "TUKETICI"
+                },
+                "AgentParty": null
+              },
+              "DespatchContact": null
+
+
+            }
+          },
+
+          "TaxTotal": [
+            {
+              "TaxAmount": {
+                "currencyID": "TRY",
+
+                "Value": 118.85
+              },
+              "TaxSubtotal": [
+                {
+                  "TaxableAmount": {
+                    "currencyID": "TRY",
+
+                    "Value": 1021.81
+                  },
+                  "TaxAmount": {
+                    "currencyID": "TRY",
+
+                    "Value": 102.18
+                  },
+                  "Percent": {
+
+                    "Value": 10.0
+                  },
+                  "TaxCategory": {
+                    "TaxExemptionReasonCode": null,
+                    "TaxExemptionReason": null,
+                    "TaxScheme": {
+                      "Name": {
+
+                        "Value": "KDV"
+                      },
+                      "TaxTypeCode": {
+                        "Value": "0015"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "LegalMonetaryTotal": {
+            "LineExtensionAmount": {
+              "currencyID": "TRY",
+
+              "Value": 1224.0
+            },
+            "TaxExclusiveAmount": {
+              "currencyID": "TRY",
+
+              "Value": 1105.15
+            },
+            "TaxInclusiveAmount": {
+              "currencyID": "TRY",
+
+              "Value": 1224.0
+            },
+            "AllowanceTotalAmount": {
+              "currencyId": "TRY",
+              "value": 110
+            },
+
+            "PayableAmount": {
+              "currencyId": "TRY",
+              "value": 110
+            }
+          },
+          "CreditNoteLine": [
+            {
+              "ID": {
+                "schemeID": null,
+                "schemeName": null,
+                "schemeAgencyID": null,
+                "schemeAgencyName": null,
+                "schemeVersionID": null,
+                "schemeDataURI": null,
+                "schemeURI": null,
+                "Value": "1"
+              },
+
+              "CreditedQuantity": {
+                "unitCode": "NIU",
+                "unitCodeListID": null,
+                "unitCodeListAgencyID": null,
+                "unitCodeListAgencyName": null,
+                "Value": 1
+              },
+              "LineExtensionAmount": {
+                "currencyID": "TRY",
+                "currencyCodeListVersionID": null,
+                "Value": 60.0
+              },
+              "TaxTotal": [
+                {
+                  "TaxAmount": {
+                    "currencyID": "TRY",
+
+                    "Value": 5.45
+                  },
+                  "TaxSubtotal": [
+                    {
+                      "TaxableAmount": {
+                        "currencyID": "TRY",
+
+                        "Value": 54.5455
+                      },
+                      "TaxAmount": {
+                        "currencyID": "TRY",
+
+                        "Value": 5.45
+                      },
+                      "Percent": {
+
+                        "Value": 10.0
+                      },
+                      "BaseUnitMeasure": null,
+                      "PerUnitAmount": null,
+                      "TaxCategory": {
+                        "Name": null,
+                        "TaxExemptionReasonCode": null,
+                        "TaxExemptionReason": null,
+                        "TaxScheme": {
+                          "ID": null,
+                          "Name": {
+                            "languageID": null,
+                            "languageLocaleID": null,
+                            "Value": "KDV"
+                          },
+                          "TaxTypeCode": {
+
+                            "Value": "0015"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "Item": {
+                "Name": {
+                  "languageID": null,
+                  "languageLocaleID": null,
+                  "Value": "ÝSKENDER KEBAP"
+                }
+              },
+              "Price": {
+                "PriceAmount": {
+                  "currencyID": "TRY",
+                  "currencyCodeListVersionID": null,
+                  "Value": 60.0
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}
+   

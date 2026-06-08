@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DespatchIntegration" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_IDespatchIntegration_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Lax />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss10>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd1" namespace="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd2" namespace="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd3" namespace="http://www.w3.org/2000/09/xmldsig#" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd4" namespace="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd5" namespace="urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd6" namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd7" namespace="urn:oasis:names:specification:ubl:schema:xsd:SignatureBasicComponents-2" />
+      <xsd:import schemaLocation="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd8" namespace="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDespatchIntegration_GetSystemDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemDate" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetSystemDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_IsEDespatchUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsEDespatchUser" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_IsEDespatchUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsEDespatchUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetEDespatchUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEDespatchUsers" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetEDespatchUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEDespatchUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetUserAliasses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAliasses" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetUserAliasses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAliassesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SaveAsDraft_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAsDraft" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SaveAsDraft_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAsDraftResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CompressedSaveAsDraft_InputMessage">
+    <wsdl:part name="parameters" element="tns:CompressedSaveAsDraft" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CompressedSaveAsDraft_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CompressedSaveAsDraftResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CloneDespatches_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloneDespatches" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CloneDespatches_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloneDespatchesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SendDraft_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendDraft" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SendDraft_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendDraftResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CancelDraft_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelDraft" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CancelDraft_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelDraftResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SendDespatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendDespatch" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SendDespatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendDespatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CompressedSendDespatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:CompressedSendDespatch" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_CompressedSendDespatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CompressedSendDespatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_RetrySendDespatches_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrySendDespatches" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_RetrySendDespatches_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrySendDespatchesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchList" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatch" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatches_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatches" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatches_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchesData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchesData" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchesData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchesDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchStatusWithLogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchStatusWithLogs" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchStatusWithLogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchStatusWithLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_QueryOutboxDespatchStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:QueryOutboxDespatchStatus" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_QueryOutboxDespatchStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QueryOutboxDespatchStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchView_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchView" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchView_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchViewResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchPdf" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetOutboxDespatchPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOutboxDespatchPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SetDespatchReceiptAdvicesTaken_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetDespatchReceiptAdvicesTaken" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SetDespatchReceiptAdvicesTaken_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetDespatchReceiptAdvicesTakenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatch" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatches_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatches" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatches_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchList" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchesData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchesData" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchesData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchesDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchStatusWithLogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchStatusWithLogs" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchStatusWithLogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchStatusWithLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_QueryInboxDespatchStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:QueryInboxDespatchStatus" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_QueryInboxDespatchStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QueryInboxDespatchStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SetDespatchesTaken_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetDespatchesTaken" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SetDespatchesTaken_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetDespatchesTakenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SendReceiptAdvice_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendReceiptAdvice" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_SendReceiptAdvice_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendReceiptAdviceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_QueryReceiptAdviceStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:QueryReceiptAdviceStatus" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_QueryReceiptAdviceStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QueryReceiptAdviceStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchView_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchView" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchView_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchViewResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchPdf" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_GetInboxDespatchPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboxDespatchPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_ChangeDespatchArchiveStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeDespatchArchiveStatus" />
+  </wsdl:message>
+  <wsdl:message name="IDespatchIntegration_ChangeDespatchArchiveStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeDespatchArchiveStatusResponse" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="false" name="IDespatchIntegration">
+    <wsdl:operation name="GetSystemDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerServiceBase/GetSystemDate" message="tns:IDespatchIntegration_GetSystemDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerServiceBase/GetSystemDateResponse" message="tns:IDespatchIntegration_GetSystemDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsEDespatchUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/IsEDespatchUser" message="tns:IDespatchIntegration_IsEDespatchUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/IsEDespatchUserResponse" message="tns:IDespatchIntegration_IsEDespatchUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEDespatchUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetEDespatchUsers" message="tns:IDespatchIntegration_GetEDespatchUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetEDespatchUsersResponse" message="tns:IDespatchIntegration_GetEDespatchUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAliasses">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetUserAliasses" message="tns:IDespatchIntegration_GetUserAliasses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetUserAliassesResponse" message="tns:IDespatchIntegration_GetUserAliasses_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAsDraft">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/SaveAsDraft" message="tns:IDespatchIntegration_SaveAsDraft_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/SaveAsDraftResponse" message="tns:IDespatchIntegration_SaveAsDraft_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CompressedSaveAsDraft">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/CompressedSaveAsDraft" message="tns:IDespatchIntegration_CompressedSaveAsDraft_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/CompressedSaveAsDraftResponse" message="tns:IDespatchIntegration_CompressedSaveAsDraft_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloneDespatches">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/CloneDespatches" message="tns:IDespatchIntegration_CloneDespatches_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/CloneDespatchesResponse" message="tns:IDespatchIntegration_CloneDespatches_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDraft">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/SendDraft" message="tns:IDespatchIntegration_SendDraft_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/SendDraftResponse" message="tns:IDespatchIntegration_SendDraft_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelDraft">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/CancelDraft" message="tns:IDespatchIntegration_CancelDraft_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/CancelDraftResponse" message="tns:IDespatchIntegration_CancelDraft_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDespatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/SendDespatch" message="tns:IDespatchIntegration_SendDespatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/SendDespatchResponse" message="tns:IDespatchIntegration_SendDespatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CompressedSendDespatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/CompressedSendDespatch" message="tns:IDespatchIntegration_CompressedSendDespatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/CompressedSendDespatchResponse" message="tns:IDespatchIntegration_CompressedSendDespatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrySendDespatches">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/RetrySendDespatches" message="tns:IDespatchIntegration_RetrySendDespatches_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/RetrySendDespatchesResponse" message="tns:IDespatchIntegration_RetrySendDespatches_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchList" message="tns:IDespatchIntegration_GetOutboxDespatchList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchListResponse" message="tns:IDespatchIntegration_GetOutboxDespatchList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatch" message="tns:IDespatchIntegration_GetOutboxDespatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchResponse" message="tns:IDespatchIntegration_GetOutboxDespatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatches">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatches" message="tns:IDespatchIntegration_GetOutboxDespatches_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchesResponse" message="tns:IDespatchIntegration_GetOutboxDespatches_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchesData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchesData" message="tns:IDespatchIntegration_GetOutboxDespatchesData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchesDataResponse" message="tns:IDespatchIntegration_GetOutboxDespatchesData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchStatusWithLogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchStatusWithLogs" message="tns:IDespatchIntegration_GetOutboxDespatchStatusWithLogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchStatusWithLogsResponse" message="tns:IDespatchIntegration_GetOutboxDespatchStatusWithLogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryOutboxDespatchStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/QueryOutboxDespatchStatus" message="tns:IDespatchIntegration_QueryOutboxDespatchStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/QueryOutboxDespatchStatusResponse" message="tns:IDespatchIntegration_QueryOutboxDespatchStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchView">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchView" message="tns:IDespatchIntegration_GetOutboxDespatchView_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchViewResponse" message="tns:IDespatchIntegration_GetOutboxDespatchView_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchPdf" message="tns:IDespatchIntegration_GetOutboxDespatchPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchPdfResponse" message="tns:IDespatchIntegration_GetOutboxDespatchPdf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDespatchReceiptAdvicesTaken">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/SetDespatchReceiptAdvicesTaken" message="tns:IDespatchIntegration_SetDespatchReceiptAdvicesTaken_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/SetDespatchReceiptAdvicesTakenResponse" message="tns:IDespatchIntegration_SetDespatchReceiptAdvicesTaken_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatch" message="tns:IDespatchIntegration_GetInboxDespatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchResponse" message="tns:IDespatchIntegration_GetInboxDespatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatches">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatches" message="tns:IDespatchIntegration_GetInboxDespatches_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchesResponse" message="tns:IDespatchIntegration_GetInboxDespatches_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchList" message="tns:IDespatchIntegration_GetInboxDespatchList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchListResponse" message="tns:IDespatchIntegration_GetInboxDespatchList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchesData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchesData" message="tns:IDespatchIntegration_GetInboxDespatchesData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchesDataResponse" message="tns:IDespatchIntegration_GetInboxDespatchesData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchStatusWithLogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchStatusWithLogs" message="tns:IDespatchIntegration_GetInboxDespatchStatusWithLogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchStatusWithLogsResponse" message="tns:IDespatchIntegration_GetInboxDespatchStatusWithLogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryInboxDespatchStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/QueryInboxDespatchStatus" message="tns:IDespatchIntegration_QueryInboxDespatchStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/QueryInboxDespatchStatusResponse" message="tns:IDespatchIntegration_QueryInboxDespatchStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDespatchesTaken">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/SetDespatchesTaken" message="tns:IDespatchIntegration_SetDespatchesTaken_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/SetDespatchesTakenResponse" message="tns:IDespatchIntegration_SetDespatchesTaken_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendReceiptAdvice">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/SendReceiptAdvice" message="tns:IDespatchIntegration_SendReceiptAdvice_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/SendReceiptAdviceResponse" message="tns:IDespatchIntegration_SendReceiptAdvice_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryReceiptAdviceStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/QueryReceiptAdviceStatus" message="tns:IDespatchIntegration_QueryReceiptAdviceStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/QueryReceiptAdviceStatusResponse" message="tns:IDespatchIntegration_QueryReceiptAdviceStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchView">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchView" message="tns:IDespatchIntegration_GetInboxDespatchView_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchViewResponse" message="tns:IDespatchIntegration_GetInboxDespatchView_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchPdf" message="tns:IDespatchIntegration_GetInboxDespatchPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/GetInboxDespatchPdfResponse" message="tns:IDespatchIntegration_GetInboxDespatchPdf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDespatchArchiveStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespatchIntegration/ChangeDespatchArchiveStatus" message="tns:IDespatchIntegration_ChangeDespatchArchiveStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespatchIntegration/ChangeDespatchArchiveStatusResponse" message="tns:IDespatchIntegration_ChangeDespatchArchiveStatus_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IDespatchIntegration" type="tns:IDespatchIntegration">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IDespatchIntegration_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSystemDate">
+      <soap:operation soapAction="http://tempuri.org/ICustomerServiceBase/GetSystemDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsEDespatchUser">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/IsEDespatchUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEDespatchUsers">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetEDespatchUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAliasses">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetUserAliasses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAsDraft">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/SaveAsDraft" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompressedSaveAsDraft">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/CompressedSaveAsDraft" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloneDespatches">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/CloneDespatches" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDraft">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/SendDraft" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelDraft">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/CancelDraft" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDespatch">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/SendDespatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompressedSendDespatch">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/CompressedSendDespatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrySendDespatches">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/RetrySendDespatches" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchList">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatch">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetOutboxDespatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatches">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetOutboxDespatches" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchesData">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchesData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchStatusWithLogs">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchStatusWithLogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryOutboxDespatchStatus">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/QueryOutboxDespatchStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchView">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchView" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutboxDespatchPdf">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetOutboxDespatchPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDespatchReceiptAdvicesTaken">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/SetDespatchReceiptAdvicesTaken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatch">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetInboxDespatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatches">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetInboxDespatches" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchList">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetInboxDespatchList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchesData">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetInboxDespatchesData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchStatusWithLogs">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetInboxDespatchStatusWithLogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryInboxDespatchStatus">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/QueryInboxDespatchStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDespatchesTaken">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/SetDespatchesTaken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendReceiptAdvice">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/SendReceiptAdvice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryReceiptAdviceStatus">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/QueryReceiptAdviceStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchView">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetInboxDespatchView" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboxDespatchPdf">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/GetInboxDespatchPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDespatchArchiveStatus">
+      <soap:operation soapAction="http://tempuri.org/IDespatchIntegration/ChangeDespatchArchiveStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DespatchIntegration">
+    <wsdl:port name="BasicHttpBinding_IDespatchIntegration" binding="tns:BasicHttpBinding_IDespatchIntegration">
+      <soap:address location="https://connect-test.crssoft.com/Services/DespatchIntegration" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,12 @@
+{
+  "Action": "CancelDraft",
+  "parameters": {
+    "invoiceIds": [
+      "83eec070-bda8-4827-9df1-838b9eeb4c5b"
+    ],
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}

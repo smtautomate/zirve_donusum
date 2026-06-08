@@ -1,0 +1,10 @@
+{
+  "Action": "GetHtmlView",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "documentId": "25ff0923-193c-4138-ac01-1a3088133242"
+  }
+}

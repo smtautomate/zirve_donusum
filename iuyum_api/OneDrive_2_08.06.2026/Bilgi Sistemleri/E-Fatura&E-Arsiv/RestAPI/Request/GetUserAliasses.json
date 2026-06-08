@@ -1,0 +1,10 @@
+{
+  "Action": "GetUserAliasses",
+  "parameters": {
+    "vknTckn": "9000068418",
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    }
+  }
+}

@@ -1,0 +1,213 @@
+<!-- StartDate ve EndDate represents Journal's Period Start and EndDate. 
+VknTckn is Company's Tax Number. It's control field.  This field has been added to prevent the customers who is working with Uyumsoft for more than one company accidentally upload their journal's to the wrong account. 
+BranchCode is company's branch code. If the company don't have a brach which use different journal account. Generally most of the companies does not have a seperate Journal Account even they have branhes. So this field must be empty -->
+<Entries StartDate="2018-09-01" EndDate="2018-09-30" VknTckn="9000068418" BranchCode="">
+	<!-- Every Journal record is represented by an EntryHeader.Every journal has minimum 1 EntryHeader field. -->
+	<EntryHeader>
+		<!-- Recorded User at the acconting application. -->
+		<EnteredBy>Faruk Kaygısız</EnteredBy>
+		<!-- Record date -->
+		<EnteredDate>2018-09-01</EnteredDate>
+		<!-- Journal's number -->
+		<EntryNumber>000001</EntryNumber>
+		<!-- Journal Description -->
+		<EntryComment>Insurance policy payment</EntryComment>
+		<!-- Total Debit for this record -->
+		<TotalDebit>13500.00</TotalDebit>
+		<!-- Total Credit for this record  -->
+		<TotalCredit>13500.00</TotalCredit>
+		<!-- If this record depends on a document, document's date will be filled -->
+		<DocumentDate>2018-09-01</DocumentDate>
+		<!-- If this record depends on a document, document type will be writted. 
+		Document Types are below. You can not set any other value except these. They should be in English. 
+		check, 
+		invoice, 
+		order-customer, 
+		order-vendor, 
+		voucher, 
+		shipment, 
+		receipt, 
+		other -->
+		
+		<DocumentType>other</DocumentType>
+		<!--If you set Document Type as other, you must be fill DocumentTypeDescription field with a description-->
+		<DocumentTypeDescription>Insurance policy</DocumentTypeDescription>
+		<!-- If you set DocumentType field DocumentNumber field is mandatory -->
+		<DocumentNumber>AAC-20141111</DocumentNumber>
+		<!-- Payment Type. Bank, Cash, Credit Card etc.   -->
+		<PaymentMethod>Bank</PaymentMethod>
+		<!-- Record Lines -->
+		<!-- Every EntryDetail field represents a journal record's detail -->
+		<EntryDetail>
+			<!-- Accounting info -->
+			<Account>
+				<!-- The uniform charf of account main Id  -->
+				<AccountMainID>100</AccountMainID>
+				<!-- Acoount Description -->
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<!-- cash in English. But it must be written in Turkish -->
+				<!-- The uniform charf of account sub detail -->
+				<AccountSub>
+					<!-- Sub Account Description -->
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<!-- The uniform charf of account sub Id. -->
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<!-- EntryDetail's moneraty amount -->
+			<Amount>1000.00</Amount>
+			<!-- Debit(D) or Credit(C) Code  -->
+			<DebitCreditCode>D</DebitCreditCode>
+			<!-- Record Date it must be same with EnteredDate field-->
+			<PostingDate>2018-09-01</PostingDate>
+			<!-- Detail's description. It's not mandatory-->
+			<DetailComment >2010 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+		<EntryDetail>
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>12500.00</Amount>
+			<DebitCreditCode>D</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2013 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+		<EntryDetail>
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>13500.00</Amount>
+			<DebitCreditCode>C</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2013 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+	</EntryHeader>
+	<!-- 2rd Redord-->
+	<EntryHeader>
+		<EnteredBy>Faruk Kaygısız</EnteredBy>
+		<EnteredDate>2018-09-01</EnteredDate>
+		<EntryNumber>000002</EntryNumber>
+		<EntryComment>2013 yılı devreden bakiye.</EntryComment>
+		<TotalDebit>13500.00</TotalDebit>
+		<TotalCredit>13500.00</TotalCredit>
+		<DocumentDate>2018-09-01</DocumentDate>
+		<DocumentType>other</DocumentType>
+		<DocumentTypeDescription>Sigorta Poliçesi</DocumentTypeDescription>
+		<DocumentNumber>AAC-20141111</DocumentNumber>
+		<PaymentMethod>Banka</PaymentMethod>
+		<EntryDetail>
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>1000.00</Amount>
+			<DebitCreditCode>D</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2010 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+		<EntryDetail>
+			
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>12500.00</Amount>
+			<DebitCreditCode>D</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2013 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+		<EntryDetail>
+			
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>13500.00</Amount>
+			<DebitCreditCode>C</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2013 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+	</EntryHeader>
+	<!-- 3rd Record-->
+	<EntryHeader>
+		<EnteredBy>Faruk Kaygısız</EnteredBy>
+		<EnteredDate>2018-09-01</EnteredDate>
+		<EntryNumber>000002</EntryNumber>
+		<EntryComment>2013 yılı devreden bakiye.</EntryComment>
+		<TotalDebit>13500.00</TotalDebit>
+		<TotalCredit>13500.00</TotalCredit>
+		<DocumentDate>2018-09-01</DocumentDate>
+		<DocumentType>other</DocumentType>
+		<DocumentTypeDescription>Sigorta Poliçesi</DocumentTypeDescription>
+		<DocumentNumber>AAC-20141111</DocumentNumber>
+		<PaymentMethod>Banka</PaymentMethod>
+		
+		<EntryDetail>
+			
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>1000.00</Amount>
+			<DebitCreditCode>D</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2010 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+		<EntryDetail>
+			
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>12500.00</Amount>
+			<DebitCreditCode>D</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2013 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+		<EntryDetail>
+		
+			<Account>
+				<AccountMainID>100</AccountMainID>
+				<AccountMainDescription >KASA</AccountMainDescription>
+				<AccountSub>
+					<AccountSubDescription >TL Kasası</AccountSubDescription>
+					<AccountSubID >100.01</AccountSubID>
+				</AccountSub>
+			</Account>
+			<Amount>13500.00</Amount>
+			<DebitCreditCode>C</DebitCreditCode>
+			<PostingDate>2018-09-01</PostingDate>
+			<DetailComment >2013 yılı devreden bakiye.</DetailComment>
+		</EntryDetail>
+	</EntryHeader>
+</Entries>

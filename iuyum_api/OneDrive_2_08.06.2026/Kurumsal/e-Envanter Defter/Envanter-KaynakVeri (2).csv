@@ -1,0 +1,7 @@
+VknTckn;AssetsDate;EntryNumberCounter;EnteredBy;EntryNumber;EntryComment;BatchID;BatchDescription;LineNumber;AccountMainID;AccountMainDescription;AccountSubID;AccountSubDescription;Amount;DetailComment;measurableID;measurableDescription;measurableQuantity;measurableUnitOfMeasure
+9000068418;46023;1;FARUK KAYGISIZ;ED-0000001;Envanter fiş kaydı açıklaması x;;;1;153;TİCARİ MALLAR;153.01;Ticari Mallar laptop;100000;Envanter Satır Açıklaması  laptop;ST-0002;HP Laptop;4;NIU
+9000068418;46023;1;FARUK KAYGISIZ;ED-0000001;Envanter fiş kaydı açıklaması x;;;2;153;TİCARİ MALLAR;153.02;Ticari Mallar tablet;50000;Envanter Satır Açıklaması  tablet;ST-0005;Lenovo Tablet;5;NIU
+9000068418;46023;2;FARUK KAYGISIZ;ED-0000002;Envanter fiş kaydı açıklaması y;;;3;253;TESİS, MAKİNA VE CİHAZLAR;253.01;Baskı makinası;500000;Satır Açıklaması;MK-001;Baskı makinası AC1;1;NIU
+9000068418;46023;3;FARUK KAYGISIZ;ED-0000003;Envanter fiş kaydı açıklaması z;;;4;153;TİCARİ MALLAR;153.04;Kumaş;150000;Satır Açıklaması;KM-001;Mavi Kumaş;3000;MTR
+9000068418;46023;3;FARUK KAYGISIZ;ED-0000003;Envanter fiş kaydı açıklaması z;;;5;254;TAŞITLAR;254.01;Kamyonet;2000000;Satır Açıklaması;TS-01;Kamyonet;1;NIU
+9000068418;46023;4;FARUK KAYGISIZ;ED-0000004;Envanter fiş kaydı açıklaması xyz;;;6;255;DEMİRBAŞLAR;255-1234;Masa;300000;Satır Açıklaması;DM-0004;Masa;10;NIU

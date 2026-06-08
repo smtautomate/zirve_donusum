@@ -1,0 +1,24 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+	<s:Header>
+		<o:Security s:mustUnderstand="1" xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+			<u:Timestamp u:Id="_0">
+				<u:Created>2020-05-16T12:38:11.515Z</u:Created>
+				<u:Expires>2020-05-16T12:43:11.515Z</u:Expires>
+			</u:Timestamp>
+			<o:UsernameToken u:Id="uuid-67df458b-45d9-4fa1-b572-9ac84147b15f-1">
+				<o:Username>Uyumsoft</o:Username>
+				<o:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">Uyumsoft</o:Password>
+			</o:UsernameToken>
+		</o:Security>
+	</s:Header>
+	<s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<QueryVoucherList xmlns="http://tempuri.org/">
+			<context PageIndex="0" PageSize="1000">
+				<CreationSartDate>2020-01-01T00:00:00</CreationSartDate>
+				<CreationEndDate>2020-05-16T00:00:00</CreationEndDate>
+				<DocumentStartDate xsi:nil="true"/>
+				<DocumentEndDate xsi:nil="true"/>
+			</context>
+		</QueryVoucherList>
+	</s:Body>
+</s:Envelope>

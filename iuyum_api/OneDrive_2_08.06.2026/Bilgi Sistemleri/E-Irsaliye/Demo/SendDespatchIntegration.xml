@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+	<s:Header>
+
+		<o:Security s:mustUnderstand="1" xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+			
+			<o:UsernameToken u:Id="uuid-be58c746-6fd8-4979-a68e-344067c221d4-3">
+				<o:Username>Uyumsoft</o:Username>
+				<o:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">Uyumsoft</o:Password>
+			</o:UsernameToken>
+		</o:Security>
+	</s:Header>
+	<s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<SendDespatch xmlns="http://tempuri.org/">
+			<despatches>
+				<DespatchInfo>
+					<DespatchAdvice xmlns="urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2">
+						<UBLVersionID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">2.1</UBLVersionID>
+						<CustomizationID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TR1.2</CustomizationID>
+						<ProfileID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TEMELIRSALIYE</ProfileID>
+						<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">IRS</ID>
+						<CopyIndicator xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">false</CopyIndicator>
+						<UUID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">e7097957-c176-4715-9ccf-c3ab720214ce</UUID>
+						<IssueDate xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">2024-10-21</IssueDate>
+						<IssueTime xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">11:23:30.0000000+02:00</IssueTime>
+						<DespatchAdviceTypeCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">SEVK</DespatchAdviceTypeCode>
+						<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Sevk Nedeni:001</Note>
+						<LineCountNumeric xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</LineCountNumeric>
+						<DespatchSupplierParty xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+							<Party>
+								<PartyIdentification>
+									<ID schemeID="VKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">9000068418</ID>
+								</PartyIdentification>
+								<PartyName>
+									<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Uyumsoft</Name>
+								</PartyName>
+								<PostalAddress>
+									<StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">DERECİK MAHALLESİ ATATÜRK CADDESİ NO:48/1</StreetName>
+									<BuildingNumber xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+									<CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ORTAHİSAR</CitySubdivisionName>
+									<CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TRABZON</CityName>
+									<Country>
+										<IdentificationCode xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TR</IdentificationCode>
+										<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Türkiye</Name>
+									</Country>
+								</PostalAddress>
+								<PartyTaxScheme>
+									<TaxScheme>
+										<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">HIZIRBEY</Name>
+									</TaxScheme>
+								</PartyTaxScheme>
+							</Party>
+						</DespatchSupplierParty>
+						<DeliveryCustomerParty xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+							<Party>
+								<PartyIdentification>
+									<ID schemeID="TCKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">51469450318</ID>
+								</PartyIdentification>
+								<PostalAddress>
+									<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+									<StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">CUMHURİYET MAH. ŞEHİR SK. - - 6 8</StreetName>
+									<BuildingNumber xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+									<CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ORTAHİSAR</CitySubdivisionName>
+									<CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TRABZON</CityName>
+									<PostalZone xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">61100</PostalZone>
+									<Country>
+										<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Türkiye</Name>
+									</Country>
+								</PostalAddress>
+								<PartyTaxScheme>
+									<TaxScheme>
+										<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">HIZIRBEY VERGİ DAİRESİ</Name>
+									</TaxScheme>
+								</PartyTaxScheme>
+								<Contact>
+									<Telephone xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">(462) 411-0212</Telephone>
+									<ElectronicMail xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">info@propos.com.tr</ElectronicMail>
+								</Contact>
+								<Person>
+									<FirstName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"> ŞÜKRÜ</FirstName>
+									<FamilyName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ÇANGA</FamilyName>
+								</Person>
+							</Party>
+						</DeliveryCustomerParty>
+						<Shipment xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+							<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+							<GoodsItem>
+								<ValueAmount currencyID="TRY" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</ValueAmount>
+							</GoodsItem>
+							<ShipmentStage>
+								<TransportMeans>
+									<RoadTransport>
+										<LicensePlateID schemeID="PLAKA" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">61 KV 936</LicensePlateID>
+									</RoadTransport>
+								</TransportMeans>
+								<DriverPerson>
+									<FirstName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">OĞUZ</FirstName>
+									<FamilyName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">DEMİR</FamilyName>
+									<Title xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Şoför</Title>
+									<NationalityID schemeID="TCKN" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">69001091646</NationalityID>
+								</DriverPerson>
+							</ShipmentStage>
+							<Delivery>
+								<DeliveryAddress>
+									<StreetName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">CUMHURİYET MAH. ŞEHİR SK. - - 6 8</StreetName>
+									<BuildingNumber xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+									<CitySubdivisionName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ORTAHİSAR</CitySubdivisionName>
+									<CityName xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">TRABZON</CityName>
+									<PostalZone xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">61100</PostalZone>
+									<Country>
+										<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">Türkiye</Name>
+									</Country>
+								</DeliveryAddress>
+								<Despatch>
+									<ActualDespatchDate xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">2024-01-13</ActualDespatchDate>
+									<ActualDespatchTime xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">11:23:30.0000000+02:00</ActualDespatchTime>
+								</Despatch>
+							</Delivery>
+							<TransportHandlingUnit>
+								<TransportEquipment>
+									<ID schemeID="DORSEPLAKA" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+								</TransportEquipment>
+							</TransportHandlingUnit>
+						</Shipment>
+						<DespatchLine xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+							<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</ID>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">KUR:</Note>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">YEREL_FIYAT:13.716</Note>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">ISKONTO:</Note>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">BIRIM:ADET</Note>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">UTS:</Note>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">LOT:</Note>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">SKT:</Note>
+							<Note xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">PARTINO:</Note>
+							<DeliveredQuantity unitCode="C62" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1.00</DeliveredQuantity>
+							<OrderLineReference>
+								<LineID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">1</LineID>
+							</OrderLineReference>
+							<Item>
+								<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">10 LT ŞEFFAF STYLE KOVA</Name>
+								<SellersItemIdentification>
+									<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">8696287091132</ID>
+								</SellersItemIdentification>
+								<ManufacturersItemIdentification>
+									<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">8696287091132</ID>
+								</ManufacturersItemIdentification>
+							</Item>
+							<Shipment>
+								<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+								<GoodsItem>
+									<InvoiceLine>
+										<ID xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+										<InvoicedQuantity unitCode="C62" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</InvoicedQuantity>
+										<LineExtensionAmount currencyID="TRY" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">0</LineExtensionAmount>
+										<Item>
+											<Name xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+										</Item>
+										<Price>
+											<PriceAmount currencyID="TRY" xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">13.71583333</PriceAmount>
+										</Price>
+									</InvoiceLine>
+								</GoodsItem>
+							</Shipment>
+						</DespatchLine>
+					</DespatchAdvice>
+				</DespatchInfo>
+			</despatches>
+		</SendDespatch>
+	</s:Body>
+</s:Envelope>

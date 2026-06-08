@@ -1,0 +1,10 @@
+{
+  "Action": "GetPdfView",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "receiptId": "e50ccf3c-4238-460a-bd99-4f360a75581f"
+  }
+}

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LedgerIntegration" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_ILedgerIntegration_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Lax />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss10>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://efatura-test.uyumsoft.com.tr/Services/LedgerIntegration?xsd=xsd0" namespace="http://tempuri.org/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILedgerIntegration_UploadSource_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSource" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_UploadSource_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetSourceInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSourceInformation" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetSourceInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSourceInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerData" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_GetLedgerData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLedgerDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedgerSource_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedgerSource" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedgerSource_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedgerSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedger_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedger" />
+  </wsdl:message>
+  <wsdl:message name="ILedgerIntegration_CancelLedger_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelLedgerResponse" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="false" name="ILedgerIntegration">
+    <wsdl:operation name="UploadSource">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSource" message="tns:ILedgerIntegration_UploadSource_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/UploadSourceResponse" message="tns:ILedgerIntegration_UploadSource_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSourceInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetSourceInformation" message="tns:ILedgerIntegration_GetSourceInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetSourceInformationResponse" message="tns:ILedgerIntegration_GetSourceInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerData" message="tns:ILedgerIntegration_GetLedgerData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/GetLedgerDataResponse" message="tns:ILedgerIntegration_GetLedgerData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedgerSource">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedgerSource" message="tns:ILedgerIntegration_CancelLedgerSource_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedgerSourceResponse" message="tns:ILedgerIntegration_CancelLedgerSource_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedger">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedger" message="tns:ILedgerIntegration_CancelLedger_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILedgerIntegration/CancelLedgerResponse" message="tns:ILedgerIntegration_CancelLedger_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ILedgerIntegration" type="tns:ILedgerIntegration">
+    <wsp:PolicyReference URI="#BasicHttpBinding_ILedgerIntegration_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UploadSource">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/UploadSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSourceInformation">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetSourceInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLedgerData">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/GetLedgerData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedgerSource">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/CancelLedgerSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelLedger">
+      <soap:operation soapAction="http://tempuri.org/ILedgerIntegration/CancelLedger" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LedgerIntegration">
+    <wsdl:port name="BasicHttpBinding_ILedgerIntegration" binding="tns:BasicHttpBinding_ILedgerIntegration">
+      <soap:address location="https://efatura-test.uyumsoft.com.tr/Services/LedgerIntegration" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

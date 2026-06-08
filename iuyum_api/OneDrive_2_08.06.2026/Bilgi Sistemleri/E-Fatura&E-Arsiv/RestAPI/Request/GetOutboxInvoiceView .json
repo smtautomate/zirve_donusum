@@ -1,0 +1,10 @@
+{
+  "Action": "GetOutboxInvoiceView",
+  "parameters": {
+    "userInfo": {
+      "Username": "Uyumsoft",
+      "Password": "Uyumsoft"
+    },
+    "invoiceId": "d48d6c76-e133-4237-b2d3-dea0a66155cf"
+  }
+}

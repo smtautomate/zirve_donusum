@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6b11538b-80ea-493e-b3d3-4d3f411d4623" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://connect-test.crssoft.com/services/despatchintegration" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DespatchIntegration1.wsdl" MetadataType="Wsdl" ID="b6455b05-ad5c-491d-8567-9431244f4234" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?wsdl" />
+    <MetadataFile FileName="DespatchIntegration9.xsd" MetadataType="Schema" ID="2db48d67-4ef2-4991-b644-fe92518cd484" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd0" />
+    <MetadataFile FileName="DespatchIntegration91.xsd" MetadataType="Schema" ID="17ea6c31-cb22-4c59-9ecb-9904317fd5a5" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd1" />
+    <MetadataFile FileName="DespatchIntegration92.xsd" MetadataType="Schema" ID="95ddfb52-6901-4924-b105-fb66ce6023ff" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd2" />
+    <MetadataFile FileName="DespatchIntegration93.xsd" MetadataType="Schema" ID="85e1d546-fb91-440c-a3b4-90dfe53bd6d2" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd3" />
+    <MetadataFile FileName="DespatchIntegration94.xsd" MetadataType="Schema" ID="5f7d6ee3-3a29-4c1c-be25-fdafc9369eef" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd4" />
+    <MetadataFile FileName="DespatchIntegration95.xsd" MetadataType="Schema" ID="4eb6aca0-bcb7-4fd4-b575-2447d58f7b15" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd5" />
+    <MetadataFile FileName="DespatchIntegration96.xsd" MetadataType="Schema" ID="70943ce6-62e8-405b-b82b-720359d045bc" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd6" />
+    <MetadataFile FileName="DespatchIntegration97.xsd" MetadataType="Schema" ID="c5e90d31-2790-4731-9bd6-8585a1d388a4" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd7" />
+    <MetadataFile FileName="DespatchIntegration98.xsd" MetadataType="Schema" ID="9315020c-22f1-4934-a7c5-3ef611461068" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?xsd=xsd8" />
+    <MetadataFile FileName="DespatchIntegration1.disco" MetadataType="Disco" ID="9aed956d-1c09-43fa-8219-fc9d2f016348" SourceId="1" SourceUrl="https://connect-test.crssoft.com/Services/DespatchIntegration?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
