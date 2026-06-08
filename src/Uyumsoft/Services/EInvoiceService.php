@@ -4,105 +4,146 @@ namespace ZirveDonusum\Uyumsoft\Services;
 
 /**
  * Uyumsoft E-Fatura servisi.
- * Endpoint: /Integration/EFatura
+ * API: POST /api/BasicIntegrationApi
+ * Referans: iuyum_api/Bilgi Sistemleri/E-Fatura&E-Arsiv/RestAPI/Request/
  */
 class EInvoiceService extends BaseService
 {
     /**
-     * Mukellefin e-Fatura kullanici olup olmadigini kontrol eder.
+     * VKN/TCKN ile mukellefin e-Fatura kullanicisi olup olmadigini sorgular.
      */
-    public function checkUser(string $taxNumber): array
+    public function isUser(string $vknTckn): array
     {
-        return $this->http->post('Integration/EFatura/CheckUser', [
-            'VknTckn' => $taxNumber,
+        return $this->http->action('IsEInvoiceUser', [
+            'vknTckn' => $vknTckn,
         ]);
     }
 
     /**
-     * E-Fatura gonder (UBL-TR XML / JSON payload).
+     * E-Fatura sistemi kullanicisi (mukellef) listesi.
      */
-    public function send(array $invoice): array
+    public function getUsers(array $filters = []): array
     {
-        return $this->http->post('Integration/EFatura/SendInvoice', [
-            'Invoice' => $invoice,
+        return $this->http->action('GetEInvoiceUsers', $filters);
+    }
+
+    /**
+     * Bir mukellefin e-Fatura sistemindeki alias (takma ad) listesi.
+     */
+    public function getUserAliases(string $vknTckn): array
+    {
+        return $this->http->action('GetUserAliasses', [
+            'vknTckn' => $vknTckn,
         ]);
     }
 
     /**
-     * Toplu e-Fatura gonder.
+     * E-Fatura gonder (tek veya coklu UBL-TR fatura).
+     *
+     * @param  array $invoices  Her eleman {"Invoice": {...}, "Scenario": 0, ...} yapısında
      */
-    public function sendBatch(array $invoices): array
+    public function send(array $invoices): array
     {
-        return $this->http->post('Integration/EFatura/SendInvoices', [
-            'Invoices' => $invoices,
+        return $this->http->action('SendInvoice', [
+            'invoices' => $invoices,
         ]);
-    }
-
-    /**
-     * Giden e-Fatura listesi.
-     */
-    public function listOutgoing(array $filters = []): array
-    {
-        return $this->http->post('Integration/EFatura/GetOutboxInvoices', $filters);
     }
 
     /**
      * Gelen e-Fatura listesi.
+     *
+     * @param  array $filters  startDate, endDate, limit vb.
      */
     public function listIncoming(array $filters = []): array
     {
-        return $this->http->post('Integration/EFatura/GetInboxInvoices', $filters);
+        return $this->http->action('GetInboxInvoiceList', $filters);
     }
 
     /**
-     * Fatura durum sorgulama (UUID/ETTN ile).
+     * Giden e-Fatura listesi.
+     *
+     * @param  array $filters  startDate, endDate, limit vb.
      */
-    public function status(string $uuid): array
+    public function listOutgoing(array $filters = []): array
     {
-        return $this->http->post('Integration/EFatura/GetInvoiceStatus', [
-            'Uuid' => $uuid,
+        return $this->http->action('GetOutboxInvoiceList', $filters);
+    }
+
+    /**
+     * Gelen bir e-Fatura detayi (UUID ile).
+     */
+    public function getIncoming(string $uuid): array
+    {
+        return $this->http->action('GetInboxInvoiceView', [
+            'uuid' => $uuid,
         ]);
     }
 
     /**
-     * Faturayi kabul et.
+     * Giden bir e-Fatura detayi (UUID ile).
      */
-    public function accept(string $uuid): array
+    public function getOutgoing(string $uuid): array
     {
-        return $this->http->post('Integration/EFatura/AcceptInvoice', [
-            'Uuid' => $uuid,
+        return $this->http->action('GetOutboxInvoiceView', [
+            'uuid' => $uuid,
         ]);
     }
 
     /**
-     * Faturayi reddet.
+     * Fatura PDF gorunumu iste.
+     *
+     * @param  string $uuid
+     * @param  int    $type  0=EFatura, 1=EArsiv
      */
-    public function reject(string $uuid, string $reason): array
+    public function getPdf(string $uuid, int $type = 0): array
     {
-        return $this->http->post('Integration/EFatura/RejectInvoice', [
-            'Uuid' => $uuid,
-            'Reason' => $reason,
+        return $this->http->action('GetPdfViewRequest', [
+            'uuid' => $uuid,
+            'type' => $type,
         ]);
     }
 
     /**
-     * Faturayi iptal et.
+     * Taslak fatura gonder (draft'i yayimla).
      */
-    public function cancel(string $uuid, string $reason = ''): array
+    public function sendDraft(string $uuid): array
     {
-        return $this->http->post('Integration/EFatura/CancelInvoice', [
-            'Uuid' => $uuid,
-            'Reason' => $reason,
+        return $this->http->action('SendDraft', [
+            'uuid' => $uuid,
         ]);
     }
 
     /**
-     * Fatura PDF/XML indir.
+     * Taslak faturay iptal et.
      */
-    public function download(string $uuid, string $format = 'pdf'): string
+    public function cancelDraft(string $uuid): array
     {
-        return $this->http->download("Integration/EFatura/Download/{$uuid}", [
-            'format' => $format,
+        return $this->http->action('CancelDraft', [
+            'uuid' => $uuid,
+        ]);
+    }
+
+    /**
+     * Gonderimi basarisiz faturalari yeniden gonder.
+     *
+     * @param  array $uuids  UUID listesi
+     */
+    public function retry(array $uuids): array
+    {
+        return $this->http->action('RetrySendInvoices', [
+            'uuids' => $uuids,
+        ]);
+    }
+
+    /**
+     * Faturaları "alinmis" olarak isaretler.
+     *
+     * @param  array $uuids  UUID listesi
+     */
+    public function markTaken(array $uuids): array
+    {
+        return $this->http->action('SetInvoicesTaken', [
+            'uuids' => $uuids,
         ]);
     }
 }

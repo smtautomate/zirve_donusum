@@ -9,51 +9,50 @@ use ZirveDonusum\Exceptions\ApiException;
 use ZirveDonusum\Exceptions\AuthenticationException;
 
 /**
- * Uyumsoft REST API HttpClient.
+ * Uyumsoft Action-Based API HttpClient.
  *
- * Stateless: her istekte Basic Auth header + JSON body icinde UserInfo gonderir.
- * Test:  https://efatura-test.uyumsoft.com.tr
- * Prod:  https://efatura.uyumsoft.com.tr
+ * Tum istekler tek endpoint'e POST edilir:
+ *   {"Action": "ActionName", "parameters": {..., "userInfo": {"Username": "...", "Password": "..."}}}
+ *
+ * E-Fatura/E-Arsiv: /api/BasicIntegrationApi
+ * E-Irsaliye:       /api/DespatchApi
+ * E-Adisyon:        /api/AdisyonApi
+ * E-Bilet:          /api/BiletApi
  */
 class HttpClient
 {
-    private GuzzleClient $http;
+    private GuzzleClient $guzzle;
     private CredentialManager $credentials;
-    private string $baseUrl;
+    private string $endpointUrl;
     private bool $testMode;
-    private int $timeout;
 
-    public function __construct(array $config)
+    public function __construct(array $config, string $apiPath = 'BasicIntegrationApi')
     {
-        $this->testMode = (bool)($config['test_mode'] ?? true);
-        $this->baseUrl = rtrim(
+        $this->testMode = (bool) ($config['test_mode'] ?? true);
+
+        $domain = rtrim(
             $config['base_url'] ?? ($this->testMode
-                ? 'https://efatura-test.uyumsoft.com.tr/services'
-                : 'https://efatura.uyumsoft.com.tr/services'),
+                ? 'http://efatura-test.uyumsoft.com.tr'
+                : 'http://efatura.uyumsoft.com.tr'),
             '/'
         );
-        $this->timeout = $config['timeout'] ?? 30;
+
+        $this->endpointUrl = "{$domain}/api/{$apiPath}";
 
         $this->credentials = new CredentialManager(
             $config['username'] ?? '',
             $config['password'] ?? ''
         );
 
-        $this->http = new GuzzleClient([
-            'base_uri' => $this->baseUrl . '/',
-            'timeout' => $this->timeout,
-            'verify' => $config['verify_ssl'] ?? true,
+        $this->guzzle = new GuzzleClient([
+            'timeout'     => $config['timeout'] ?? 30,
+            'verify'      => $config['verify_ssl'] ?? true,
             'http_errors' => false,
-            'headers' => [
-                'Accept' => 'application/json',
+            'headers'     => [
+                'Accept'       => 'application/json',
                 'Content-Type' => 'application/json',
             ],
         ]);
-    }
-
-    public function isAuthenticated(): bool
-    {
-        return $this->credentials->isComplete();
     }
 
     public function isTestMode(): bool
@@ -61,89 +60,41 @@ class HttpClient
         return $this->testMode;
     }
 
-    public function ensureAuthenticated(): void
+    public function getEndpointUrl(): string
+    {
+        return $this->endpointUrl;
+    }
+
+    /**
+     * Uyumsoft API aksiyonu calistir.
+     *
+     * @param  string $action     Aksiyon adi (orn. "SendInvoice", "IsEInvoiceUser")
+     * @param  array  $parameters Aksiyon parametreleri (userInfo otomatik eklenir)
+     * @return array
+     */
+    public function action(string $action, array $parameters = []): array
     {
         if (!$this->credentials->isComplete()) {
             throw new AuthenticationException(
-                'Uyumsoft credentials are not configured (username/password missing).'
+                'Uyumsoft credentials eksik (username/password tanimlanmamis).'
             );
         }
-    }
 
-    // ─── HTTP Methods ────────────────────────────────────────────────
-
-    public function get(string $endpoint, array $query = []): array
-    {
-        return $this->request('GET', $endpoint, ['query' => $query]);
-    }
-
-    public function post(string $endpoint, array $data = []): array
-    {
-        $payload = array_merge(['UserInfo' => $this->credentials->asUserInfo()], $data);
-        return $this->request('POST', $endpoint, ['json' => $payload]);
-    }
-
-    public function put(string $endpoint, array $data = []): array
-    {
-        $payload = array_merge(['UserInfo' => $this->credentials->asUserInfo()], $data);
-        return $this->request('PUT', $endpoint, ['json' => $payload]);
-    }
-
-    public function delete(string $endpoint, array $data = []): array
-    {
-        $payload = array_merge(['UserInfo' => $this->credentials->asUserInfo()], $data);
-        return $this->request('DELETE', $endpoint, ['json' => $payload]);
-    }
-
-    public function download(string $endpoint, array $query = []): string
-    {
-        $this->ensureAuthenticated();
+        $body = [
+            'Action'     => $action,
+            'parameters' => array_merge($parameters, [
+                'userInfo' => $this->credentials->asUserInfo(),
+            ]),
+        ];
 
         try {
-            $response = $this->http->get($endpoint, [
-                'query' => $query,
-                'headers' => $this->authHeaders(),
-            ]);
-
-            if ($response->getStatusCode() >= 400) {
-                throw new ApiException(
-                    'Uyumsoft download failed',
-                    $response->getStatusCode(),
-                    $endpoint
-                );
-            }
-
-            return $response->getBody()->getContents();
-        } catch (GuzzleException $e) {
-            throw new ApiException(
-                "Uyumsoft download failed: {$e->getMessage()}",
-                $e->getCode(),
-                $endpoint,
-                [],
-                $e
-            );
-        }
-    }
-
-    // ─── Internal ────────────────────────────────────────────────────
-
-    private function request(string $method, string $endpoint, array $options = []): array
-    {
-        $this->ensureAuthenticated();
-
-        try {
-            if (!isset($options['headers'])) {
-                $options['headers'] = [];
-            }
-            $options['headers'] = array_merge($options['headers'], $this->authHeaders());
-
-            $response = $this->http->request($method, $endpoint, $options);
+            $response   = $this->guzzle->post($this->endpointUrl, ['json' => $body]);
             $statusCode = $response->getStatusCode();
-            $rawBody = $response->getBody()->getContents();
+            $rawBody    = $response->getBody()->getContents();
 
             if (in_array($statusCode, [401, 403])) {
                 throw new AuthenticationException(
-                    'Uyumsoft authentication rejected (HTTP ' . $statusCode . '): ' . $rawBody,
+                    "Uyumsoft kimlik dogrulama reddedildi (HTTP {$statusCode}): {$rawBody}",
                     $statusCode
                 );
             }
@@ -151,66 +102,44 @@ class HttpClient
             if (trim($rawBody) === '') {
                 if ($statusCode >= 400) {
                     throw new ApiException(
-                        "Uyumsoft API error: HTTP {$statusCode}",
+                        "Uyumsoft API hatasi: HTTP {$statusCode}",
                         $statusCode,
-                        $endpoint
+                        $action
                     );
                 }
                 return [];
             }
 
-            $body = json_decode($rawBody, true);
+            $parsed = json_decode($rawBody, true);
 
             if ($statusCode >= 400) {
-                $msg = $body['Message']
-                    ?? $body['message']
-                    ?? $body['Error']
-                    ?? $body['ErrorMessage']
-                    ?? "Uyumsoft API error: HTTP {$statusCode}";
+                $msg = $parsed['Message']
+                    ?? $parsed['message']
+                    ?? $parsed['Error']
+                    ?? $parsed['ErrorMessage']
+                    ?? "Uyumsoft API hatasi: HTTP {$statusCode}";
+                throw new ApiException($msg, $statusCode, $action, $parsed ?? ['raw' => $rawBody]);
+            }
+
+            // Bazi Uyumsoft endpoint'leri IsSucceded:false ile HTTP 200 doner
+            if (is_array($parsed) && isset($parsed['IsSucceded']) && $parsed['IsSucceded'] === false) {
                 throw new ApiException(
-                    $msg,
+                    $parsed['Message'] ?? 'Uyumsoft API: IsSucceded=false',
                     $statusCode,
-                    $endpoint,
-                    $body ?? ['raw' => $rawBody]
+                    $action,
+                    $parsed
                 );
             }
 
-            // Bazi Uyumsoft endpoint'leri IsSucceded:false ile 200 doner
-            if (is_array($body) && isset($body['IsSucceded']) && $body['IsSucceded'] === false) {
-                throw new ApiException(
-                    $body['Message'] ?? 'Uyumsoft API returned IsSucceded=false',
-                    $statusCode,
-                    $endpoint,
-                    $body
-                );
-            }
-
-            return $body ?? [];
+            return $parsed ?? [];
         } catch (GuzzleException $e) {
             throw new ApiException(
-                "Uyumsoft request failed: {$e->getMessage()}",
+                "Uyumsoft istek basarisiz ({$action}): {$e->getMessage()}",
                 $e->getCode(),
-                $endpoint,
+                $action,
                 [],
                 $e
             );
         }
-    }
-
-    private function authHeaders(): array
-    {
-        return [
-            'Authorization' => $this->credentials->asBasicAuthHeader(),
-        ];
-    }
-
-    public function getBaseUrl(): string
-    {
-        return $this->baseUrl;
-    }
-
-    public function getCredentials(): CredentialManager
-    {
-        return $this->credentials;
     }
 }

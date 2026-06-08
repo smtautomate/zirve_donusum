@@ -3,33 +3,39 @@
 namespace ZirveDonusum\Uyumsoft\Services;
 
 /**
- * Mukellef sorgulama / firma bilgisi servisi.
+ * Uyumsoft mukellef / firma sorgulama servisi.
+ * API: POST /api/BasicIntegrationApi
+ * E-Fatura'ya kayitli mukellef ve firma bilgisi sorgulari.
  */
 class CompanyService extends BaseService
 {
     /**
-     * VKN/TCKN ile mukellefin GIB e-Fatura kayitli olup olmadigini sorgula.
+     * VKN/TCKN ile mukellefin GIB e-Fatura sistemine kayitli olup olmadigini sorgula.
      */
-    public function lookupTaxpayer(string $taxNumber): array
+    public function lookupTaxpayer(string $vknTckn): array
     {
-        return $this->http->post('Integration/Common/CheckUser', [
-            'VknTckn' => $taxNumber,
+        return $this->http->action('IsEInvoiceUser', [
+            'vknTckn' => $vknTckn,
         ]);
     }
 
     /**
-     * Tum kayitli e-Fatura mukelleflerini getir (GIB listesi).
+     * GIB'e kayitli tum e-Fatura mukelleflerini getir.
+     *
+     * @param  array $filters  orn. startDate, endDate
      */
     public function listRegisteredTaxpayers(array $filters = []): array
     {
-        return $this->http->post('Integration/Common/GetUserList', $filters);
+        return $this->http->action('GetEInvoiceUsers', $filters);
     }
 
     /**
-     * Aktif kullanicinin firma bilgisi.
+     * Hesaba ait kullanici takma ad (alias) listesi.
      */
-    public function info(): array
+    public function getUserAliases(string $vknTckn): array
     {
-        return $this->http->post('Integration/Common/GetCompanyInfo', []);
+        return $this->http->action('GetUserAliasses', [
+            'vknTckn' => $vknTckn,
+        ]);
     }
 }
