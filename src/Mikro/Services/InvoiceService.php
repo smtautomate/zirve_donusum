@@ -6,14 +6,17 @@ namespace ZirveDonusum\Mikro\Services;
  * E-Fatura / E-Arşiv Fatura İşlemleri
  *
  * Gerçek endpoint'ler (Network tab'dan):
- *   GET /cp/{accountId}/newInvoice/getOptions
- *   GET /cp/{accountId}/newInvoice/get/?invoiceType=EInvoice
- *   GET /cp/{accountId}/newInvoice/getSubtotals
- *   GET /cp/{accountId}/DocumentNo/GenerateOrValidateSerial?uuid=...&prefix=EFAB
- *   GET /cp/{accountId}/packagecode/getall
- *   GET /cp/{accountId}/paymenttype/getall
- *   GET /cp/{accountId}/paymentcode/getall
- *   GET /cp/{accountId}/Nace/GetAccountVatRates
+ *   GET  /cp/{accountId}/newInvoice/getOptions
+ *   GET  /cp/{accountId}/newInvoice/get/?invoiceType=EInvoice
+ *   GET  /cp/{accountId}/newInvoice/getCustomerEInvoiceUsers/{vkn}
+ *   POST /cp/{accountId}/newInvoice/getSubtotals
+ *   POST /cp/{accountId}/newInvoice/CheckAllWarnings
+ *   POST /cp/{accountId}/newInvoice/send
+ *   GET  /cp/{accountId}/DocumentNo/GenerateOrValidateSerial?uuid=...&prefix=EFAB
+ *   GET  /cp/{accountId}/packagecode/getall
+ *   GET  /cp/{accountId}/paymenttype/getall
+ *   GET  /cp/{accountId}/paymentcode/getall
+ *   GET  /cp/{accountId}/Nace/GetAccountVatRates
  */
 class InvoiceService extends BaseService
 {
@@ -30,20 +33,34 @@ class InvoiceService extends BaseService
     /**
      * Yeni fatura formu / taslak getir (sunucu UUID + serial dahil döner)
      *
-     * Mikro API: POST /cp/{accountId}/newInvoice/get
+     * Mikro API: GET /cp/{accountId}/newInvoice/get/?invoiceType=EArchive
      * @param string $invoiceType EInvoice, EArchive, vb.
      */
     public function getNewInvoice(string $invoiceType = 'EInvoice'): array
     {
-        return $this->http->post($this->cp('newInvoice/get'), ['invoiceType' => $invoiceType]);
+        return $this->http->get($this->cp('newInvoice/get'), ['invoiceType' => $invoiceType]);
     }
 
     /**
-     * Fatura alt toplamlarını hesapla
+     * Fatura alt toplamlarını hesapla (fatura payload'u ile POST)
+     *
+     * Gerçek endpoint: POST /cp/{accountId}/newInvoice/getSubtotals
      */
-    public function getSubtotals(): array
+    public function getSubtotals(array $invoicePayload): array
     {
-        return $this->http->get($this->cp('newInvoice/getSubtotals'));
+        return $this->http->post($this->cp('newInvoice/getSubtotals'), $invoicePayload);
+    }
+
+    /**
+     * Göndermeden önce uyarı / hata kontrolü
+     *
+     * Gerçek endpoint: POST /cp/{accountId}/newInvoice/CheckAllWarnings
+     * Tarayıcıda gönder butonuna basılmadan önce çağrılır.
+     * Dönen array'de 'HasError'=>true ise fatura gönderilemez.
+     */
+    public function checkAllWarnings(array $invoicePayload): array
+    {
+        return $this->http->post($this->cp('newInvoice/CheckAllWarnings'), $invoicePayload);
     }
 
     /**
@@ -569,9 +586,8 @@ class InvoiceService extends BaseService
         // 3. e-Fatura alias'ı otomatik sorgula (EInvoice için zorunlu)
         $aliasObj = $options['aliasObj'] ?? null;
         if ($aliasObj === null && $invoiceType === 'EInvoice') {
-            $aliasResp = $this->http->post(
-                $this->cp("newInvoice/getCustomerEInvoiceUsers/{$taxNumber}"),
-                []
+            $aliasResp = $this->http->get(
+                $this->cp("newInvoice/getCustomerEInvoiceUsers/{$taxNumber}")
             );
             $aliasObj = $aliasResp['Data']['users'][0] ?? null;
         }
@@ -676,7 +692,15 @@ class InvoiceService extends BaseService
             ];
         }
 
-        // 6. Gönder
+        // 6. Uyarı kontrolü (tarayıcının gönder öncesi yaptığı adım)
+        $warnings = $this->checkAllWarnings($payload);
+        if (!empty($warnings['HasError'])) {
+            throw new \RuntimeException(
+                'Fatura doğrulama hatası: ' . json_encode($warnings['Errors'] ?? $warnings)
+            );
+        }
+
+        // 7. Gönder
         return $this->send($payload);
     }
 
