@@ -374,11 +374,15 @@ class HttpClient
             $body = json_decode($rawBody, true);
 
             if ($statusCode >= 400) {
+                $errorBody = $body ?? [];
+                if ($statusCode >= 500 && empty($errorBody)) {
+                    $errorBody = ['raw' => substr($rawBody, 0, 1000)];
+                }
                 throw new ApiException(
                     $body['message'] ?? $body['error'] ?? "API error: HTTP {$statusCode}",
                     $statusCode,
                     $endpoint,
-                    $body ?? ['raw' => $rawBody]
+                    $errorBody
                 );
             }
 

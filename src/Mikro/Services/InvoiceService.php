@@ -569,7 +569,11 @@ class InvoiceService extends BaseService
         $invoiceType = $options['invoiceType'] ?? 'EInvoice';
 
         // 1. Boş şablon + UUID + SubAccountId al
-        $template    = $this->getNewInvoice($invoiceType);
+        try {
+            $template = $this->getNewInvoice($invoiceType);
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Step 1 (getNewInvoice/{$invoiceType}) başarısız: " . $e->getMessage(), (int) $e->getCode(), $e);
+        }
         $invoiceNode = $template['invoice'] ?? $template;
         $uuid        = $invoiceNode['UUID'] ?? null;
 
@@ -578,18 +582,26 @@ class InvoiceService extends BaseService
         }
 
         // 2. Seri prefix ve sıradaki numara (her firma/yıl farklı seri kullanabilir)
-        $prefix        = $options['prefix'] ?? ($invoiceNode['Number']['Serial'] ?? 'EFAB');
-        $docNoResponse = $this->generateDocumentNo($uuid, $prefix);
-        $serial        = $docNoResponse['Data']['Prefix'] ?? $prefix;
-        $docNumber     = $docNoResponse['Data']['Serial'] ?? 0;
+        $prefix = $options['prefix'] ?? ($invoiceNode['Number']['Serial'] ?? 'EFAB');
+        try {
+            $docNoResponse = $this->generateDocumentNo($uuid, $prefix);
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Step 2 (generateDocumentNo prefix={$prefix}) başarısız: " . $e->getMessage(), (int) $e->getCode(), $e);
+        }
+        $serial    = $docNoResponse['Data']['Prefix'] ?? $prefix;
+        $docNumber = $docNoResponse['Data']['Serial'] ?? 0;
 
         // 3. e-Fatura alias'ı otomatik sorgula (EInvoice için zorunlu)
         $aliasObj = $options['aliasObj'] ?? null;
         if ($aliasObj === null && $invoiceType === 'EInvoice') {
-            $aliasResp = $this->http->get(
-                $this->cp("newInvoice/getCustomerEInvoiceUsers/{$taxNumber}")
-            );
-            $aliasObj = $aliasResp['Data']['users'][0] ?? null;
+            try {
+                $aliasResp = $this->http->get(
+                    $this->cp("newInvoice/getCustomerEInvoiceUsers/{$taxNumber}")
+                );
+                $aliasObj = $aliasResp['Data']['users'][0] ?? null;
+            } catch (\Throwable $e) {
+                throw new \RuntimeException("Step 3 (getCustomerEInvoiceUsers vkn={$taxNumber}) başarısız: " . $e->getMessage(), (int) $e->getCode(), $e);
+            }
         }
 
         $now = date('Y-m-d\TH:i:s.000\Z');
@@ -693,7 +705,11 @@ class InvoiceService extends BaseService
         }
 
         // 6. Uyarı kontrolü (tarayıcının gönder öncesi yaptığı adım)
-        $warnings = $this->checkAllWarnings($payload);
+        try {
+            $warnings = $this->checkAllWarnings($payload);
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Step 6 (checkAllWarnings) başarısız: " . $e->getMessage(), (int) $e->getCode(), $e);
+        }
         if (!empty($warnings['HasError'])) {
             throw new \RuntimeException(
                 'Fatura doğrulama hatası: ' . json_encode($warnings['Errors'] ?? $warnings)
@@ -701,7 +717,11 @@ class InvoiceService extends BaseService
         }
 
         // 7. Gönder
-        return $this->send($payload);
+        try {
+            return $this->send($payload);
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Step 7 (newInvoice/send) başarısız: " . $e->getMessage(), (int) $e->getCode(), $e);
+        }
     }
 
     /**
