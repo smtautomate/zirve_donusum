@@ -583,13 +583,20 @@ class InvoiceService extends BaseService
 
         // 2. Seri prefix ve sıradaki numara (her firma/yıl farklı seri kullanabilir)
         $prefix = $options['prefix'] ?? ($invoiceNode['Number']['Serial'] ?? 'EFAB');
-        try {
-            $docNoResponse = $this->generateDocumentNo($uuid, $prefix);
-        } catch (\Throwable $e) {
-            throw new \RuntimeException("Step 2 (generateDocumentNo prefix={$prefix}) başarısız: " . $e->getMessage(), (int) $e->getCode(), $e);
+
+        // serialNumber geçilmişse generateDocumentNo atlanır — CRM'deki mevcut numara kullanılır
+        if (isset($options['serialNumber'])) {
+            $serial    = $prefix;
+            $docNumber = (int) $options['serialNumber'];
+        } else {
+            try {
+                $docNoResponse = $this->generateDocumentNo($uuid, $prefix);
+            } catch (\Throwable $e) {
+                throw new \RuntimeException("Step 2 (generateDocumentNo prefix={$prefix}) başarısız: " . $e->getMessage(), (int) $e->getCode(), $e);
+            }
+            $serial    = $docNoResponse['Data']['Prefix'] ?? $prefix;
+            $docNumber = $docNoResponse['Data']['Serial'] ?? 0;
         }
-        $serial    = $docNoResponse['Data']['Prefix'] ?? $prefix;
-        $docNumber = $docNoResponse['Data']['Serial'] ?? 0;
 
         // 3. e-Fatura alias'ı otomatik sorgula (EInvoice için zorunlu)
         $aliasObj = $options['aliasObj'] ?? null;
