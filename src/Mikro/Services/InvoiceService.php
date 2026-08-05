@@ -38,7 +38,7 @@ class InvoiceService extends BaseService
      */
     public function getNewInvoice(string $invoiceType = 'EInvoice'): array
     {
-        return $this->http->get($this->cp('newInvoice/get'), ['invoiceType' => $invoiceType]);
+        return $this->http->get($this->cp('newInvoice/get/'), ['invoiceType' => $invoiceType]);
     }
 
     /**
