@@ -595,7 +595,7 @@ class InvoiceService extends BaseService
         $aliasObj = $options['aliasObj'] ?? null;
         if ($aliasObj === null && $invoiceType === 'EInvoice') {
             try {
-                $aliasResp = $this->http->get(
+                $aliasResp = $this->http->postForm(
                     $this->cp("newInvoice/getCustomerEInvoiceUsers/{$taxNumber}")
                 );
                 $aliasObj = $aliasResp['Data']['users'][0] ?? null;
