@@ -88,10 +88,16 @@ class HttpClient
             $body = json_decode($rawBody, true);
 
             if ($statusCode !== 200) {
+                $hint = match ($statusCode) {
+                    403 => ' (Hesap askıya alınmış veya abonelik süresi dolmuş olabilir)',
+                    401 => ' (Kullanıcı adı veya şifre hatalı)',
+                    429 => ' (İstek limiti aşıldı, lütfen bekleyin)',
+                    default => '',
+                };
                 throw new AuthenticationException(
-                    "Login failed with status {$statusCode}: {$rawBody}",
+                    "eMikro giriş başarısız (HTTP {$statusCode}){$hint}",
                     $statusCode,
-                    $body ?? []
+                    $body ?? ['raw' => substr($rawBody, 0, 500)]
                 );
             }
 
