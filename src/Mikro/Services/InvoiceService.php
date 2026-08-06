@@ -646,8 +646,8 @@ class InvoiceService extends BaseService
             'Customer'   => [
                 'TaxNumber'  => $taxNumber,
                 'Title'      => $title,
-                'Name'       => '',
-                'Surname'    => '',
+                'Name'       => $options['name'] ?? '',
+                'Surname'    => $options['surname'] ?? '',
                 'TaxOffice'  => $options['taxOffice'] ?? '',
                 'DealerNo'   => '',
                 'VehicleNumberPlate'          => '',
