@@ -44,14 +44,22 @@ class HttpClient
             $config['password'] ?? ''
         );
 
+        $headers = [
+            'Accept'       => 'application/json',
+            'Content-Type' => 'application/json',
+        ];
+
+        // Uyumsoft REST API zorunlu header: IntegrationClient_SoftwareDefinitionId
+        // Uyumsoft'un onayladığı GUID değeri config['software_definition_id'] üzerinden alınır.
+        if (!empty($config['software_definition_id'])) {
+            $headers['IntegrationClient_SoftwareDefinitionId'] = $config['software_definition_id'];
+        }
+
         $this->guzzle = new GuzzleClient([
             'timeout'     => $config['timeout'] ?? 30,
             'verify'      => $config['verify_ssl'] ?? true,
             'http_errors' => false,
-            'headers'     => [
-                'Accept'       => 'application/json',
-                'Content-Type' => 'application/json',
-            ],
+            'headers'     => $headers,
         ]);
     }
 
